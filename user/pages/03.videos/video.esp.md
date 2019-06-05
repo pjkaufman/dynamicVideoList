@@ -2,24 +2,28 @@
 title: Videos
 
 languages: 
-  - English
-  - Spanish
+  - Inglés
+  - Español
 
 videos: 
-  - name: God Makes the World
+  - name: Dios crea el mundo
     id: 1
     link: https://player.vimeo.com/video/210999824
-    language: English
+    language: Inglés
   - name: When Sin Entered the World
     id: 2
     link: https://player.vimeo.com/video/233860107
-    language: English
+    language: Inglés
   - name: Noah and the Flood
     id: 3
     link: https://player.vimeo.com/video/234338529"
-    language: English
-  - name: The Sons of Abraham
+    language: Inglés
+  - name: Los hijos de Abram
     id: 4
     link: https://player.vimeo.com/video/27726252
-    language: Spanish
+    language: Español
+
+select:
+  languages: "Escoge una idioma:"
+  videos: "Escoge un video:"
 ---
