@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(){
   var languages = document.getElementById("languages");
   var videoList = document.getElementById("videos");
+  var langBtns = document.querySelectorAll("#swapLanguage > p > a");
   var selectedLanguage;
   var selectedVideo;
   var videos;
@@ -8,6 +9,10 @@ document.addEventListener("DOMContentLoaded", function(){
   displaySelectedVideo();
   languages.addEventListener("change", displayAppropriateVideoList);
   videoList.addEventListener("change", displaySelectedVideo);
+  // add listerner for click on language
+  for (var i = 0; i < langBtns.length; i++) {
+    langBtns[i].setAttribute("href", fixURLForLanguage(langBtns[i].id));
+  }
 
   /**
    * Displays the videos titles that are in the language specified by the language list.
@@ -39,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   /**
-   * displays the video selected by the user.
+   * Displays the video selected by the user.
    */
   function displaySelectedVideo() {
     // hide the currently selected video
@@ -53,5 +58,19 @@ document.addEventListener("DOMContentLoaded", function(){
     selectedVideo = document.getElementById(videoID);
     selectedVideo.classList.add("visible");
     selectedVideo.classList.remove("hidden");
+  }
+
+  /**
+   * Updates the url to point to the rigth directory for the language selected.
+   * @param lang is a string which is the language to swap the page to.
+   * @return a string which is the url to use as a link to that language for 
+   * this page.
+   */
+  function fixURLForLanguage(lang) {
+    var url = window.location.href;
+    url = url.substring(0, url.lastIndexOf('/'));
+    url = url.substring(0, url.lastIndexOf('/'));
+    url += '/' + lang + '/videos';
+    return url;
   }
 });

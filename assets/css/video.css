@@ -7,6 +7,24 @@
   display: none;
 }
 
+#swapLanguage{
+  position: absolute;
+  right: 5px;
+}
+
+#swapLanguage > p {
+  float: left;
+}
+
+#swapLanguage > p > a {
+  color: #50596c;
+  text-decoration: underline;
+}
+
+#videosFrames {
+  text-align: center;
+}
+
 /**
  * CSS from https://andy-bell.design/wrote/create-a-responsive-grid-layout-with-no-media-queries-using-css-grid/
  */
