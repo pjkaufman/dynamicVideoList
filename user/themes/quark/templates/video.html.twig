@@ -1,0 +1,44 @@
+{% block videolinks %} 
+
+<head>
+  <link rel="stylesheet" type="text/css" href="assets\css\video.css"></stylesheet>
+</head>
+
+<center>
+  <h1>{{ page.header.title }}</h1>
+
+  <div class="wrapper">
+    <div id="videoOptions" class="auto-grid">
+      <div>
+        <p>Select a language:</p>
+        <select id="languages">
+          {% for language in page.header.languages %}
+            <option value="{{ language }}">{{ language }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="hidden" id="videoOption">
+        <p>Select a video:</p>
+        <select id="videos">
+          {% for video in page.header.videos %}
+            <option value="{{ video.id }}" class="{{ video.language }}">{{ video.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+</center>
+
+<div id="videosFrames">
+  {% for video in page.header.videos %}
+    <iframe src="{{ video.link }}" width="640" height="564" frameborder="0" allow="fullscreen" 
+    allowfullscreen class="hidden" id="{{ video.id }}"></iframe>
+  {% endfor %}
+</div>
+
+<footer> 
+  <script src="assets\js\video.js"></script>
+</footer>
+
+{% endblock %}
+
