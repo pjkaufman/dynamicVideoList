@@ -8,13 +8,22 @@
   </p> 
   <p>|</p> 
   <p>
-    <a href="" id="esp" >Español</a>
+    <a href="" id="es" >Español</a>
   </p>
 </div>
 
 <center>
   <div class="wrapper">
     <div id="videoOptions" class="auto-grid">
+      <div id="videoOption">
+        <p>{{ page.header.select.videos }}</p>
+        <select id="videos">
+          {% for video in page.header.videos %}
+            <option value="{{ video.name }}">{{ video.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
       <div>
         <p>{{ page.header.select.languages }}</p>
         <select id="languages">
@@ -23,32 +32,29 @@
           {% endfor %}
         </select>
       </div>
-      <div class="hidden" id="videoOption">
-        <p>{{ page.header.select.videos }}</p>
-        <select id="videos">
-          {% set id = 0 %}
-          {% for video in page.header.videos %}
-            <option value="{{ id }}" class="{{ video.language }}">{{ video.name }}</option>
-            {% set id = id + 1 %}
-          {% endfor %}
-        </select>
-      </div>
     </div>
   </div>
 </center>
 
 <div id="videosFrames">
-  {% set id = 0 %}
-  {% for video in page.header.videos %}
-    <iframe src="{{ video.link }}" width="640" height="564" frameborder="0" allow="fullscreen" 
-    allowfullscreen class="hidden" id="{{ id }}"></iframe>
-    {% set id = id + 1 %}
-  {% endfor %}
+ <h2 id="videoTitle"></h2>
+
+  <h3 id="videoError"></h3>
 </div>
 
-<footer> 
-  <link rel="stylesheet" type="text/css" href="..\assets\css\video.css"></stylesheet>
-  <script src="..\assets\js\video.js"></script>
-</footer>
+<script>
+  Window.Vinya = {};
+  Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
+  {% for video in page.header.videos %}
+    Object.assign(Window.Vinya, {'{{ video.name }}': {} })
+    {% for link in video.links %}
+      Object.assign(Window.Vinya['{{ video.name }}'], { {{ link.language }}: "{{ link.link }}"});
+    {% endfor %}
+  {% endfor %}
+</script>
+
+<link rel="stylesheet" type="text/css" href="..\assets\css\video.css"></stylesheet>
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script src="..\assets\js\video.js"></script>
 
 {% endblock %}
