@@ -61,6 +61,8 @@ videos:
 select:
   languages: "Escoge una idioma:"
   videos: "Escoge un video:"
+  subtitles: "Escoge un subtitulo:"
+  empty: "Apagar"
 
 error: "El video que intenta seleccionar no existe en este idioma."
 ---

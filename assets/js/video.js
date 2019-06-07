@@ -2,13 +2,15 @@ document.addEventListener("DOMContentLoaded", function(){
   var URLParams = {
     lang: "lang", 
     title: "video", 
-    time: "time"
+    time: "time",
+    sub: "sub"
   };
   var DOMElements = {
     languages: document.getElementById("languages"),
     videoList: document.getElementById("videos"),
     langBtns: document.querySelectorAll("#swapLanguage > p > a"),
     videoError: document.getElementById('videoError'),
+    subtitles: document.getElementById('subtitles'),
     video: undefined
   };
   var selectedLanguage;
@@ -24,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // preprocess check 
   if (URLContainsParam()) {
+    // update the video accordingly based on the parameters
     parseURL();
   } else {
     displaySelectedVideo();
@@ -31,6 +34,14 @@ document.addEventListener("DOMContentLoaded", function(){
 
   DOMElements.languages.addEventListener("change", updateLanguage);
   DOMElements.videoList.addEventListener("change", displaySelectedVideo);
+  DOMElements.subtitles.addEventListener("change", function() {
+    if (DOMElements.subtitles.value == 'off') {
+      player.disableTextTrack();
+    } else {
+      player.enableTextTrack(DOMElements.subtitles.value);
+    }
+    updateURL(URLParams.sub, DOMElements.subtitles.value );
+  });
   // add appropriate url for the language
   for (var i = 0; i < DOMElements.langBtns.length; i++) {
     DOMElements.langBtns[i].setAttribute("href", fixURLForLanguage(DOMElements.langBtns[i].id));
@@ -58,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function(){
     // hide the currently selected video
     if (player === undefined ) {
       createVimeoPlayer(videoName, selectedLanguage.value);
-      console.log('updating DOMElements.video...');
       updateURL(URLParams.title, videoName);
       updateURL(URLParams.lang, selectedLanguage.value);
     } else {
@@ -102,18 +112,15 @@ document.addEventListener("DOMContentLoaded", function(){
         player.loadVideo(videoOptions).then( function () {
           player.ready().then(function(){
             if (languageChanged && url.searchParams.has(URLParams.time)) {
-              console.log("changing time to: " + url.searchParams.get(URLParams.time));
               player.setCurrentTime(url.searchParams.get(URLParams.time));
-            } 
-            console.log(player);
+            }
+            getTextTracks(); 
           });
         });
       });
       if (!languageChanged) {
-        console.log("resetting time...");
         updateURL(URLParams.title, videoName);
       }
-      getTextTracks();
     }
   }
 
@@ -123,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function(){
    * @param {*} val is the value to put in the url.
    */
   function updateURL(param, val) {
-    console.log(param + " " + val);
     // when the video is changed, the time should be reset
     if (param === URLParams.title) {
       url.searchParams.delete(URLParams.time);
@@ -133,7 +139,11 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       url.searchParams.append(param, val);
     }
-    
+    // if the subtitles are turned off or the video is changed, remove the sub param
+    if (url.searchParams.has(URLParams.sub) && (param === URLParams.title || val == 'off' )) {
+      url.searchParams.delete(URLParams.sub);
+    }
+    // update the browser history
     if (history.pushState) {
       window.history.pushState({path:url.href},'',url.href);
     }
@@ -149,18 +159,18 @@ document.addEventListener("DOMContentLoaded", function(){
    // check to see if the language and video title are present in the url
    if (params.has(URLParams.title) && params.has(URLParams.lang)) {
       // create the iframe and set the default value of the selects
-      createVimeoPlayer(title, lang);
       DOMElements.videoList.value = title;
       DOMElements.languages.value = lang;
     } else if (params.has(URLParams.title)) {
       // if the title is present but not the language, use the default language
       DOMElements.videoList.value = title;
-      console.log("no language found");
-    } else if (params.has(URLParams.title)) {
+      lang = DOMElements.languages.value;
+    } else if (params.has(URLParams.lang)) {
       // if the language is present but not the title
       DOMElements.languages.value = lang;
-      console.log("no title found");
+      title = DOMElements.videoList.value;
     }
+    createVimeoPlayer(title, lang);
     // check to see if the time is in the url, if so the video will be set to that time
     if (params.has(URLParams.time)) {
       player.setCurrentTime(time);
@@ -184,7 +194,6 @@ document.addEventListener("DOMContentLoaded", function(){
    */
   function createVimeoPlayer(videoName, videoLanguage) {
     // create iframe
-    console.log(videoName + " : " + videoLanguage);
     videoOptions.id = Window.Vinya[videoName][videoLanguage];
     player = new Vimeo.Player('videosFrames', videoOptions);
     DOMElements.video = document.querySelector('iframe');
@@ -202,8 +211,27 @@ document.addEventListener("DOMContentLoaded", function(){
   }
   
   function getTextTracks() {
+    // remove all added tracks
+    var elements = document.querySelectorAll('.added');
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].parentNode.removeChild(elements[i]);
+    }
+    // add the new ones
     player.getTextTracks().then(function(tracks) {
       console.log(tracks);
-    })
+      var subtitle;
+      if (tracks.length !== 0) {
+        // append all options to the list
+        for (var i = 0; i < tracks.length; i++) {
+          if (tracks[i].kind === 'subtitles') {
+            subtitle = '<option value=' + tracks[i].language + ' class="added">' + tracks[i].label + '</option>';
+            DOMElements.subtitles.innerHTML += subtitle;
+          }
+        }
+      }
+      if (!document.querySelector('.added[value="' + url.searchParams.get(URLParams.sub) + '"]')) {
+        updateURL(URLParams.sub, 'off');
+      }
+    });
   }
 });

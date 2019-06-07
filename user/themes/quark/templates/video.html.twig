@@ -32,12 +32,18 @@
           {% endfor %}
         </select>
       </div>
+
+      <div id="subtitleWrapper">
+        <p>{{ page.header.select.subtitles }}</p>
+        <select id="subtitles">
+          <option value="off">{{ page.header.select.empty }}</option>
+        </select>
+      </div>
     </div>
   </div>
 </center>
 
 <div id="videosFrames">
- <h2 id="videoTitle"></h2>
 
   <h3 id="videoError"></h3>
 </div>
