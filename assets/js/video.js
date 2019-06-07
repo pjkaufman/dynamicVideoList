@@ -1,12 +1,23 @@
 document.addEventListener("DOMContentLoaded", function(){
-  var URLParams = {lang: "lang", title: "video", time: "time"};
-  var languages = document.getElementById("languages");
-  var videoList = document.getElementById("videos");
-  var iframeContainer = document.getElementById("videosFrames");
-  var langBtns = document.querySelectorAll("#swapLanguage > p > a");
-  var videoError = document.getElementById('videoError');
+  var URLParams = {
+    lang: "lang", 
+    title: "video", 
+    time: "time"
+  };
+  var DOMElements = {
+    languages: document.getElementById("languages"),
+    videoList: document.getElementById("videos"),
+    langBtns: document.querySelectorAll("#swapLanguage > p > a"),
+    videoError: document.getElementById('videoError'),
+    video: undefined
+  };
   var selectedLanguage;
-  var video;
+  var videoOptions = {
+    id: undefined,
+    width: 640,
+    height: 564,
+    autoplay: false
+  };
   var player;
   var videos;
   var url = new URL(window.location.href);
@@ -18,21 +29,21 @@ document.addEventListener("DOMContentLoaded", function(){
     displaySelectedVideo();
   }
 
-  languages.addEventListener("change", updateLanguage);
-  videoList.addEventListener("change", displaySelectedVideo);
-  // add listerner for click on language
-  for (var i = 0; i < langBtns.length; i++) {
-    langBtns[i].setAttribute("href", fixURLForLanguage(langBtns[i].id));
+  DOMElements.languages.addEventListener("change", updateLanguage);
+  DOMElements.videoList.addEventListener("change", displaySelectedVideo);
+  // add appropriate url for the language
+  for (var i = 0; i < DOMElements.langBtns.length; i++) {
+    DOMElements.langBtns[i].setAttribute("href", fixURLForLanguage(DOMElements.langBtns[i].id));
   }
 
   /**
    * Updates the selected language and updates the player;
    */
   function updateLanguage() {
-    var langs = languages.options;
-    selectedLanguage = langs[languages.selectedIndex];
-    videos = videoList.options;
-    updatePlayer(videos[videoList.selectedIndex].value);
+    var langs = DOMElements.languages.options;
+    selectedLanguage = langs[DOMElements.languages.selectedIndex];
+    videos = DOMElements.videoList.options;
+    updatePlayer(videos[DOMElements.videoList.selectedIndex].value, true);
   }
 
   /**
@@ -40,17 +51,18 @@ document.addEventListener("DOMContentLoaded", function(){
    */
   function displaySelectedVideo() {
     // display the selected video
-    videos = videoList.options;
-    var videoName = videos[videoList.selectedIndex].value;
-    var langs = languages.options;
-    selectedLanguage = langs[languages.selectedIndex];
+    videos = DOMElements.videoList.options;
+    var videoName = videos[DOMElements.videoList.selectedIndex].value;
+    var langs = DOMElements.languages.options;
+    selectedLanguage = langs[DOMElements.languages.selectedIndex];
     // hide the currently selected video
-    if (video === undefined ) {
-      createPlayerAndIframe(videoName, selectedLanguage.value);
+    if (player === undefined ) {
+      createVimeoPlayer(videoName, selectedLanguage.value);
+      console.log('updating DOMElements.video...');
       updateURL(URLParams.title, videoName);
       updateURL(URLParams.lang, selectedLanguage.value);
     } else {
-      updatePlayer(videoName);
+      updatePlayer(videoName, false);
     }
   }
 
@@ -73,20 +85,35 @@ document.addEventListener("DOMContentLoaded", function(){
    * be that of the desired video if it exists. Otherwise an error
    * message is displayed to the user.
    * @param {String} videoName is the name of the video to display.
+   * @param {Boolean} languageChanged is whether or not the language was changed.
    */
-  function updatePlayer(videoName) {
-    player.pause().then(function() {
-      console.log('the video was paused');
-    });
+  function updatePlayer(videoName, languageChanged) {
     if (Window.Vinya[videoName][selectedLanguage.value] === undefined) {
-      videoError.innerText = Window.Vinya.errorMsg;
-      video.setAttribute("class", "hidden");
+      DOMElements.videoError.innerText = Window.Vinya.errorMsg;
+      DOMElements.video = document.querySelector('iframe');
+      DOMElements.video.setAttribute('class' , 'hidden');
     } else {
-      videoError.innerText = "";
-      video.setAttribute("src", Window.Vinya[videoName][selectedLanguage.value]);
-      video.setAttribute("class", "");
-      updateURL(URLParams.title, videoName);
+      DOMElements.video = document.querySelector('iframe');
+      DOMElements.videoError.innerText = "";  
+      DOMElements.video.setAttribute('class' , '');   
       updateURL(URLParams.lang, selectedLanguage.value);
+      player.unload().then(function () {
+        videoOptions.id = Window.Vinya[videoName][selectedLanguage.value];
+        player.loadVideo(videoOptions).then( function () {
+          player.ready().then(function(){
+            if (languageChanged && url.searchParams.has(URLParams.time)) {
+              console.log("changing time to: " + url.searchParams.get(URLParams.time));
+              player.setCurrentTime(url.searchParams.get(URLParams.time));
+            } 
+            console.log(player);
+          });
+        });
+      });
+      if (!languageChanged) {
+        console.log("resetting time...");
+        updateURL(URLParams.title, videoName);
+      }
+      getTextTracks();
     }
   }
 
@@ -96,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function(){
    * @param {*} val is the value to put in the url.
    */
   function updateURL(param, val) {
+    console.log(param + " " + val);
     // when the video is changed, the time should be reset
     if (param === URLParams.title) {
       url.searchParams.delete(URLParams.time);
@@ -121,16 +149,16 @@ document.addEventListener("DOMContentLoaded", function(){
    // check to see if the language and video title are present in the url
    if (params.has(URLParams.title) && params.has(URLParams.lang)) {
       // create the iframe and set the default value of the selects
-      createPlayerAndIframe(title, lang);
-      videoList.value = title;
-      languages.value = lang;
+      createVimeoPlayer(title, lang);
+      DOMElements.videoList.value = title;
+      DOMElements.languages.value = lang;
     } else if (params.has(URLParams.title)) {
       // if the title is present but not the language, use the default language
-      videoList.value = title;
+      DOMElements.videoList.value = title;
       console.log("no language found");
     } else if (params.has(URLParams.title)) {
       // if the language is present but not the title
-      languages.value = lang;
+      DOMElements.languages.value = lang;
       console.log("no title found");
     }
     // check to see if the time is in the url, if so the video will be set to that time
@@ -150,24 +178,18 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   /**
-   * Creates an iframe using the video name and language to select the appropriate link for the video.
+   * Creates an iframe using the video name and language to select the appropriate link for the DOMElements.video.
    * @param {String} videoName is the name of the video to select.
    * @param {String} videoLanguage is the language to get the video in.
    */
-  function createPlayerAndIframe(videoName, videoLanguage) {
+  function createVimeoPlayer(videoName, videoLanguage) {
     // create iframe
     console.log(videoName + " : " + videoLanguage);
-    var iframe = '<iframe src="' + Window.Vinya[videoName][videoLanguage] + '" width="640" height="564" frameborder="0" allow="fullscreen"' +
-    'allowfullscreen id="iframeVideo"></iframe>';
-    // add iframe to the DOM
-    iframeContainer.insertAdjacentHTML('beforeend', iframe);
-    // keep a reference to the selected video
-    video = document.getElementById('iframeVideo');
-    console.log(video);
-    player = new Vimeo.Player(video);
+    videoOptions.id = Window.Vinya[videoName][videoLanguage];
+    player = new Vimeo.Player('videosFrames', videoOptions);
+    DOMElements.video = document.querySelector('iframe');
     player.on("timeupdate", updateURLTime); // updates the url time when progress is made in the video
-    player.on("pause", updateURLTime); // updates the url time when the video is paused
-    player.on("bufferend", updateURLTime); // updates the url time when the video is paused
+    getTextTracks();
   }
 
   /**
@@ -176,6 +198,12 @@ document.addEventListener("DOMContentLoaded", function(){
   function updateURLTime() {
     player.getCurrentTime().then(function(seconds) {
       updateURL(URLParams.time, seconds);
+    })
+  }
+  
+  function getTextTracks() {
+    player.getTextTracks().then(function(tracks) {
+      console.log(tracks);
     })
   }
 });

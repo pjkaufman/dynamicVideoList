@@ -47,13 +47,13 @@
   Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
   {% for video in page.header.videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} })
-    {% for link in video.links %}
-      Object.assign(Window.Vinya['{{ video.name }}'], { {{ link.language }}: "{{ link.link }}"});
+    {% for id in video.ids %}
+      Object.assign(Window.Vinya['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
     {% endfor %}
   {% endfor %}
 </script>
 
-<link rel="stylesheet" type="text/css" href="..\assets\css\video.css"></stylesheet>
+<link rel="stylesheet" type="text/css" href="..\assets\css\video.css"></link>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="..\assets\js\video.js"></script>
 

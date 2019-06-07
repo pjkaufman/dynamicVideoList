@@ -8,48 +8,54 @@ languages:
 
 videos: 
   - name: Ep. 1
-    links: 
-      - link: https://player.vimeo.com/video/210999824
+    ids: 
+      - id: 210999824
         language: English
-      - link: https://player.vimeo.com/video/244652102
+      - id: 177244126
+        language: Spanish
+      - id: 244652102
         language: Kaqchikel
   - name: Ep. 2
-    links:
-      - link: https://player.vimeo.com/video/233860107
+    ids:
+      - id: 233860107
         language: English
-      - link: https://player.vimeo.com/video/244674274
+      - id: 177293932
+        language: Spanish
+      - id: 244674274
         language: Kaqchikel
   - name: Ep. 3
-    links:
-      - link: https://player.vimeo.com/video/234338529
+    ids:
+      - id: 234338529
         language: English
-      - link: https://player.vimeo.com/video/244701244
+      - id: 177417325
+        language: Spanish
+      - id: 244701244
         language: Kaqchikel
   - name: Ep. 4
-    links:
-      - link: https://player.vimeo.com/video/27726252
+    ids:
+      - id: 27726252
         language: Spanish
-      - link: https://player.vimeo.com/video/244727792
+      - id: 244727792
         language: Kaqchikel
   - name: Ep. 5
-    links:
-      - link: https://player.vimeo.com/video/74403242
+    ids:
+      - id: 74403242
         language: Spanish
   - name: Ep. 6
-    links:
-      - link: https://player.vimeo.com/video/73814356
+    ids:
+      - id: 73814356
         language: Spanish
   - name: Ep. 7
-    links:
-      - link: https://player.vimeo.com/video/194721481
+    ids:
+      - id: 194721481
         language: Spanish
   - name: Ep. 8
-    links:
-      - link: https://player.vimeo.com/video/133693604
+    ids:
+      - id: 133693604
         language: Spanish
   - name: Ep. 9
-    links:
-      - link: https://player.vimeo.com/video/210653772
+    ids:
+      - id: 210653772
         language: Spanish
     
 select:
