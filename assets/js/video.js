@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       player.enableTextTrack(DOMElements.subtitles.value);
     }
-    updateURL(URLParams.sub, DOMElements.subtitles.value );
   });
   // add appropriate url for the language
   for (var i = 0; i < DOMElements.langBtns.length; i++) {
@@ -155,7 +154,8 @@ document.addEventListener("DOMContentLoaded", function(){
    */
   function parseURL() {
    var params = url.searchParams;
-   var title = params.get(URLParams.title), lang = params.get(URLParams.lang), time = params.get(URLParams.time);
+   var title = params.get(URLParams.title), lang = params.get(URLParams.lang), time = params.get(URLParams.time)
+      sub = params.get(URLParams.sub);
    // check to see if the language and video title are present in the url
    if (params.has(URLParams.title) && params.has(URLParams.lang)) {
       // create the iframe and set the default value of the selects
@@ -174,6 +174,9 @@ document.addEventListener("DOMContentLoaded", function(){
     // check to see if the time is in the url, if so the video will be set to that time
     if (params.has(URLParams.time)) {
       player.setCurrentTime(time);
+    }
+    if (params.has(URLParams.sub)) {
+      player.enableTextTrack(sub);
     }
   }
 
@@ -198,6 +201,17 @@ document.addEventListener("DOMContentLoaded", function(){
     player = new Vimeo.Player('videosFrames', videoOptions);
     DOMElements.video = document.querySelector('iframe');
     player.on("timeupdate", updateURLTime); // updates the url time when progress is made in the video
+    player.on("texttrackchange", function (lang) {
+      console.log(lang);
+      if (!lang.language) {
+        // remove the sub from the url
+        updateURL(URLParams.sub, 'off');
+        DOMElements.subtitles.value = 'off';
+      } else {
+        updateURL(URLParams.sub, lang.language);
+        DOMElements.subtitles.value = url.searchParams.get(URLParams.sub);
+      }
+    });
     getTextTracks();
   }
 
@@ -228,9 +242,6 @@ document.addEventListener("DOMContentLoaded", function(){
             DOMElements.subtitles.innerHTML += subtitle;
           }
         }
-      }
-      if (!document.querySelector('.added[value="' + url.searchParams.get(URLParams.sub) + '"]')) {
-        updateURL(URLParams.sub, 'off');
       }
     });
   }
