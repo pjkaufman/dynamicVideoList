@@ -209,8 +209,30 @@ document.addEventListener("DOMContentLoaded", function(){
         DOMElements.subtitles.value = 'off';
       } else {
         updateURL(URLParams.sub, lang.language);
-        DOMElements.subtitles.value = url.searchParams.get(URLParams.sub);
+        DOMElements.subtitles.value = lang.language;
       }
+    });
+    player.on("loaded", function () {
+      player.getTextTracks().then(function(tracks) {
+        var trackSelected = false;
+        var lang;
+        for (var i = 0; i < tracks.length; i++) {
+          console.log(tracks[i]);
+          if (tracks[i].mode === 'showing') {
+            lang = tracks[i].language;
+            trackSelected = true;
+            break;
+          }
+        }
+        if (trackSelected) {
+          updateURL(URLParams.sub, lang);
+          DOMElements.subtitles.value = lang;
+        } else {
+          updateURL(URLParams.sub, 'off');
+          DOMElements.subtitles.value = 'off';
+        }
+    })
+     
     });
     getTextTracks();
   }
