@@ -12,7 +12,7 @@ Allows a user to dynamically choose what video they want to watch based on the e
 - [Modifying](#Modifying)
   - [Video List](#Video-List)
   - [Language List](#Language-List)
-  - [URL Parameters](#URL-Parameters)
+  - [URL Parameters](#URL-Parameters-1)
   - [Subtitle List](#Subtitle-List)
 - [Uses](#Uses)
 
