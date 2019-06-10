@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function(){
     DOMElements.video = document.querySelector('iframe');
     player.on("timeupdate", updateURLTime); // updates the url time when progress is made in the video
     player.on("texttrackchange", function (lang) {
-      console.log(lang);
+      console.log("text rack changed:" + lang);
       if (!lang.language) {
         // remove the sub from the url
         updateURL(URLParams.sub, 'off');
@@ -263,6 +263,9 @@ document.addEventListener("DOMContentLoaded", function(){
             subtitle = '<option value=' + tracks[i].language + ' class="added">' + tracks[i].label + '</option>';
             DOMElements.subtitles.innerHTML += subtitle;
           }
+        }
+        if (url.searchParams.has(URLParams.sub)) {
+          DOMElements.subtitles.value = url.searchParams.get(URLParams.sub);
         }
       }
     });
