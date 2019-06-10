@@ -57,10 +57,23 @@
       Object.assign(Window.Vinya['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
     {% endfor %}
   {% endfor %}
+  Window.Vinya.URLParams = {
+    lang: "lang", 
+    title: "video", 
+    time: "time",
+    sub: "sub"
+  };
+
+  // this function runs itself
+  (function(){
+    var lastURL = localStorage.getItem('url');
+    if (lastURL != undefined && !window.location.href.includes(lastURL)) {
+      window.location.href = lastURL;
+    }
+  })();
 </script>
 
 <link rel="stylesheet" type="text/css" href="..\assets\css\video.css"></link>
-<script src="..\assets\js\cookie.js"></script>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="..\assets\js\video.js"></script>
 
