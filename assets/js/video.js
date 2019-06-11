@@ -38,9 +38,6 @@ document.addEventListener("DOMContentLoaded", function(){
   // add appropriate url for the language
   for (var i = 0; i < DOMElements.langBtns.length; i++) {
     DOMElements.langBtns[i].setAttribute("href", fixURLForLanguage(DOMElements.langBtns[i].id));
-    DOMElements.langBtns[i].addEventListener("click", function () {
-      updateStorage(this.href);
-    });
   }
 
   /**
@@ -129,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function(){
     if (history.pushState) {
       window.history.pushState({path:url.href},'',url.href);
     }
-    updateStorage(url.href.substring(0, url.href.indexOf('?')));
+    updateStorage();
   }
 
   /**
@@ -262,11 +259,23 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   /**
-   * Updates the url storage value.
-   * @param {String} href is the url to redirect to if a user comes back to the
-   * site.
+   * Updates the url parameters in storage by removing all unnecesary url params. 
    */
-  function updateStorage(href) {
-    localStorage.setItem('url', href);
+  function updateStorage() {
+    // a list of parameters to store in local storage
+    tempURL = new URL(url.href.substring(0, url.href.indexOf('?')));
+    if (url.searchParams.has(Window.Vinya.URLParams.sub)) {
+      tempURL.searchParams.append(Window.Vinya.URLParams.sub, url.searchParams.get(Window.Vinya.URLParams.sub));
+    }
+    if (url.searchParams.has(Window.Vinya.URLParams.lang)) {
+      tempURL.searchParams.append(Window.Vinya.URLParams.lang, url.searchParams.get(Window.Vinya.URLParams.lang));
+    }
+    if (url.searchParams.has(Window.Vinya.URLParams.title)) {
+      tempURL.searchParams.append(Window.Vinya.URLParams.title, url.searchParams.get(Window.Vinya.URLParams.title));
+    }
+    // store the parameters and current url base
+    localStorage.setItem('params', JSON.stringify({ 
+      params: tempURL.search, 
+      url: url.href.substring(0, url.href.indexOf('?'))}));
   }
 });
