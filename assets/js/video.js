@@ -5,12 +5,13 @@ document.addEventListener("DOMContentLoaded", function(){
     langBtns: document.querySelectorAll("#swapLanguage > p > a"),
     videoError: document.getElementById('videoError'),
     subtitles: document.getElementById('subtitles'),
+    spinner: document.getElementById('loading'),
     video: undefined
   };
   var videoOptions = {
     id: undefined,
-    width: 640,
-    height: 564,
+    // maxwidth: 640,
+    // maxheight: 564,
     autoplay: false
   };
   var player;
@@ -76,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function(){
    * @param {Boolean} languageChanged is whether or not the language was changed.
    */
   function updatePlayer(videoName, languageChanged) {
-    console.log('changes:' + DOMElements.languages.value + ', ' + videoName);
     if (Window.Vinya[videoName][DOMElements.languages.value] === undefined) {
       DOMElements.videoError.innerText = Window.Vinya.errorMsg;
       DOMElements.video = document.querySelector('iframe');
@@ -84,12 +84,14 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       DOMElements.video = document.querySelector('iframe');
       DOMElements.videoError.innerText = "";  
-      DOMElements.video.setAttribute('class' , '');   
+      DOMElements.video.setAttribute('class' , 'resp-iframe');   
       updateURL(Window.Vinya.URLParams.lang, DOMElements.languages.value);
+      DOMElements.spinner.setAttribute('class', '');
       player.unload().then(function () {
         videoOptions.id = Window.Vinya[videoName][DOMElements.languages.value];
         player.loadVideo(videoOptions).then( function () {
           player.ready().then(function(){
+            DOMElements.spinner.setAttribute('class', 'hidden');
             if (languageChanged && url.searchParams.has(Window.Vinya.URLParams.time)) {
               player.setCurrentTime(url.searchParams.get(Window.Vinya.URLParams.time));
             }
@@ -184,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function(){
     // create iframe
     videoOptions.id = Window.Vinya[videoName][videoLanguage];
     player = new Vimeo.Player('videosFrames', videoOptions);
-    DOMElements.video = document.querySelector('iframe');
     player.on("timeupdate", updateURLTime); // updates the url time when progress is made in the video
     player.on("texttrackchange", function (lang) {
       if (!lang.language) {
@@ -197,6 +198,8 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     });
     player.on("loaded", function () {
+      DOMElements.video = document.querySelector('iframe');
+      DOMElements.video.setAttribute('class' , 'resp-iframe');
       player.getTextTracks().then(function(tracks) {
         var trackSelected = false;
         var lang;
@@ -214,6 +217,7 @@ document.addEventListener("DOMContentLoaded", function(){
           updateURL(Window.Vinya.URLParams.sub, 'off');
           DOMElements.subtitles.value = 'off';
         }
+        DOMElements.spinner.setAttribute('class', 'hidden');
     })
      
     });

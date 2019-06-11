@@ -1,6 +1,7 @@
 {% extends 'partials/base.html.twig' %}
 
 {% block content %} 
+<link rel="stylesheet" type="text/css" href="..\assets\css\video.css"></link>
 
 <div id="swapLanguage">
   <p>
@@ -43,7 +44,7 @@
   </div>
 </center>
 
-<div id="videosFrames">
+<div id="videosFrames" class="resp-container">
   <h3 id="videoError"></h3>
   <div id="loading"></div>
 </div>
@@ -66,14 +67,12 @@
 
   // this function runs itself
   (function(){
-    var lastParams = JSON.parse(localStorage.getItem('params'));
+    var lastParams = localStorage.getItem('params');
     if (lastParams != undefined && !window.location.href.includes(lastParams.params)) {
       window.location.search = lastParams.params;
     }
   })();
 </script>
-
-<link rel="stylesheet" type="text/css" href="..\assets\css\video.css"></link>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="..\assets\js\video.js"></script>
 

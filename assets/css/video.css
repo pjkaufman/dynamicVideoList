@@ -66,18 +66,20 @@
 .wrapper {
   max-width: 65rem;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: .75rem;
 }
 
 /** CSS from https://codepen.io/mandelid/pen/vwKoe */
 
 #loading {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  width: 100px;
+  height: 100px;
   border: 3px solid rgba(255,255,255,.3);
   border-radius: 50%;
-  border-top-color: #fff;
+  border-top-color: black;
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
 }
@@ -87,4 +89,20 @@
 }
 @-webkit-keyframes spin {
   to { -webkit-transform: rotate(360deg); }
+}
+
+/** CSS from https://blog.theodo.com/2018/01/responsive-iframes-css-trick/ */
+.resp-container {
+  position: relative;
+  overflow: hidden;
+  padding-top: 88.125%;
+}
+
+.resp-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
