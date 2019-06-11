@@ -60,7 +60,7 @@ videos:
   - name: [name_to_display_here]
     ids: 
       - id: [id_for_video]
-        language: [language_to_list_the_video_as]
+        language: [code_of_language_to_list_the_video_as]
 ```
 _Note: you can add as many elements to ids as you like as long as the language is in the language list (see below) and the id  is a valid Vimeo id._
 
