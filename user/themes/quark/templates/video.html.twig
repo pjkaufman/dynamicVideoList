@@ -28,7 +28,7 @@
         <p>{{ page.header.select.languages }}</p>
         <select id="languages">
           {% for language in page.header.languages %}
-            <option value="{{ language }}">{{ language }}</option>
+            <option value="{{ language.code }}">{{ language.name }}</option>
           {% endfor %}
         </select>
       </div>
@@ -44,8 +44,8 @@
 </center>
 
 <div id="videosFrames">
-
   <h3 id="videoError"></h3>
+  <div id="loading"></div>
 </div>
 
 <script>
@@ -67,8 +67,7 @@
   // this function runs itself
   (function(){
     var lastParams = JSON.parse(localStorage.getItem('params'));
-    if (lastParams != undefined && window.location.href.includes(lastParams.url)
-      && !window.location.href.includes(lastParams.params)) {
+    if (lastParams != undefined && !window.location.href.includes(lastParams.params)) {
       window.location.search = lastParams.params;
     }
   })();

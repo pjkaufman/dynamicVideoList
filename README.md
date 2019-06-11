@@ -71,9 +71,12 @@ You need to modify the yaml front matter in `user\pages\01.videos\*.md` to modif
 It will look something like: 
 ``` YAML
 languages: 
-  - English
-  - Spanish
-  - French
+  - name: English
+    code: en
+  - name: Spanish
+    code: es
+  - name: French
+    code: fr
 ```
 
 ### URL Parameters
@@ -89,8 +92,6 @@ The list should look something like this:
     sub: "[subtitle_param_name_to_display]"
   }
 ```
-
- 
 
 ### Subtitle List
 

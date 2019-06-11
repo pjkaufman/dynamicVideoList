@@ -274,8 +274,6 @@ document.addEventListener("DOMContentLoaded", function(){
       tempURL.searchParams.append(Window.Vinya.URLParams.title, url.searchParams.get(Window.Vinya.URLParams.title));
     }
     // store the parameters and current url base
-    localStorage.setItem('params', JSON.stringify({ 
-      params: tempURL.search, 
-      url: url.href.substring(0, url.href.indexOf('?'))}));
+    localStorage.setItem('params', tempURL.search);
   }
 });

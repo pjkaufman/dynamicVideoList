@@ -2,61 +2,64 @@
 title: Videos
 
 languages: 
-  - English
-  - Spanish
-  - Kaqchikel
+  - name: English
+    code: en
+  - name: Spanish
+    code: es
+  - name: Kaqchikel
+    code: cak
 
 videos: 
   - name: Ep. 1
     ids: 
       - id: 210999824
-        language: English
+        language: en
       - id: 177244126
-        language: Spanish
+        language: es
       - id: 244652102
-        language: Kaqchikel
+        language: cak
   - name: Ep. 2
     ids:
       - id: 233860107
-        language: English
+        language: en
       - id: 177293932
-        language: Spanish
+        language: es
       - id: 244674274
-        language: Kaqchikel
+        language: cak
   - name: Ep. 3
     ids:
       - id: 234338529
-        language: English
+        language: en
       - id: 177417325
-        language: Spanish
+        language: es
       - id: 244701244
-        language: Kaqchikel
+        language: cak
   - name: Ep. 4
     ids:
       - id: 27726252
-        language: Spanish
+        language: es
       - id: 244727792
-        language: Kaqchikel
+        language: cak
   - name: Ep. 5
     ids:
       - id: 74403242
-        language: Spanish
+        language: es
   - name: Ep. 6
     ids:
       - id: 73814356
-        language: Spanish
+        language: es
   - name: Ep. 7
     ids:
       - id: 194721481
-        language: Spanish
+        language: es
   - name: Ep. 8
     ids:
       - id: 133693604
-        language: Spanish
+        language: es
   - name: Ep. 9
     ids:
       - id: 210653772
-        language: Spanish
+        language: es
     
 select:
   languages: "Select a language:"
