@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", function(){
   };
   var videoOptions = {
     id: undefined,
-    // maxwidth: 640,
-    // maxheight: 564,
     autoplay: false
   };
   var player;
@@ -217,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function(){
           updateURL(Window.Vinya.URLParams.sub, 'off');
           DOMElements.subtitles.value = 'off';
         }
-        DOMElements.spinner.setAttribute('class', 'hidden');
+        DOMElements.spinner.setAttribute('class' , 'hidden');
     })
      
     });

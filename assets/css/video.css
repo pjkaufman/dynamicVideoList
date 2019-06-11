@@ -5,6 +5,7 @@
 
 .hidden {
   display: none;
+  visibility: hidden;
 }
 
 #swapLanguage {
@@ -72,12 +73,16 @@
 /** CSS from https://codepen.io/mandelid/pen/vwKoe */
 
 #loading {
-  position: absolute;
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   top: 50%;
   left: 40%;
   width: 100px;
   height: 100px;
-  border: 3px solid rgba(255,255,255,.3);
+  border: 3px solid gray;
   border-radius: 50%;
   border-top-color: black;
   animation: spin 1s ease-in-out infinite;
@@ -96,6 +101,8 @@
   position: relative;
   overflow: hidden;
   padding-top: 88.125%;
+  max-width: 640;
+  max-height: 540;
 }
 
 .resp-iframe {
