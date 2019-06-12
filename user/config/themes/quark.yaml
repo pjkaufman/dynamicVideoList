@@ -1,0 +1,10 @@
+enabled: true                 # Enable the theme
+production-mode: true         # In production mode, only minified CSS is used. When disabled, nested CSS with sourcemaps are enabled
+grid-size: grid-lg            # The max-width of the theme, options include: `grid-xl`, `grid-lg`, and `grid-md`
+header-fixed: true            # Cause the header to be fixed at the top of the browser
+header-animated: true         # Allows the fixed header to resize to a smaller header when scrolled
+header-dark: true            # Inverts the text/logo to work better on dark backgrounds
+header-transparent: false     # Allows the fixed header to be transparent over the page
+sticky-footer: true           # Causes the footer to be sticky at the bottom of the page
+custom_logo:                  # A custom logo rather than the default (see below)  
+custom_logo_mobile:           # A custom logo to use for mobile navigation

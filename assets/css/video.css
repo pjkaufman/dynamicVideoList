@@ -1,3 +1,8 @@
+body{
+  background-color: gray;
+  color: white;
+}
+
 .videoOption {
   display: inline-block;
   margin-right: 10px;
@@ -11,6 +16,7 @@
 #swapLanguage {
   position: absolute;
   right: 5px;
+  color: white;
 }
 
 #swapLanguage > p {
@@ -18,7 +24,7 @@
 }
 
 #swapLanguage > p > a {
-  color: #50596c;
+  color: white;
   text-decoration: underline;
 }
 
@@ -73,12 +79,9 @@
 /** CSS from https://codepen.io/mandelid/pen/vwKoe */
 
 #loading {
-  position: fixed;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  top: 50%;
+  position: absolute;
+  z-index: 2;
+  top: 40%;
   left: 40%;
   width: 100px;
   height: 100px;
@@ -99,10 +102,11 @@
 /** CSS from https://blog.theodo.com/2018/01/responsive-iframes-css-trick/ */
 .resp-container {
   position: relative;
+  left: 6.25rem;
   overflow: hidden;
   padding-top: 88.125%;
-  max-width: 640;
-  max-height: 540;
+  max-width: 640px;
+  max-height: 540px;
 }
 
 .resp-iframe {
@@ -112,4 +116,57 @@
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+/** CSS from https://codepen.io/raubaca/pen/VejpQP */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  overflow: hidden;
+  border-radius: .25em;
+}
+
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #34495e;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: midnightblue;
 }

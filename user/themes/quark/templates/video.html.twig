@@ -18,34 +18,40 @@
     <div id="videoOptions" class="auto-grid">
       <div id="videoOption">
         <p>{{ page.header.select.videos }}</p>
-        <select id="videos">
-          {% for video in page.header.videos %}
-            <option value="{{ video.name }}">{{ video.name }}</option>
-          {% endfor %}
-        </select>
+        <div class="select">
+          <select id="videos">
+            {% for video in page.header.videos %}
+              <option value="{{ video.name }}">{{ video.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
       </div>
 
       <div>
         <p>{{ page.header.select.languages }}</p>
-        <select id="languages">
-          {% for language in page.header.languages %}
-            <option value="{{ language.code }}">{{ language.name }}</option>
-          {% endfor %}
-        </select>
+        <div class="select">
+          <select id="languages">
+            {% for language in page.header.languages %}
+              <option value="{{ language.code }}">{{ language.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
       </div>
 
       <div id="subtitleWrapper">
         <p>{{ page.header.select.subtitles }}</p>
-        <select id="subtitles">
-          <option value="off">{{ page.header.select.empty }}</option>
-        </select>
+        <div class="select">
+          <select id="subtitles">
+            <option value="off">{{ page.header.select.empty }}</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
 </center>
 
+ <h3 id="videoError"></h3>
 <div id="videosFrames" class="resp-container">
-  <h3 id="videoError"></h3>
   <div id="loading"></div>
 </div>
 
