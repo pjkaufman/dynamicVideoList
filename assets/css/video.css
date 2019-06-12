@@ -1,6 +1,10 @@
-body{
+body {
   background-color: gray;
   color: white;
+}
+
+.header-fixed #header { /* fixes issue where selects go over navbar */
+  z-index: 9999;
 }
 
 .videoOption {
@@ -29,7 +33,8 @@ body{
 }
 
 #videosFrames {
-  text-align: center;
+  z-index: 1;
+  margin-top: -20%;
 }
 
 /** CSS from https://andy-bell.design/wrote/create-a-responsive-grid-layout-with-no-media-queries-using-css-grid/ */
@@ -77,7 +82,6 @@ body{
 }
 
 /** CSS from https://codepen.io/mandelid/pen/vwKoe */
-
 #loading {
   position: absolute;
   z-index: 2;
@@ -102,11 +106,9 @@ body{
 /** CSS from https://blog.theodo.com/2018/01/responsive-iframes-css-trick/ */
 .resp-container {
   position: relative;
-  left: 6.25rem;
+  left: 1%;
   overflow: hidden;
   padding-top: 88.125%;
-  max-width: 640px;
-  max-height: 540px;
 }
 
 .resp-iframe {
@@ -128,7 +130,6 @@ select {
   box-shadow: none;
   border: 0 !important;
   background: #2c3e50;
-  background-image: none;
 }
 /* Remove IE arrow */
 select::-ms-expand {
@@ -148,12 +149,14 @@ select::-ms-expand {
 
 select {
   flex: 1;
+  z-index: 2;
   padding: 0 .5em;
   color: #fff;
   cursor: pointer;
 }
 /* Arrow */
 .select::after {
+  z-index: 2;
   content: '\25BC';
   position: absolute;
   top: 0;
@@ -168,5 +171,6 @@ select {
 }
 /* Transition */
 .select:hover::after {
+  z-index: 2;
   color: midnightblue;
 }
