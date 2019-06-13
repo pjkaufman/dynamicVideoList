@@ -1,3 +1,4 @@
+"use strict";
 document.addEventListener("DOMContentLoaded", function(){
   var DOMElements = {
     languages: document.getElementById("languages"),
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   });
   // add appropriate url for the language
-  for (var i = 0; i < DOMElements.langBtns.length; i++) {
+  for (var i = 0, length = DOMElements.langBtns.length; i < length; i++) {
     DOMElements.langBtns[i].setAttribute("href", fixURLForLanguage(DOMElements.langBtns[i].id));
   }
 
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function(){
       url.searchParams.delete(Window.Vinya.URLParams.time);
     }
     if (url.searchParams.has(param)) {
-      url.searchParams.set(param, val)
+      url.searchParams.set(param, val);
     } else {
       url.searchParams.append(param, val);
     }
@@ -135,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function(){
    */
   function parseURL() {
    var params = url.searchParams;
-   var title = params.get(Window.Vinya.URLParams.title), lang = params.get(Window.Vinya.URLParams.lang), time = params.get(Window.Vinya.URLParams.time)
+   var title = params.get(Window.Vinya.URLParams.title), lang = params.get(Window.Vinya.URLParams.lang), time = params.get(Window.Vinya.URLParams.time),
       sub = params.get(Window.Vinya.URLParams.sub);
    // check to see if the language and video title are present in the url
    if (params.has(Window.Vinya.URLParams.title) && params.has(Window.Vinya.URLParams.lang)) {
@@ -201,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function(){
       player.getTextTracks().then(function(tracks) {
         var trackSelected = false;
         var lang;
-        for (var i = 0; i < tracks.length; i++) {
+        for (var i = 0, length = tracks.length; i < length; i++) {
           if (tracks[i].mode === 'showing') {
             lang = tracks[i].language;
             trackSelected = true;
@@ -216,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function(){
           DOMElements.subtitles.value = 'off';
         }
         DOMElements.spinner.setAttribute('class' , 'hidden');
-    })
+    });
      
     });
     getTextTracks();
@@ -228,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function(){
   function updateURLTime() {
     player.getCurrentTime().then(function(seconds) {
       updateURL(Window.Vinya.URLParams.time, seconds);
-    })
+    });
   }
   
   /**
@@ -239,20 +240,20 @@ document.addEventListener("DOMContentLoaded", function(){
   function getTextTracks() {
     // remove all added tracks
     var elements = document.querySelectorAll('.added');
-    for (var i = 0; i < elements.length; i++) {
+    for (var i = 0, length =  elements.length; i < length; i++) {
       elements[i].parentNode.removeChild(elements[i]);
     }
     // add the new ones
     player.getTextTracks().then(function(tracks) {
-      var subtitle;
+      var subtitle = '';
       if (tracks.length !== 0) {
         // append all options to the list
-        for (var i = 0; i < tracks.length; i++) {
+        for (var i = 0, length = tracks.length; i < length; i++) {
           if (tracks[i].kind === 'subtitles') {
-            subtitle = '<option value=' + tracks[i].language + ' class="added">' + tracks[i].label + '</option>';
-            DOMElements.subtitles.innerHTML += subtitle;
+            subtitle += '<option value=' + tracks[i].language + ' class="added">' + tracks[i].label + '</option>';
           }
         }
+        DOMElements.subtitles.innerHTML += subtitle;
         if (url.searchParams.has(Window.Vinya.URLParams.sub)) {
           DOMElements.subtitles.value = url.searchParams.get(Window.Vinya.URLParams.sub);
         }
@@ -265,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function(){
    */
   function updateStorage() {
     // a list of parameters to store in local storage
-    tempURL = new URL(url.href.substring(0, url.href.indexOf('?')));
+    var tempURL = new URL(url.href.substring(0, url.href.indexOf('?')));
     if (url.searchParams.has(Window.Vinya.URLParams.sub)) {
       tempURL.searchParams.append(Window.Vinya.URLParams.sub, url.searchParams.get(Window.Vinya.URLParams.sub));
     }

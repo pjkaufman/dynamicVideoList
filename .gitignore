@@ -1,5 +1,6 @@
 # Grav Root and Unused
 /*.*
+!README.md
 !.gitignore
 /backup
 /bin
