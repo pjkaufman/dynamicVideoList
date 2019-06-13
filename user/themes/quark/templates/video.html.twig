@@ -18,7 +18,7 @@
         <p>{{ page.header.select.videos }}</p>
         <div class="select">
           <select id="videos">
-            {% for video in page.header.videos %}
+            {% for video in config.video.videos %}
               <option value="{{ video.name }}">{{ video.name }}</option>
             {% endfor %}
           </select>
@@ -55,7 +55,7 @@
 <script>
   Window.Vinya = {defLang: '{{page.header.defaultLang}}'};
   Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
-  {% for video in page.header.videos %}
+  {% for video in config.video.videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} })
     {% for id in video.ids %}
       Object.assign(Window.Vinya['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});

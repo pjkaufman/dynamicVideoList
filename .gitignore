@@ -1,16 +1,18 @@
-# Grav Root and Unused
-/*.*
-!README.md
-!.gitignore
-/backup
-/bin
-/cache
-/system
-/logs
-/vendor
-/webserver-configs
-/tmp
-/images
+# Grav Specific
+.sass-cache
+composer.lock
+cache/*
+assets/*
+logs/*
+images/*
+user/data/*
+
+# OS Generated
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
 
 # Created by https://www.gitignore.io/api/node,bower,sass,windows
 

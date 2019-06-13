@@ -1,0 +1,7 @@
+1560209738
+a:2:{s:7:"content";s:263:"<h1>My New Page!</h1>
+<p>This is the body of <strong>my new page</strong> and I can easily use <em>Markdown</em> syntax here.</p>
+<!-- Custom JavaScript files set in YAML front matter -->
+{% for js in page.customjs %}
+<script src="{{ js }}"></script>
+{% endfor %}";s:12:"content_meta";N;}
