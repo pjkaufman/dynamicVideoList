@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(){
    */
   function displaySelectedVideo() {
     // display the selected video
-    if (player === undefined ) {;
+    if (player === undefined ) {
       createVimeoPlayer(DOMElements.videoList.value, DOMElements.languages.value);
       updateURL(Window.Vinya.URLParams.title, DOMElements.videoList.value);
       updateURL(Window.Vinya.URLParams.lang, DOMElements.languages.value);
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       DOMElements.video = document.querySelector('iframe');
       DOMElements.videoError.innerText = "";  
-      DOMElements.video.setAttribute('class' , 'resp-iframe');   
+      DOMElements.video.setAttribute('class' , 'resp-iframe');  
       updateURL(Window.Vinya.URLParams.lang, DOMElements.languages.value);
       DOMElements.spinner.setAttribute('class', '');
       player.unload().then(function () {

@@ -71,8 +71,8 @@
   // this function runs itself
   (function(){
     var lastParams = localStorage.getItem('params');
-    if (lastParams != undefined && !window.location.href.includes(lastParams.params)) {
-      window.location.search = lastParams.params;
+    if (lastParams != undefined && !window.location.href.includes(lastParams)) {
+      window.location.search = lastParams;
     }
   })();
 </script>
