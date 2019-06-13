@@ -9,6 +9,8 @@ languages:
   - name: Kaqchikel
     code: cak
 
+defaultLang: en
+
 videos: 
   - name: Ep. 1
     ids: 

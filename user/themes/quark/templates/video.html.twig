@@ -53,7 +53,7 @@
 </div>
 
 <script>
-  Window.Vinya = {};
+  Window.Vinya = {defLang: '{{page.header.defaultLang}}'};
   Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
   {% for video in page.header.videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} })
@@ -71,8 +71,17 @@
   // this function runs itself
   (function(){
     var lastParams = localStorage.getItem('params');
+    // add the appropriate params to the website if they exist
     if (lastParams != undefined && !window.location.href.includes(lastParams)) {
       window.location.search = lastParams;
+    }
+    var tempURL = new URL(window.location.href);
+    if (!tempURL.searchParams.has(Window.Vinya.URLParams.lang)) {
+      tempURL.searchParams.append(Window.Vinya.URLParams.lang, Window.Vinya.defLang);
+      // update the browser history
+      if (history.pushState) {
+        window.history.pushState({path:window.location.href},'',tempURL.href);
+      }
     }
   })();
 </script>

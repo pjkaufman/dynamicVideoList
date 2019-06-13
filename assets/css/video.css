@@ -1,6 +1,7 @@
 :root { /* Define all variables for later use*/
   --textColor: #fff;
 }
+
 body {
   background-color: gray;
   color: var(--textColor);
