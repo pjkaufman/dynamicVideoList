@@ -5,6 +5,7 @@
 /backup
 /bin
 /cache
+/system
 /logs
 /vendor
 /webserver-configs

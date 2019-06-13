@@ -182,7 +182,6 @@ document.addEventListener("DOMContentLoaded", function(){
    * @param {String} videoLanguage is the language to get the video in.
    */
   function createVimeoPlayer(videoName, videoLanguage) {
-    console.log(videoName + ":" + videoLanguage);
     // create iframe
     videoOptions.id = Window.Vinya[videoName][videoLanguage];
     player = new Vimeo.Player('videosFrames', videoOptions);
