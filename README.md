@@ -52,7 +52,7 @@ These parameters are defined and used in Javascript
 
 ### Video List
 
-You need to modify the yaml front matter in `user\pages\01.videos\*.md` to modify the video list.
+You need to modify the yaml front matter in `user\config\video.yaml` to modify the video list.
 
 It will look something like: 
 ``` YAML
