@@ -14,17 +14,6 @@
 <center>
   <div class="wrapper">
     <div id="videoOptions" class="auto-grid">
-      <div id="videoOption">
-        <p>{{ page.header.select.videos }}</p>
-        <div class="select">
-          <select id="videos">
-            {% for video in config.video.videos %}
-              <option value="{{ video.name }}">{{ video.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-
       <div>
         <p>{{ page.header.select.languages }}</p>
         <div class="select">
@@ -53,7 +42,9 @@
 </div>
 
 <script>
-  Window.Vinya = {defLang: '{{~grav.language.getActive~}}'};
+  Window.Vinya = {defLang: '{{~grav.language.getActive~}}',
+    videoTitle: '{{ page.header.videoTitle }}'
+  };
   Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
   {% for video in config.video.videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} })
@@ -63,7 +54,6 @@
   {% endfor %}
   Window.Vinya.URLParams = {
     lang: "lang", 
-    title: "video", 
     time: "time",
     sub: "sub"
   };
@@ -85,6 +75,6 @@
   })();
 </script>
 <script src="https://player.vimeo.com/api/player.js" defer></script>
-<script src="..\assets\js\videos.js" defer></script>
+<script src="..\assets\js\video.js" defer></script>
 
 {% endblock %}

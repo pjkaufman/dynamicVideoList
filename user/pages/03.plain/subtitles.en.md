@@ -1,5 +1,5 @@
 ---
-title: Videos
+title: Subtitle
 
 languages: 
   - name: English
@@ -14,6 +14,9 @@ select:
   videos: "Select a video:"
   subtitles: "Select a subtitle:"
   empty: "Off"
+
+videoTitle: Ep. 1
+videoLanguage: cak
 
 error: "The video you are trying to select does not exist in this language."
 ---

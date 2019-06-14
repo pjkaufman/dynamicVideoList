@@ -1,5 +1,5 @@
 ---
-title: Videos
+title: Subtitulo
 
 languages: 
   - name: Inglés
@@ -14,6 +14,9 @@ select:
   videos: "Escoge un video:"
   subtitles: "Escoge un subtitulo:"
   empty: "Apagar"
+
+videoTitle: Ep. 1
+videoLanguage: cak
 
 error: "El video que intenta seleccionar no existe en este idioma."
 ---
