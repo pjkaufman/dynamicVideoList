@@ -67,13 +67,13 @@
     time: "time",
     sub: "sub"
   };
-
   // this function runs itself
+   // this function runs itself
   (function(){
     var lastParams = localStorage.getItem('params');
     // add the appropriate params to the website if they exist
-    if (lastParams != undefined && !window.location.href.includes(lastParams)) {
-      window.location.search = lastParams;
+    if (lastParams != undefined && window.location.search === '' && !window.location.href.includes(lastParams)) {
+     window.location.search = lastParams;
     }
     var tempURL = new URL(window.location.href);
     if (!tempURL.searchParams.has(Window.Vinya.URLParams.lang)) {
