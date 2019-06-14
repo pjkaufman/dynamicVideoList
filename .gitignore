@@ -1,11 +1,3 @@
-# Grav Specific
-.sass-cache
-composer.lock
-cache/*
-logs/*
-images/*
-user/data/*
-
 # OS Generated
 .DS_Store*
 ehthumbs.db
@@ -17,7 +9,7 @@ Thumbs.db
 
 ### Node ###
 # Logs
-logs
+logs/*
 *.log
 npm-debug.log*
 
@@ -83,3 +75,17 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Grav Specific
+.sass-cache
+composer.lock
+cache/*/*
+cache/*
+!cache/*/.gitkeep
+!cache/.gitkeep
+logs/*
+!logs/.gitkeep
+images/*
+!images/.gitkeep
+user/data/*
+!user/data/.gitkeep

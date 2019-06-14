@@ -37,7 +37,7 @@
       </div>
 
       <div id="subtitleWrapper">
-        <p>{{ page.header.select.subtitles }}</p>
+        <p>{{page.header.select.subtitles }}</p>
         <div class="select">
           <select id="subtitles">
             <option value="off">{{ page.header.select.empty }}</option>
@@ -53,7 +53,7 @@
 </div>
 
 <script>
-  Window.Vinya = {defLang: '{{page.header.defaultLang}}'};
+  Window.Vinya = {defLang: '{{~grav.language.getActive~}}'};
   Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
   {% for video in config.video.videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} })

@@ -8,8 +8,6 @@ languages:
     code: es
   - name: Kaqchikel
     code: cak
-
-defaultLang: en
     
 select:
   languages: "Select a language:"

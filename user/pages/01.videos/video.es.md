@@ -9,8 +9,6 @@ languages:
   - name: Kaqchikel
     code: cak
 
-defaultLang: es
-
 select:
   languages: "Escoge una idioma:"
   videos: "Escoge un video:"
