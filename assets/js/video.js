@@ -7,7 +7,13 @@ document.addEventListener("DOMContentLoaded", function(){
     videoError: document.getElementById('videoError'),
     subtitles: document.getElementById('subtitles'),
     spinner: document.getElementById('loading'),
-    video: undefined
+    video: undefined,
+    hide: function (property) {
+      DOMElements[property].setAttribute('class', 'hidden');
+    },
+    display: function (property) {
+      DOMElements[property].setAttribute('class', '');
+    }
   };
   var videoOptions = {
     id: undefined,
@@ -27,8 +33,9 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   DOMElements.languages.addEventListener("change", function() {
-    updatePlayer(DOMElements.videoList.value, true);
+    changeVideo(DOMElements.videoList.value, true);
   });
+
   DOMElements.videoList.addEventListener("change", displaySelectedVideo);
   DOMElements.subtitles.addEventListener("change", function() {
     if (DOMElements.subtitles.value == 'off') {
@@ -37,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function(){
       player.enableTextTrack(DOMElements.subtitles.value);
     }
   });
+
   // add appropriate url for the language
   for (var i = 0, length = DOMElements.langBtns.length; i < length; i++) {
     DOMElements.langBtns[i].setAttribute("href", fixURLForLanguage(DOMElements.langBtns[i].id));
@@ -52,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function(){
       updateURL(Window.Vinya.URLParams.title, DOMElements.videoList.value);
       updateURL(Window.Vinya.URLParams.lang, DOMElements.languages.value);
     } else {
-      updatePlayer(DOMElements.videoList.value, false);
+      changeVideo(DOMElements.videoList.value, false);
     }
   }
 
@@ -71,28 +79,20 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   /**
-   * Pauses the current video and updates the src of the iframe to
-   * be that of the desired video if it exists. Otherwise an error
-   * message is displayed to the user.
+   * Updates the src of the iframe to be that of the desired video if it exists.
+   * Otherwise an error message is displayed to the user.
    * @param {String} videoName is the name of the video to display.
    * @param {Boolean} languageChanged is whether or not the language was changed.
    */
-  function updatePlayer(videoName, languageChanged) {
-    if (Window.Vinya[videoName][DOMElements.languages.value] === undefined) {
-      DOMElements.videoError.innerText = Window.Vinya.errorMsg;
-      DOMElements.video = document.querySelector('iframe');
-      DOMElements.video.setAttribute('class' , 'hidden');
-    } else {
-      DOMElements.video = document.querySelector('iframe');
-      DOMElements.videoError.innerText = "";  
-      DOMElements.video.setAttribute('class' , 'resp-iframe');  
+  function changeVideo(videoName, languageChanged) {
+    if (videoPlayerPreCheck(videoName)) {
+      DOMElements.videoError.innerText = ""; 
       updateURL(Window.Vinya.URLParams.lang, DOMElements.languages.value);
-      DOMElements.spinner.setAttribute('class', '');
+      DOMElements.display('spinner');
       player.unload().then(function () {
         videoOptions.id = Window.Vinya[videoName][DOMElements.languages.value];
         player.loadVideo(videoOptions).then( function () {
           player.ready().then(function(){
-            DOMElements.spinner.setAttribute('class', 'hidden');
             if (languageChanged && url.searchParams.has(Window.Vinya.URLParams.time)) {
               player.setCurrentTime(url.searchParams.get(Window.Vinya.URLParams.time));
             }
@@ -184,45 +184,27 @@ document.addEventListener("DOMContentLoaded", function(){
    * @param {String} videoLanguage is the language to get the video in.
    */
   function createVimeoPlayer(videoName, videoLanguage) {
-    // create iframe
-    videoOptions.id = Window.Vinya[videoName][videoLanguage];
-    player = new Vimeo.Player('videosFrames', videoOptions);
-    player.on("timeupdate", updateURLTime); // updates the url time when progress is made in the video
-    player.on("texttrackchange", function (lang) {
-      if (!lang.language) {
-        // remove the sub from the url
-        updateURL(Window.Vinya.URLParams.sub, 'off');
-        DOMElements.subtitles.value = 'off';
-      } else {
-        updateURL(Window.Vinya.URLParams.sub, lang.language);
-        DOMElements.subtitles.value = lang.language;
-      }
-    });
-    player.on("loaded", function () {
-      DOMElements.video = document.querySelector('iframe');
-      DOMElements.video.setAttribute('class' , 'resp-iframe');
-      player.getTextTracks().then(function(tracks) {
-        var trackSelected = false;
-        var lang;
-        for (var i = 0, length = tracks.length; i < length; i++) {
-          if (tracks[i].mode === 'showing') {
-            lang = tracks[i].language;
-            trackSelected = true;
-            break;
-          }
-        }
-        if (trackSelected) {
-          updateURL(Window.Vinya.URLParams.sub, lang);
-          DOMElements.subtitles.value = lang;
-        } else {
+    if (videoPlayerPreCheck(videoName)) {
+      // create iframe
+      videoOptions.id = Window.Vinya[videoName][videoLanguage];
+      player = new Vimeo.Player('videosFrames', videoOptions);
+      player.on("timeupdate", updateURLTime); // updates the url time when progress is made in the video
+      player.on("texttrackchange", function (lang) {
+        if (!lang.language) {
+          // remove the sub from the url
           updateURL(Window.Vinya.URLParams.sub, 'off');
           DOMElements.subtitles.value = 'off';
+        } else {
+          updateURL(Window.Vinya.URLParams.sub, lang.language);
+          DOMElements.subtitles.value = lang.language;
         }
-        DOMElements.spinner.setAttribute('class' , 'hidden');
-    });
-     
-    });
-    getTextTracks();
+      });
+      player.on("loaded", function () {
+        DOMElements.video = document.querySelector('iframe');
+        DOMElements.video.setAttribute('class' , 'resp-iframe');
+        getTextTracks();         
+      });
+    }
   }
 
   /**
@@ -248,18 +230,28 @@ document.addEventListener("DOMContentLoaded", function(){
     // add the new ones
     player.getTextTracks().then(function(tracks) {
       var subtitle = '';
+      var trackSelected = false;
+      var lang;
       if (tracks.length !== 0) {
         // append all options to the list
         for (var i = 0, length = tracks.length; i < length; i++) {
           if (tracks[i].kind === 'subtitles') {
             subtitle += '<option value=' + tracks[i].language + ' class="added">' + tracks[i].label + '</option>';
+            if (tracks[i].mode === 'showing') {
+              lang = tracks[i].language;
+              trackSelected = true;
+            }
           }
         }
         DOMElements.subtitles.innerHTML += subtitle;
         if (url.searchParams.has(Window.Vinya.URLParams.sub)) {
           DOMElements.subtitles.value = url.searchParams.get(Window.Vinya.URLParams.sub);
+        } else if (trackSelected) {
+          updateURL(Window.Vinya.URLParams.sub, lang);
+          DOMElements.subtitles.value = lang;
         }
       }
+      DOMElements.hide('spinner');
     });
   }
 
@@ -280,5 +272,22 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     // store the parameters and current url base
     localStorage.setItem('params', tempURL.search);
+  }
+
+  /**
+   * Determines if it is possible to load the desired video and displays
+   * the appropriate response if it is not possible.
+   * @returns whether or not the desired video is in the current video list.
+   */
+  function videoPlayerPreCheck(videoName) {
+    if (Window.Vinya[videoName][DOMElements.languages.value] === undefined) {
+      DOMElements.videoError.innerText = Window.Vinya.errorMsg;
+      if (DOMElements.video != undefined) {
+        DOMElements.hide('video');
+      }
+      DOMElements.hide('spinner');
+      return false;
+    }
+    return true;
   }
 });
