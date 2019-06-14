@@ -80,11 +80,11 @@ The URL Parameters are defined in `user\themes\quark\templates\video.html.twig` 
 The list should look something like this:
 ``` JSON
 {
-    lang: "[lang_param_name_to_display]", 
-    title: "[video_param_name_to_display]", 
-    time: "[video_time_param_name_to_display]",
-    sub: "[subtitle_param_name_to_display]"
-  }
+  lang: "[lang_param_name_to_display]", 
+  title: "[video_param_name_to_display]", 
+  time: "[video_time_param_name_to_display]",
+  sub: "[subtitle_param_name_to_display]"
+}
 ```
 
 ### Subtitle List
@@ -93,4 +93,5 @@ This list must be modified in Vimeo.
 
 ## Uses
 
+- [Grav](https://getgrav.org/)
 - [Vimeo API](https://github.com/vimeo/player.js#vimeo-player-api---)
