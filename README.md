@@ -5,7 +5,6 @@ Allows a user to dynamically choose what video they want to watch based on the e
 ## Table of Contents
 
 - [Installation](#Installation)
-  - [Dependencies](#Dependencies)
 - [Features](#Features)
   - [Dynamic Video Selection](#Dynamic-Video-Selection)
   - [URL Parameters](#URL-Parameters)
@@ -26,24 +25,19 @@ git clone https://github.com/pjkaufman/dynamicVideoList.git
 
 Then copy the files from the git repository and paste them in the web content folder of your server.
 
-### Dependencies
-
-- [Grav](https://getgrav.org/) must be installed and in place first.
-
 ## Features
 
 ### Dynamic Video Selection
 
 This is possible due to having the ids of the Vimeo videos.
 
-The id  is taken in by the Vimeo API and used to load the desired video.
+The id is taken in by the Vimeo API and used to load the desired video.
 
 ### URL Parameters
 
 These parameters are defined and used in Javascript
 
 - lang - the language in which to check for the video in
-  - _Note: this parameter is needed if url parameters are present_
 - video - the name of the video to play
 - time - the time in the video to start the user at
 - sub - the language to have the subtitles set to

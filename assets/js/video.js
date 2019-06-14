@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", function(){
   };
   var videoOptions = {
     id: undefined,
-    autoplay: false
+    autoplay: false,
+    title: false,
+    byline: false
   };
   var player;
   var url = new URL(window.location.href);
