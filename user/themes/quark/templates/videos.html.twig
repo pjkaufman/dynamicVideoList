@@ -1,5 +1,16 @@
 {% extends 'partials/base.html.twig' %}
 
+{% if grav.language.getActive == "en" %}
+   {% set select = config.video.select.en %}
+   {% set error = config.video.error.en %}
+   {% set languages = config.video.languages.en %}
+{% else %}
+   {% set select = config.video.select.es %}
+   {% set error = config.video.error.es %}
+   {% set languages = config.video.languages.es %}
+{% endif %}
+
+
 {% block content %} 
 <link rel="stylesheet" type="text/css" href="..\assets\css\videos.css"></link>
 <div id="swapLanguage">
@@ -16,7 +27,7 @@
     <div id="videoOptions" class="auto-grid">
       {% block videoSelect %} 
       <div id="videoOption">
-        <p>{{ page.header.select.videos }}</p>
+        <p>{{ select.videos }}</p>
         <div class="select">
           <select id="videos">
             {% for video in config.video.videos %}
@@ -28,10 +39,10 @@
       {% endblock %}
       {% block languageSelect %}
       <div>
-        <p>{{ page.header.select.languages }}</p>
+        <p>{{ select.languages }}</p>
         <div class="select">
           <select id="languages">
-            {% for language in page.header.languages %}
+            {% for language in languages %}
               <option value="{{ language.code }}">{{ language.name }}</option>
             {% endfor %}
           </select>
@@ -40,10 +51,10 @@
       {% endblock %}
       {% block subtitleSelect %}
       <div id="subtitleWrapper">
-        <p>{{page.header.select.subtitles }}</p>
+        <p>{{ select.subtitles }}</p>
         <div class="select">
           <select id="subtitles">
-            <option value="off">{{ page.header.select.empty }}</option>
+            <option value="off">{{ select.empty }}</option>
           </select>
         </div>
       </div>
@@ -59,7 +70,7 @@
 {% block inlineScript %}
 <script>
   Window.Vinya = {defLang: '{{~grav.language.getActive~}}'};
-  Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
+  Object.assign(Window.Vinya, {'errorMsg': '{{ error }}' });
   {% for video in config.video.videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} })
     {% for id in video.ids %}

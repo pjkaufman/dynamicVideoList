@@ -49,3 +49,35 @@ videos:
     ids:
       - id: 210653772
         language: es
+
+languages: 
+  en:
+    - name: English
+      code: en
+    - name: Spanish
+      code: es
+    - name: Kaqchikel
+      code: cak
+  es:
+    - name: Inglés
+      code: en
+    - name: Español
+      code: es
+    - name: Kaqchikel
+      code: cak
+    
+select:
+  en:
+    languages: "Select a language:"
+    videos: "Select a video:"
+    subtitles: "Select a subtitle:"
+    empty: "Off"
+  es:
+    languages: "Escoge una idioma:"
+    videos: "Escoge un video:"
+    subtitles: "Escoge un subtitulo:"
+    empty: "Apagar"
+
+error: 
+  en: "The video you are trying to select does not exist in this language."
+  es: "El video que intenta seleccionar no existe en este idioma."

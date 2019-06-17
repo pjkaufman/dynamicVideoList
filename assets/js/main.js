@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * Runs the general code needed to to create and run a video player.
+ */
 document.addEventListener("DOMContentLoaded", function(){
   Window.Vinya.DOMElements = {
     languages: document.getElementById("languages"),
