@@ -45,8 +45,8 @@ Window.Vinya.createVimeoPlayer = function createVimeoPlayer(videoName, videoLang
     Window.Vinya.player.on("texttrackchange", function (lang) {
       if (!lang.language) {
         // remove the sub from the url
-        Window.Vinya.updateURL(Window.Vinya.URLParams.sub, 'off');
         Window.Vinya.DOMElements.subtitles.value = 'off';
+        Window.Vinya.updateURL(Window.Vinya.URLParams.sub, 'off');
       } else {
         Window.Vinya.DOMElements.subtitles.value = lang.language;
         Window.Vinya.updateURL(Window.Vinya.URLParams.sub, lang.language);

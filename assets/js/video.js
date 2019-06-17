@@ -43,7 +43,9 @@ Window.Vinya.changeVideo = function changeVideo(videoName, languageChanged) {
           if (languageChanged && Window.Vinya.url.searchParams.has(Window.Vinya.URLParams.time)) {
             Window.Vinya.player.setCurrentTime(Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.time));
           }
-          Window.Vinya.getTextTracks(); 
+          // hide spinner and display iframe
+          Window.Vinya.DOMElements.hide('spinner');
+          Window.Vinya.DOMElements.display('video'); 
         });
       });
     });

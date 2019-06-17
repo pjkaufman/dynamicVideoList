@@ -26,6 +26,7 @@ Window.Vinya.displaySelectedVideo = function displaySelectedVideo() {
  * @param {*} val is the value to put in the url.
  */
 Window.Vinya.updateURL = function updateURL(param, val) {
+  console.log(param + ':' + val);
   if (Window.Vinya.url.searchParams.has(param)) {
     Window.Vinya.url.searchParams.set(param, val);
   } else {
