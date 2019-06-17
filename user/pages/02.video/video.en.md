@@ -15,7 +15,7 @@ select:
   subtitles: "Select a subtitle:"
   empty: "Off"
 
-videoTitle: "Ep. 1"
+videoTitle: "Ep. 4"
 
 error: "The video you are trying to select does not exist in this language."
 ---

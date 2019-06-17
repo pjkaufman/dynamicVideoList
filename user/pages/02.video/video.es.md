@@ -15,7 +15,7 @@ select:
   subtitles: "Escoge un subtitulo:"
   empty: "Apagar"
 
-videoTitle: "Ep. 1"
+videoTitle: "Ep. 4"
 
 error: "El video que intenta seleccionar no existe en este idioma."
 ---

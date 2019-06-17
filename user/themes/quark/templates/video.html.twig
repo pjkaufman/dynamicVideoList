@@ -1,46 +1,13 @@
-{% extends 'partials/base.html.twig' %}
+{% extends 'videos.html.twig' %}
 
-{% block content %} 
-<link rel="stylesheet" type="text/css" href="..\assets\css\videos.css"></link>
-<div id="swapLanguage">
-  <p>
-    <a href="" id="en" >English</a>
-  </p> 
-  <p>|</p> 
-  <p>
-    <a href="" id="es" >Español</a>
-  </p>
-</div>
-<center>
-  <div class="wrapper">
-    <div id="videoOptions" class="auto-grid">
-      <div>
-        <p>{{ page.header.select.languages }}</p>
-        <div class="select">
-          <select id="languages">
-            {% for language in page.header.languages %}
-              <option value="{{ language.code }}">{{ language.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
+{% block videoSelect %}
+{% endblock %}
 
-      <div id="subtitleWrapper">
-        <p>{{page.header.select.subtitles }}</p>
-        <div class="select">
-          <select id="subtitles">
-            <option value="off">{{ page.header.select.empty }}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-  <h3 id="videoError"></h3>
-</center>
-<div id="videosFrames" class="resp-container">
-  <div id="loading"></div>
-</div>
+{% block javascriptFunctions %}
+<script src="..\assets\js\video.js" defer></script>
+{% endblock %}
 
+{% block inlineScript %}
 <script>
   Window.Vinya = {defLang: '{{~grav.language.getActive~}}',
     videoTitle: '{{ page.header.videoTitle }}'
@@ -59,7 +26,7 @@
   };
   // this function runs itself
   (function(){
-    var lastParams = localStorage.getItem('params');
+    var lastParams = localStorage.getItem('videoParams');
     // add the appropriate params to the website if they exist
     if (lastParams != undefined && window.location.search === '' && !window.location.href.includes(lastParams)) {
      window.location.search = lastParams;
@@ -74,7 +41,4 @@
     }
   })();
 </script>
-<script src="https://player.vimeo.com/api/player.js" defer></script>
-<script src="..\assets\js\video.js" defer></script>
-
 {% endblock %}

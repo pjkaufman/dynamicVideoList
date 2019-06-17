@@ -14,6 +14,7 @@
 <center>
   <div class="wrapper">
     <div id="videoOptions" class="auto-grid">
+      {% block videoSelect %} 
       <div id="videoOption">
         <p>{{ page.header.select.videos }}</p>
         <div class="select">
@@ -24,7 +25,8 @@
           </select>
         </div>
       </div>
-
+      {% endblock %}
+      {% block languageSelect %}
       <div>
         <p>{{ page.header.select.languages }}</p>
         <div class="select">
@@ -35,7 +37,8 @@
           </select>
         </div>
       </div>
-
+      {% endblock %}
+      {% block subtitleSelect %}
       <div id="subtitleWrapper">
         <p>{{page.header.select.subtitles }}</p>
         <div class="select">
@@ -44,6 +47,7 @@
           </select>
         </div>
       </div>
+      {% endblock %}
     </div>
   </div>
   <h3 id="videoError"></h3>
@@ -52,6 +56,7 @@
   <div id="loading"></div>
 </div>
 
+{% block inlineScript %}
 <script>
   Window.Vinya = {defLang: '{{~grav.language.getActive~}}'};
   Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
@@ -84,7 +89,11 @@
     }
   })();
 </script>
+{% endblock %}
 <script src="https://player.vimeo.com/api/player.js" defer></script>
+<script src="..\assets\js\base.js" defer></script>
+{% block javascriptFunctions %}
 <script src="..\assets\js\videos.js" defer></script>
-
+{% endblock %}
+<script src="..\assets\js\main.js" defer></script>
 {% endblock %}
