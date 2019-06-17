@@ -27,6 +27,10 @@ git clone https://github.com/pjkaufman/dynamicVideoList.git
 
 Then copy the files from the git repository and paste them in the web content folder of your server.
 
+### Configuration
+
+modify the [language list](#Language-List) and [video list](#Video-List) according to your needs.
+
 ## Features
 
 ### Dynamic Video Selection
