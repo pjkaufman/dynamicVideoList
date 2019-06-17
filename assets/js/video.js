@@ -38,7 +38,7 @@ Window.Vinya.changeVideo = function changeVideo(videoName, languageChanged) {
     Window.Vinya.DOMElements.display('spinner');
     Window.Vinya.player.unload().then(function () {
       Window.Vinya.videoOptions.id = Window.Vinya[videoName][Window.Vinya.DOMElements.languages.value];
-      Window.Vinya.player.loadVideo(videoOptions).then( function () {
+      Window.Vinya.player.loadVideo(Window.Vinya.videoOptions).then( function () {
         Window.Vinya.player.ready().then(function(){
           if (languageChanged && Window.Vinya.url.searchParams.has(Window.Vinya.URLParams.time)) {
             Window.Vinya.player.setCurrentTime(Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.time));

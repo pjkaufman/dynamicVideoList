@@ -10,10 +10,10 @@
  * this page.
  */
 Window.Vinya.fixURLForLanguage = function fixURLForLanguage(lang) {
-  var url = window.location.href;
+  var url = window.location.href, endpoint = url.substring(url.lastIndexOf('/'));
   url = url.substring(0, url.lastIndexOf('/'));
   url = url.substring(0, url.lastIndexOf('/'));
-  url += '/' + lang + '/videos';
+  url += '/' + lang + endpoint;
   return url;
 }
 
@@ -76,7 +76,6 @@ Window.Vinya.updateURLTime = function updateURLTime() {
  */
 Window.Vinya.getTextTracks = function getTextTracks() {
   // remove all added tracks
-  console.log('removing added elements');
   var elements = document.querySelectorAll('.added');
   for (var i = 0, length =  elements.length; i < length; i++) {
     elements[i].parentNode.removeChild(elements[i]);
@@ -87,7 +86,6 @@ Window.Vinya.getTextTracks = function getTextTracks() {
     var trackSelected = false;
     var lang;
     if (tracks.length !== 0) {
-      console.log('adding elements');
       // append all options to the list
       for (var i = 0, length = tracks.length; i < length; i++) {
         if (tracks[i].kind === 'subtitles') {
@@ -107,5 +105,6 @@ Window.Vinya.getTextTracks = function getTextTracks() {
       }
     }
     Window.Vinya.DOMElements.hide('spinner');
+    Window.Vinya.DOMElements.display('video');
   });
 }

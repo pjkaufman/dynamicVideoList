@@ -9,7 +9,8 @@
 
 {% block inlineScript %}
 <script>
-  Window.Vinya = {defLang: '{{~grav.language.getActive~}}',
+  Window.Vinya = {
+    defLang: '{{~grav.language.getActive~}}',
     videoTitle: '{{ page.header.videoTitle }}'
   };
   Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});

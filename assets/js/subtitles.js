@@ -49,7 +49,7 @@ Window.Vinya.updateURL = function updateURL(param, val) {
 Window.Vinya.parseURL = function parseURL() {
   var params = Window.Vinya.url.searchParams;
   var time = params.get(Window.Vinya.URLParams.time), sub = params.get(Window.Vinya.URLParams.sub);
-  createVimeoPlayer(Window.Vinya.videoTitle, Window.Vinya.videoLanguage);
+  Window.Vinya.createVimeoPlayer(Window.Vinya.videoTitle, Window.Vinya.videoLanguage);
   // check to see if the time is in the url, if so the video will be set to that time
   if (params.has(Window.Vinya.URLParams.time)) {
     Window.Vinya.player.setCurrentTime(time);
@@ -66,7 +66,7 @@ Window.Vinya.updateStorage = function updateStorage() {
   // a list of parameters to store in local storage
   var tempURL = new URL(Window.Vinya.url.href.substring(0, Window.Vinya.url.href.indexOf('?')));
   if (Window.Vinya.url.searchParams.has(Window.Vinya.URLParams.sub)) {
-    tempURL.searchParams.append(Window.Vinya.URLParams.sub,Window.Vinya. url.searchParams.get(Window.Vinya.URLParams.sub));
+    tempURL.searchParams.append(Window.Vinya.URLParams.sub,Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.sub));
   }
   // store the parameters and current url base
   localStorage.setItem('subParams', tempURL.search);

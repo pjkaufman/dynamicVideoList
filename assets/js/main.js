@@ -9,10 +9,18 @@ document.addEventListener("DOMContentLoaded", function(){
     spinner: document.getElementById('loading'),
     video: undefined,
     hide: function (property) {
-      this[property].setAttribute('class', 'hidden');
+      if (this[property].classList.length.length === 0) {
+        this[property].setAttribute('class', 'hidden');
+      } else {
+        this[property].classList.add('hidden');
+      } 
     },
     display: function (property) {
-      this[property].setAttribute('class', '');
+      if (this[property].classList.length.length === 0) {
+        this[property].setAttribute('class', '');
+      } else {
+        this[property].classList.remove('hidden');
+      } 
     }
   };
   Window.Vinya.videoOptions = {

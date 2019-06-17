@@ -91,6 +91,10 @@ The list should look something like this:
 
 This list must be modified in Vimeo. 
 
+## Types
+
+TODO: add the three types that this is designed to work with
+
 ## Uses
 
 - [Grav](https://getgrav.org/)

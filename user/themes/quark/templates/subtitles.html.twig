@@ -12,7 +12,8 @@
 
 {% block inlineScript %}
 <script>
-  Window.Vinya = {defLang: '{{~grav.language.getActive~}}',
+  Window.Vinya = {
+    defLang: '{{~grav.language.getActive~}}',
     videoLanguage: '{{ page.header.videoLanguage }}',
     videoTitle: '{{ page.header.videoTitle }}'
     };
