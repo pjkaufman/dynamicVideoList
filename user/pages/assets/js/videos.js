@@ -4,6 +4,7 @@
  */
 Window.Vinya.addEventListeners = function addEventListeners() {
   Window.Vinya.DOMElements.languages.addEventListener("change", function() {
+    Window.Vinya.fixBtnDisplay(Window.Vinya.DOMElements.videoList.value);
     Window.Vinya.changeVideo(Window.Vinya.DOMElements.videoList.value, true);
   });
 
@@ -17,19 +18,73 @@ Window.Vinya.addEventListeners = function addEventListeners() {
       Window.Vinya.player.enableTextTrack(Window.Vinya.DOMElements.subtitles.value);
     }
   });
+  Window.Vinya.DOMElements.nextEpisode.addEventListener("click", function() {
+    var title = Window.Vinya.DOMElements.videoList.value;
+    var episodeNum = parseInt(title.replace( /^\D+/g, ''));
+    var epsiodeFormat = title.replace(episodeNum, '');
+    var next = episodeNum + 1;
+    Window.Vinya.DOMElements.videoList.value = epsiodeFormat + next;
+    Window.Vinya.fixBtnDisplay(epsiodeFormat + next);
+    Window.Vinya.changeVideo(epsiodeFormat + next, false);
+  });
+  Window.Vinya.DOMElements.backEpisode.addEventListener("click", function() {
+    var title = Window.Vinya.DOMElements.videoList.value;
+    var episodeNum = parseInt(title.replace( /^\D+/g, ''));
+    var epsiodeFormat = title.replace(episodeNum, '');
+    var  back = episodeNum - 1;
+    Window.Vinya.DOMElements.videoList.value = epsiodeFormat + back;
+    Window.Vinya.DOMElements.videoTitle.innerText = Window.Vinya[epsiodeFormat + back].title;
+    Window.Vinya.fixBtnDisplay(epsiodeFormat + back);
+    Window.Vinya.changeVideo(epsiodeFormat + back, false);
+  });
+
 } 
+
+/**
+ * Makes sure that the buttons are currently setup correctly
+ * @param {String} episode is the name of the currently selected episode.
+ */
+Window.Vinya.fixBtnDisplay = function fixBtnDisplay(episode) {
+  var lang = Window.Vinya.DOMElements.languages.value;
+  if (Window.Vinya[episode][lang]) {
+    // fix the title
+    Window.Vinya.DOMElements.videoTitle.innerText = Window.Vinya[episode].title;
+    // extract a number from the current episode name
+    var episodeNum = parseInt(episode.replace( /^\D+/g, ''));
+    var epsiodeFormat = episode.replace(episodeNum, '');
+    var next = episodeNum + 1, back = episodeNum - 1;
+    // hide or display the back and forward buttons
+    if (Window.Vinya[epsiodeFormat + next] != undefined && Window.Vinya[epsiodeFormat + next][lang] != undefined ) {
+      Window.Vinya.DOMElements.display('nextEpisode');
+    } else {
+      Window.Vinya.DOMElements.hide('nextEpisode');
+    }
+    if (Window.Vinya[epsiodeFormat + back] != undefined && Window.Vinya[epsiodeFormat + back][lang] != undefined) {
+      Window.Vinya.DOMElements.display('backEpisode');
+    } else {
+      Window.Vinya.DOMElements.hide('backEpisode');
+    }
+  } else {
+    // hide everything
+    Window.Vinya.DOMElements.hide('nextEpisode');
+    Window.Vinya.DOMElements.hide('backEpisode');
+    Window.Vinya.DOMElements.videoTitle.innerText = '';
+  }
+}
 
 /**
  * Displays the video selected by the user.
  */
 Window.Vinya.displaySelectedVideo = function displaySelectedVideo() {
+  var title = Window.Vinya.DOMElements.videoList.value, lang = Window.Vinya.DOMElements.languages.value;
+  Window.Vinya.fixBtnDisplay(title);
   // display the selected video
   if (Window.Vinya.player === undefined ) {
-    Window.Vinya.createVimeoPlayer(Window.Vinya.DOMElements.videoList.value, Window.Vinya.DOMElements.languages.value);
-    Window.Vinya.updateURL(Window.Vinya.URLParams.title, Window.Vinya.DOMElements.videoList.value);
-    Window.Vinya.updateURL(Window.Vinya.URLParams.lang, Window.Vinya.DOMElements.languages.value);
+    Window.Vinya.createVimeoPlayer(title, lang);
+    Window.Vinya.updateURL(Window.Vinya.URLParams.title, title);
+    Window.Vinya.updateURL(Window.Vinya.URLParams.lang, lang);
   } else {
-    Window.Vinya.changeVideo(Window.Vinya.DOMElements.videoList.value, false);
+    Window.Vinya.changeVideo(title, false);
   }
 }
 
@@ -111,6 +166,7 @@ Window.Vinya.parseURL = function parseURL() {
     Window.Vinya.DOMElements.languages.value = lang;
     title = Window.Vinya.DOMElements.videoList.value;
   }
+  Window.Vinya.fixBtnDisplay(title);
   Window.Vinya.createVimeoPlayer(title, lang);
   // check to see if the time is in the url, if so the video will be set to that time
   if (params.has(Window.Vinya.URLParams.time)) {

@@ -54,6 +54,13 @@
       {% endblock %}
     </div>
   </div>
+  {% block videoOptions %}
+  <span>
+    <p id="videoBtnOptions">
+      <a id="back">{{ select.back }}</a><span id="title">  </span><a id="next">{{ select.next }}</a>
+    </p>
+  </span>
+  {% endblock %}
   <h3 id="videoError"></h3>
 </center>
 <div id="videosFrames" class="resp-container">
@@ -65,7 +72,8 @@
   Window.Vinya = {defLang: '{{~grav.language.getActive~}}'};
   Object.assign(Window.Vinya, {'errorMsg': '{{ error }}' });
   {% for video in config.video.videos %}
-    Object.assign(Window.Vinya, {'{{ video.name }}': {} })
+    Object.assign(Window.Vinya, {'{{ video.name }}': {} });
+    Object.assign(Window.Vinya['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });
     {% for id in video.ids %}
       Object.assign(Window.Vinya['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
     {% endfor %}

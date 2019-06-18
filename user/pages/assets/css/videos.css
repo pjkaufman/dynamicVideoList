@@ -7,12 +7,16 @@ body {
   background-color: gray;
 }
 /* Sets the same color to all of the necesssary elements */
-body, #swapLanguage, #swapLanguage > p > a {
+body, #swapLanguage, #swapLanguage > p > a, #videoBtnOptions > a {
   color: var(--textColor);
 }
 
-#loading, .select {
+#loading, .select, #videoBtnOptions {
   z-index: 1;
+}
+
+#videoBtnOptions {
+  position: relative;
 }
 
 .header-fixed #header { /* fixes issue where selects go over navbar */
@@ -32,12 +36,25 @@ body, #swapLanguage, #swapLanguage > p > a {
   float: left;
 }
 
-#swapLanguage > p > a {
+#swapLanguage > p > a, #back, #next {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 #videosFrames {
-  margin-top: -20%;
+  margin-top: -18%;
+}
+
+#back {
+  float: left;
+}
+
+#next {
+  float: right;
+}
+
+#title {
+  font-size: 20px;
 }
 
 select {
