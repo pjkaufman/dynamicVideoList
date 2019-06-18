@@ -1,3 +1,5 @@
 ---
 title: Videos
+
+videoList: videos
 ---

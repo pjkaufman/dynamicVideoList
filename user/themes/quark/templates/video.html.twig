@@ -17,7 +17,7 @@
     videoTitle: '{{ page.header.videoTitle }}'
   };
   Object.assign(Window.Vinya, {'errorMsg': '{{ error }}'});
-  {% for video in config.video.videos %}
+  {% for video in videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} })
     {% for id in video.ids %}
       Object.assign(Window.Vinya['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});

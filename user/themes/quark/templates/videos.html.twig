@@ -3,6 +3,10 @@
 {% set select = attribute(config.video.select, grav.language.getActive) %}
 {% set error = attribute(config.video.error, grav.language.getActive) %}
 {% set languages = attribute(config.video.languages, grav.language.getActive) %}
+{% if page.header.videoList is defined %}
+  {% set videos = attribute(config.video, page.header.videoList) %}
+{% endif %}
+
 
 {% block content %} 
 {% do assets.addCss('page://assets/css/videos.css') %}
@@ -23,7 +27,7 @@
         <p>{{ select.videos }}</p>
         <div class="select">
           <select id="videos">
-            {% for video in config.video.videos %}
+            {% for video in videos %}
               <option value="{{ video.name }}">{{ video.name }}</option>
             {% endfor %}
           </select>
@@ -71,7 +75,7 @@
 <script>
   Window.Vinya = {defLang: '{{~grav.language.getActive~}}'};
   Object.assign(Window.Vinya, {'errorMsg': '{{ error }}' });
-  {% for video in config.video.videos %}
+  {% for video in videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} });
     Object.assign(Window.Vinya['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });
     {% for id in video.ids %}

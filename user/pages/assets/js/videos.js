@@ -212,3 +212,32 @@ Window.Vinya.videoPlayerPreCheck = function videoPlayerPreCheck(videoName) {
   }
   return true;
 }
+
+/**
+ * Creates an iframe using the video name and language to select the appropriate link for the Window.Vinya.DOMElements.video.
+ * @param {String} videoName is the name of the video to select.
+ * @param {String} videoLanguage is the language to get the video in.
+ */
+Window.Vinya.createVimeoPlayer = function createVimeoPlayer(videoName, videoLanguage) {
+  if (Window.Vinya.videoPlayerPreCheck(videoName)) {
+    // create iframe
+    Window.Vinya.videoOptions.id = Window.Vinya[videoName][videoLanguage];
+    Window.Vinya.player = new Vimeo.Player('videosFrames', Window.Vinya.videoOptions);
+    Window.Vinya.player.on("timeupdate", Window.Vinya.updateURLTime); // updates the url time when progress is made in the video
+    Window.Vinya.player.on("texttrackchange", function (lang) {
+      if (!lang.language) {
+        // remove the sub from the url
+        Window.Vinya.DOMElements.subtitles.value = 'off';
+        Window.Vinya.updateURL(Window.Vinya.URLParams.sub, 'off');
+      } else {
+        Window.Vinya.DOMElements.subtitles.value = lang.language;
+        Window.Vinya.updateURL(Window.Vinya.URLParams.sub, lang.language);
+      }
+    });
+    Window.Vinya.player.on("loaded", function () {
+      Window.Vinya.DOMElements.video = document.querySelector('iframe');
+      Window.Vinya.DOMElements.video.setAttribute('class' , 'resp-iframe');
+      Window.Vinya.getTextTracks();         
+    });
+  }
+}
