@@ -16,8 +16,7 @@ Window.Vinya.addEventListeners = function addEventListeners() {
  * Displays the video selected by the user.
  */
 Window.Vinya.displaySelectedVideo = function displaySelectedVideo() {
-  // display the selected video
-  Window.Vinya.createVimeoPlayer(Window.Vinya.videoLanguage);
+  Window.Vinya.createVimeoPlayer(Window.Vinya.videoID);
 }
 
 /**
@@ -50,7 +49,7 @@ Window.Vinya.updateURL = function updateURL(param, val) {
 Window.Vinya.parseURL = function parseURL() {
   var params = Window.Vinya.url.searchParams;
   var time = params.get(Window.Vinya.URLParams.time), sub = params.get(Window.Vinya.URLParams.sub);
-  Window.Vinya.createVimeoPlayer(Window.Vinya.videoLanguage);
+  Window.Vinya.createVimeoPlayer(Window.Vinya.videoID);
   // check to see if the time is in the url, if so the video will be set to that time
   if (params.has(Window.Vinya.URLParams.time)) {
     Window.Vinya.player.setCurrentTime(time);
@@ -71,30 +70,4 @@ Window.Vinya.updateStorage = function updateStorage() {
   }
   // store the parameters and current url base
   localStorage.setItem('subParams', tempURL.search);
-}
-
-/**
- * Creates an iframe using the video name and language to select the appropriate link for the Window.Vinya.DOMElements.video.
- * @param {String} videoLanguage is the language to get the video in.
- */
-Window.Vinya.createVimeoPlayer = function createVimeoPlayer(videoLanguage) {
-  // create iframe
-  Window.Vinya.videoOptions.id = Window.Vinya.videoID;
-  Window.Vinya.player = new Vimeo.Player('videosFrames', Window.Vinya.videoOptions);
-  Window.Vinya.player.on("timeupdate", Window.Vinya.updateURLTime); // updates the url time when progress is made in the video
-  Window.Vinya.player.on("texttrackchange", function (lang) {
-    if (!lang.language) {
-      // remove the sub from the url
-      Window.Vinya.DOMElements.subtitles.value = 'off';
-      Window.Vinya.updateURL(Window.Vinya.URLParams.sub, 'off');
-    } else {
-      Window.Vinya.DOMElements.subtitles.value = lang.language;
-      Window.Vinya.updateURL(Window.Vinya.URLParams.sub, lang.language);
-    }
-  });
-  Window.Vinya.player.on("loaded", function () {
-    Window.Vinya.DOMElements.video = document.querySelector('iframe');
-    Window.Vinya.DOMElements.video.setAttribute('class' , 'resp-iframe');
-    Window.Vinya.getTextTracks();         
-  });
 }

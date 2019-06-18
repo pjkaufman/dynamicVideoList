@@ -21,8 +21,12 @@ Window.Vinya.addEventListeners = function addEventListeners() {
  */
 Window.Vinya.displaySelectedVideo = function displaySelectedVideo() {
   // display the selected video
-  Window.Vinya.createVimeoPlayer(Window.Vinya.videoTitle, Window.Vinya.DOMElements.languages.value);
-  Window.Vinya.updateURL(Window.Vinya.URLParams.lang, Window.Vinya.DOMElements.languages.value);
+  var title = Window.Vinya.DOMElements.videoList.value, lang = Window.Vinya.DOMElements.languages.value;
+  if (Window.Vinya.videoPlayerPreCheck(title)) {
+    Window.Vinya.createVimeoPlayer(Window.Vinya[title][lang]);
+    Window.Vinya.updateURL(Window.Vinya.URLParams.lang, lang);
+  }
+ 
 }
 
 /**
@@ -89,7 +93,9 @@ Window.Vinya.parseURL = function parseURL() {
   if (params.has(Window.Vinya.URLParams.lang)) {
     Window.Vinya.DOMElements.languages.value = lang;
   }
-  Window.Vinya.createVimeoPlayer(Window.Vinya.videoTitle, lang);
+  if (Window.Vinya.videoPlayerPreCheck(title)) {
+    Window.Vinya.createVimeoPlayer(Window.Vinya[Window.Vinya.videoTitle][lang]);
+  }
   // check to see if the time is in the url, if so the video will be set to that time
   if (params.has(Window.Vinya.URLParams.time)) {
     Window.Vinya.player.setCurrentTime(time);
