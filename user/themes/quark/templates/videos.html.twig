@@ -1,7 +1,11 @@
 {% extends 'partials/base.html.twig' %}
 
+{% set select = attribute(config.video.select, grav.language.getActive) %}
+{% set error = attribute(config.video.error, grav.language.getActive) %}
+{% set languages = attribute(config.video.languages, grav.language.getActive) %}
+
 {% block content %} 
-<link rel="stylesheet" type="text/css" href="..\assets\css\video.css"></link>
+{% do assets.addCss('page://assets/css/videos.css') %}
 <div id="swapLanguage">
   <p>
     <a href="" id="en" >English</a>
@@ -14,8 +18,9 @@
 <center>
   <div class="wrapper">
     <div id="videoOptions" class="auto-grid">
+      {% block videoSelect %} 
       <div id="videoOption">
-        <p>{{ page.header.select.videos }}</p>
+        <p>{{ select.videos }}</p>
         <div class="select">
           <select id="videos">
             {% for video in config.video.videos %}
@@ -24,26 +29,29 @@
           </select>
         </div>
       </div>
-
+      {% endblock %}
+      {% block languageSelect %}
       <div>
-        <p>{{ page.header.select.languages }}</p>
+        <p>{{ select.languages }}</p>
         <div class="select">
           <select id="languages">
-            {% for language in page.header.languages %}
+            {% for language in languages %}
               <option value="{{ language.code }}">{{ language.name }}</option>
             {% endfor %}
           </select>
         </div>
       </div>
-
+      {% endblock %}
+      {% block subtitleSelect %}
       <div id="subtitleWrapper">
-        <p>{{page.header.select.subtitles }}</p>
+        <p>{{ select.subtitles }}</p>
         <div class="select">
           <select id="subtitles">
-            <option value="off">{{ page.header.select.empty }}</option>
+            <option value="off">{{ select.empty }}</option>
           </select>
         </div>
       </div>
+      {% endblock %}
     </div>
   </div>
   <h3 id="videoError"></h3>
@@ -52,9 +60,10 @@
   <div id="loading"></div>
 </div>
 
+{% block inlineScript %}
 <script>
   Window.Vinya = {defLang: '{{~grav.language.getActive~}}'};
-  Object.assign(Window.Vinya, {'errorMsg': '{{ page.header.error }}'});
+  Object.assign(Window.Vinya, {'errorMsg': '{{ error }}' });
   {% for video in config.video.videos %}
     Object.assign(Window.Vinya, {'{{ video.name }}': {} })
     {% for id in video.ids %}
@@ -68,7 +77,6 @@
     sub: "sub"
   };
   // this function runs itself
-   // this function runs itself
   (function(){
     var lastParams = localStorage.getItem('params');
     // add the appropriate params to the website if they exist
@@ -85,8 +93,11 @@
     }
   })();
 </script>
-<script src="https://player.vimeo.com/api/player.js" defer></script>
-<script src="..\assets\js\videoWrapper.js" defer></script>
-<script src="..\assets\js\video.js" defer></script>
-
+{% endblock %}
+{% do assets.addJs('https://player.vimeo.com/api/player.js', {priority: 7, loading: 'defer', position: 'after'}) %}
+{% do assets.addJs('page://assets/js/base.js', {priority: 6, loading: 'defer', position: 'after'}) %}
+{% block javascriptFunctions %}
+  {% do assets.addJs('page://assets/js/videos.js', {priority: 5, loading: 'defer', position: 'after'}) %}
+{% endblock %}
+{% do assets.addJs('page://assets/js/main.js', {priority: 4, loading: 'defer', position: 'after'}) %}
 {% endblock %}
