@@ -89,3 +89,5 @@ images/*
 !images/.gitkeep
 user/data/*
 !user/data/.gitkeep
+assets/*
+!assets/.gitkeep

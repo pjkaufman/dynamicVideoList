@@ -1,18 +1,11 @@
 {% extends 'partials/base.html.twig' %}
 
-{% if grav.language.getActive == "en" %}
-   {% set select = config.video.select.en %}
-   {% set error = config.video.error.en %}
-   {% set languages = config.video.languages.en %}
-{% else %}
-   {% set select = config.video.select.es %}
-   {% set error = config.video.error.es %}
-   {% set languages = config.video.languages.es %}
-{% endif %}
-
+{% set select = attribute(config.video.select, grav.language.getActive) %}
+{% set error = attribute(config.video.error, grav.language.getActive) %}
+{% set languages = attribute(config.video.languages, grav.language.getActive) %}
 
 {% block content %} 
-<link rel="stylesheet" type="text/css" href="..\assets\css\videos.css"></link>
+{% do assets.addCss('page://assets/css/videos.css') %}
 <div id="swapLanguage">
   <p>
     <a href="" id="en" >English</a>
@@ -101,10 +94,10 @@
   })();
 </script>
 {% endblock %}
-<script src="https://player.vimeo.com/api/player.js" defer></script>
-<script src="..\assets\js\base.js" defer></script>
+{% do assets.addJs('https://player.vimeo.com/api/player.js', {priority: 7, loading: 'defer', position: 'after'}) %}
+{% do assets.addJs('page://assets/js/base.js', {priority: 6, loading: 'defer', position: 'after'}) %}
 {% block javascriptFunctions %}
-<script src="..\assets\js\videos.js" defer></script>
+  {% do assets.addJs('page://assets/js/videos.js', {priority: 5, loading: 'defer', position: 'after'}) %}
 {% endblock %}
-<script src="..\assets\js\main.js" defer></script>
+{% do assets.addJs('page://assets/js/main.js', {priority: 4, loading: 'defer', position: 'after'}) %}
 {% endblock %}

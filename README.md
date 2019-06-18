@@ -79,21 +79,8 @@ languages:
     - name: French
       code: fr
 ```
-This list should have a language code for each part of the conditional stamement found in `user\themes\quark\templates\videos.html.twig`. It looks something like this:
+This list should have a language code for each language you plan to support (the YAML code above would only support English).
 
-``` Twig
-{% if grav.language.getActive == "en" %}
-   {% set select = config.video.select.en %}
-   {% set error = config.video.error.en %}
-   {% set languages = config.video.languages.en %}
-{% else %}
-   {% set select = config.video.select.es %}
-   {% set error = config.video.error.es %}
-   {% set languages = config.video.languages.es %}
-{% endif %}
-```
-
-_Note: if a language is added to the languages list, the `user\themes\quark\templates\videos.html.twig` must be modified to set the appropriate variables in the conditional block._
 
 ### URL Parameters
 

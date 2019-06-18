@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block javascriptFunctions %}
-<script src="..\assets\js\subtitles.js" defer></script>
+  {% do assets.addJs('page://assets/js/subtitles.js', {priority: 5, loading: 'defer', position: 'after'}) %}
 {% endblock %}
 
 {% block inlineScript %}
