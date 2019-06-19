@@ -9,7 +9,7 @@
  * @returns a string which is the url to use as a link to that language for 
  * this page.
  */
-Window.Vinya.fixURLForLanguage = function fixURLForLanguage(lang) {
+Window.Vinya.functions.fixURLForLanguage = function fixURLForLanguage(lang) {
   var url = window.location.href, endpoint = url.substring(url.lastIndexOf('/'));
   url = url.substring(0, url.lastIndexOf('/'));
   url = url.substring(0, url.lastIndexOf('/'));
@@ -21,60 +21,56 @@ Window.Vinya.fixURLForLanguage = function fixURLForLanguage(lang) {
  * Checks to see if the URL contains any parameters.
  * @returns whether or not the url has any url parameters in it.
  */
-Window.Vinya.URLContainsParam = function URLContainsParam() {
-  var paramExists = false;
-  Object.keys(Window.Vinya.URLParams).forEach(function (key) {
+Window.Vinya.functions.URLContainsParam = function URLContainsParam() {
+  for (key in Window.Vinya.URLParams) {
     if (Window.Vinya.url.searchParams.has(Window.Vinya.URLParams[key])) {
-      paramExists = true;
+      return true;
     }
-  });
-  return paramExists;
-}
-
-/**
- * Creates an iframe using the video name and language to select the appropriate link for the Window.Vinya.DOMElements.video.
- * @param {String} videoName is the name of the video to select.
- * @param {String} videoLanguage is the language to get the video in.
- */
-Window.Vinya.createVimeoPlayer = function createVimeoPlayer(videoName, videoLanguage) {
-  if (Window.Vinya.videoPlayerPreCheck(videoName)) {
-    // create iframe
-    Window.Vinya.videoOptions.id = Window.Vinya[videoName][videoLanguage];
-    Window.Vinya.player = new Vimeo.Player('videosFrames', Window.Vinya.videoOptions);
-    Window.Vinya.player.on("timeupdate", Window.Vinya.updateURLTime); // updates the url time when progress is made in the video
-    Window.Vinya.player.on("texttrackchange", function (lang) {
-      if (!lang.language) {
-        // remove the sub from the url
-        Window.Vinya.DOMElements.subtitles.value = 'off';
-        Window.Vinya.updateURL(Window.Vinya.URLParams.sub, 'off');
-      } else {
-        Window.Vinya.DOMElements.subtitles.value = lang.language;
-        Window.Vinya.updateURL(Window.Vinya.URLParams.sub, lang.language);
-      }
-    });
-    Window.Vinya.player.on("loaded", function () {
-      Window.Vinya.DOMElements.video = document.querySelector('iframe');
-      Window.Vinya.DOMElements.video.setAttribute('class' , 'resp-iframe');
-      Window.Vinya.getTextTracks();         
-    });
   }
+  return false;
 }
 
 /**
  * updates the time in the url.
  */
-Window.Vinya.updateURLTime = function updateURLTime() {
+Window.Vinya.functions.updateURLTime = function updateURLTime() {
   Window.Vinya.player.getCurrentTime().then(function(seconds) {
-    Window.Vinya.updateURL(Window.Vinya.URLParams.time, seconds);
+    Window.Vinya.functions.updateURL(Window.Vinya.URLParams.time, seconds);
   });
 }
 
-  /**
+/**
+ * Creates an iframe using the video name and language to select the appropriate link for the Window.Vinya.DOMElements.video.
+ * @param {String} videoID is the id of the desired video.
+ */
+Window.Vinya.functions.createVimeoPlayer = function createVimeoPlayer(videoID) {
+  // create iframe
+  Window.Vinya.videoOptions.id = videoID;
+  Window.Vinya.player = new Vimeo.Player('videosFrames', Window.Vinya.videoOptions);
+  Window.Vinya.player.on("timeupdate", Window.Vinya.functions.updateURLTime); // updates the url time when progress is made in the video
+  Window.Vinya.player.on("texttrackchange", function (lang) {
+    if (!lang.language) {
+      // remove the sub from the url
+      Window.Vinya.DOMElements.subtitles.value = 'off';
+      Window.Vinya.functions.updateURL(Window.Vinya.URLParams.sub, 'off');
+    } else {
+      Window.Vinya.DOMElements.subtitles.value = lang.language;
+      Window.Vinya.functions.updateURL(Window.Vinya.URLParams.sub, lang.language);
+    }
+  });
+  Window.Vinya.player.on("loaded", function () {
+    Window.Vinya.DOMElements.video = document.querySelector('iframe');
+    Window.Vinya.DOMElements.video.setAttribute('class' , 'resp-iframe');
+    Window.Vinya.functions.getTextTracks();         
+  });
+}
+
+/**
  * Gets the subtitles and captions for the video and then adds them to the
  * select for subtitles. It also selects the subtitle value listed in url 
  * parameter if it exists. 
  */
-Window.Vinya.getTextTracks = function getTextTracks() {
+Window.Vinya.functions.getTextTracks = function getTextTracks() {
   // remove all added tracks
   var elements = document.querySelectorAll('.added');
   for (var i = 0, length =  elements.length; i < length; i++) {
@@ -101,7 +97,7 @@ Window.Vinya.getTextTracks = function getTextTracks() {
         Window.Vinya.DOMElements.subtitles.value = Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.sub);
       } else if (trackSelected) {
         Window.Vinya.DOMElements.subtitles.value = lang;
-        Window.Vinya.updateURL(Window.Vinya.URLParams.sub, lang);
+        Window.Vinya.functions.updateURL(Window.Vinya.URLParams.sub, lang);
       }
     }
     Window.Vinya.DOMElements.hide('spinner');

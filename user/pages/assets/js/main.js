@@ -39,17 +39,17 @@ document.addEventListener("DOMContentLoaded", function(){
   Window.Vinya.url = new URL(window.location.href);
 
   // preprocess check 
-  if (Window.Vinya.URLContainsParam()) {
+  if (Window.Vinya.functions.URLContainsParam()) {
     // update the video accordingly based on the parameters
-    Window.Vinya.parseURL();
+    Window.Vinya.functions.parseURL();
   } else {
-    Window.Vinya.displaySelectedVideo();
+    Window.Vinya.functions.displaySelectedVideo();
   }
   // add the event listeners for the page
-  Window.Vinya.addEventListeners();
+  Window.Vinya.functions.addEventListeners();
 
   // add appropriate url for the language
   for (var i = 0, length = Window.Vinya.DOMElements.langBtns.length; i < length; i++) {
-    Window.Vinya.DOMElements.langBtns[i].setAttribute("href", Window.Vinya.fixURLForLanguage(Window.Vinya.DOMElements.langBtns[i].id));
+    Window.Vinya.DOMElements.langBtns[i].setAttribute("href", Window.Vinya.functions.fixURLForLanguage(Window.Vinya.DOMElements.langBtns[i].id));
   }
 });

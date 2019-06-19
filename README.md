@@ -52,16 +52,23 @@ These parameters are defined and used in Javascript
 
 ### Video List
 
-You need to modify the yaml front matter in `user\config\video.yaml` to modify the video list.
+The video list is where both the Dynamic Video Player and Video Language Player get their video IDs from.
+You need to modify the yaml config file `user\config\video.yaml` to modify or add a video list.
 
 It will look something like: 
 ``` YAML
-videos: 
+[name_of_video_list]: 
   - name: [name_to_display_here]
+    title:
+        en: [English_video_name]
+        es: [Spanish_video_name]
     ids: 
       - id: [id_for_video]
         language: [code_of_language_to_list_the_video_as]
 ```
+
+The title option is only needed for the Dynamic Video Player.
+
 _Note: you can add as many elements to ids as you like as long as the language is in the language list (see below) and the id  is a valid Vimeo id._
 
 ### Language List
@@ -84,7 +91,7 @@ This list should have a language code for each language you plan to support (the
 
 ### URL Parameters
 
-The URL Parameters are defined in `user\themes\quark\templates\videos.html.twig` in a script tag.
+The URL Parameters are defined in `user\themes\quark\templates\` in a script tag in any of the custom templates (videos.html.twig, video.html.twig, and subtitles.html.twig).
 
 The list should look something like this:
 ``` JSON
@@ -102,9 +109,9 @@ This list must be modified in Vimeo.
 
 ### Visible Options
 
-When editing any of the custom template files (videos.html.twig, video.html.twig, subtitles.html.twig, or any template that extends videos.html.twig), there are 5 blocks to note.
+When editing any of the custom template files (videos.html.twig, video.html.twig, subtitles.html.twig, or any template that extends videos.html.twig), there are 6 blocks to note.
 
-1. The **videoSelect** block which allows the user to select from the video list defined in `user\config\video.yaml`.
+1. The **videoSelect** block which allows the user to select from a video list defined in `user\config\video.yaml`.
 
 2. The **languageSelect** block which allows the user to select a language from the language list defined in `user\config\video.yaml`.
 
@@ -113,6 +120,8 @@ When editing any of the custom template files (videos.html.twig, video.html.twig
 4. The **inlineScript** block which allows for slight variations in the setup for the player via the YAML front matter and initial url parameter reading.
 
 5. The **javascriptFunctions** block which deals directly with all the functions that are defined differently for each video player.
+
+6. The **videoOptions** block which allows the user to navigate forward and backwards between videos with ease.
 
 If you would like to remove any of these blocks from a template that extends videos.html.twig, just add the following to the your custom template:
 ```Twig
@@ -129,11 +138,13 @@ In order to modify any of these blocks, add the following to your template:
 
 ## Types
 
-There are three different types of video player templates setup in this repository.
+There are three different types of video player templates setup in this repository. Each player requires that in the YAML front matter of the page there is an option called `pageIdentifier` which is used to enhance the user experience. 
 
 1. Dynamic Video Player
 
 This video player allows the user to select a video from the video list defined in and a language from the languages list which are both defined in `user\config\video.yaml` as well as a subtilte from a list of subtitles which is loaded with the video.
+
+This option requires that in the YAML front matter of the page there is an option called `videoList`. videoList corresponds to the name of one of the video lists defined in `user\config\video.yaml`.
 
 In order to use this template, make sure the Markdown files is called `videos.*.*md` or `videos.md`.
 
@@ -141,7 +152,7 @@ In order to use this template, make sure the Markdown files is called `videos.*.
 
 This video player allows the user to select a language from the languages list which is defined in `user\config\video.yaml` as well as a subtilte from a list of subtitles which is loaded with the video.
 
-This option requires that in the YAML front matter of the page there is an option called `videoTitle`. videoTitle corresponds to the name of one of the video names listed in the video list in `user\config\video.yaml`.
+This option requires that in the YAML front matter of the page there are options called `videoTitle` and `videoList`. videoTitle corresponds to the name of one of the video names listed in the video list specified by the `videoList` option which corresponds with a video list in `user\config\video.yaml`.
 
 In order to use this template, make sure the Markdown files is called `video.*.*md` or `video.md`.
 
@@ -149,7 +160,7 @@ In order to use this template, make sure the Markdown files is called `video.*.*
 
 This video player allows the user to select a subtilte from a list of subtitles which is loaded with the video.
 
-This option requires that in the YAML front matter of the page there is an option called `videoTitle` and `videoLanguage`. videoTitle corresponds with the name of one of the video names listed in the video list. videoLanguage corresponds with the name of one of the languages listed in the language list. Both of this lists can be found in `user\config\video.yaml`.
+This option requires that in the YAML front matter of the page there is an option called `videoID`. videoID should be a valid Vimeo ID for the video to load.
 
 In order to use this template, make sure the Markdown files is called `subtitles.*.*md` or `subtitles.md`.
 

@@ -14,23 +14,26 @@
 <script>
   Window.Vinya = {
     defLang: '{{~grav.language.getActive~}}',
-    videoTitle: '{{ page.header.videoTitle }}'
+    videoTitle: '{{ page.header.videoTitle }}',
+    errorMsg: '{{ error }}',
+    localKey: '{{ page.header.pageIdentifier }}',
+    videoList: {},
+    functions: {},
+    URLParams: {
+      lang: "lang",  
+      time: "time",
+      sub: "sub"
+    }
   };
-  Object.assign(Window.Vinya, {'errorMsg': '{{ error }}'});
-  {% for video in config.video.videos %}
-    Object.assign(Window.Vinya, {'{{ video.name }}': {} })
+  {% for video in videos %}
+    Object.assign(Window.Vinya.videoList, {'{{ video.name }}': {} })
     {% for id in video.ids %}
-      Object.assign(Window.Vinya['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
+      Object.assign(Window.Vinya.videoList['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
     {% endfor %}
   {% endfor %}
-  Window.Vinya.URLParams = {
-    lang: "lang", 
-    time: "time",
-    sub: "sub"
-  };
   // this function runs itself
   (function(){
-    var lastParams = localStorage.getItem('videoParams');
+    var lastParams = localStorage.getItem(Window.Vinya.localKey);
     // add the appropriate params to the website if they exist
     if (lastParams != undefined && window.location.search === '' && !window.location.href.includes(lastParams)) {
      window.location.search = lastParams;

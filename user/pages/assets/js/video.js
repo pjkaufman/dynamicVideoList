@@ -2,9 +2,9 @@
 /**
  * Adds event listeners for each of the select options.
  */
-Window.Vinya.addEventListeners = function addEventListeners() {
+Window.Vinya.functions.addEventListeners = function addEventListeners() {
   Window.Vinya.DOMElements.languages.addEventListener("change", function() {
-    Window.Vinya.changeVideo(Window.Vinya.videoTitle, true);
+    Window.Vinya.functions.changeVideo(Window.Vinya.videoTitle, true);
   });
 
   Window.Vinya.DOMElements.subtitles.addEventListener("change", function() {
@@ -19,10 +19,14 @@ Window.Vinya.addEventListeners = function addEventListeners() {
 /**
  * Displays the video selected by the user.
  */
-Window.Vinya.displaySelectedVideo = function displaySelectedVideo() {
+Window.Vinya.functions.displaySelectedVideo = function displaySelectedVideo() {
   // display the selected video
-  Window.Vinya.createVimeoPlayer(Window.Vinya.videoTitle, Window.Vinya.DOMElements.languages.value);
-  Window.Vinya.updateURL(Window.Vinya.URLParams.lang, Window.Vinya.DOMElements.languages.value);
+  var title = Window.Vinya.DOMElements.videoList.value, lang = Window.Vinya.DOMElements.languages.value;
+  if (Window.Vinya.functions.videoPlayerPreCheck(title)) {
+    Window.Vinya.functions.createVimeoPlayer(Window.Vinya.videoList[title][lang]);
+    Window.Vinya.functions.updateURL(Window.Vinya.URLParams.lang, lang);
+  }
+ 
 }
 
 /**
@@ -31,13 +35,13 @@ Window.Vinya.displaySelectedVideo = function displaySelectedVideo() {
  * @param {String} videoName is the name of the video to display.
  * @param {Boolean} languageChanged is whether or not the language was changed.
  */
-Window.Vinya.changeVideo = function changeVideo(videoName, languageChanged) {
-  if (Window.Vinya.videoPlayerPreCheck(videoName)) {
+Window.Vinya.functions.changeVideo = function changeVideo(videoName, languageChanged) {
+  if (Window.Vinya.functions.videoPlayerPreCheck(videoName)) {
     Window.Vinya.DOMElements.videoError.innerText = ""; 
-    Window.Vinya.updateURL(Window.Vinya.URLParams.lang, Window.Vinya.DOMElements.languages.value);
+    Window.Vinya.functions.updateURL(Window.Vinya.URLParams.lang, Window.Vinya.DOMElements.languages.value);
     Window.Vinya.DOMElements.display('spinner');
     Window.Vinya.player.unload().then(function () {
-      Window.Vinya.videoOptions.id = Window.Vinya[videoName][Window.Vinya.DOMElements.languages.value];
+      Window.Vinya.videoOptions.id = Window.Vinya.videoList[videoName][Window.Vinya.DOMElements.languages.value];
       Window.Vinya.player.loadVideo(Window.Vinya.videoOptions).then( function () {
         Window.Vinya.player.ready().then(function(){
           if (languageChanged && Window.Vinya.url.searchParams.has(Window.Vinya.URLParams.time)) {
@@ -50,9 +54,26 @@ Window.Vinya.changeVideo = function changeVideo(videoName, languageChanged) {
       });
     });
     if (!languageChanged) {
-      Window.Vinya.updateURL(Window.Vinya.URLParams.title, videoName);
+      Window.Vinya.functions.updateURL(Window.Vinya.URLParams.title, videoName);
     }
   }
+}
+
+/**
+ * Determines if it is possible to load the desired video and displays
+ * the appropriate response if it is not possible.
+ * @returns whether or not the desired video is in the current video list.
+ */
+Window.Vinya.functions.videoPlayerPreCheck = function videoPlayerPreCheck(videoName) {
+  if (Window.Vinya.videoList[videoName][Window.Vinya.DOMElements.languages.value] === undefined) {
+    Window.Vinya.DOMElements.videoError.innerText = Window.Vinya.errorMsg;
+    if (Window.Vinya.DOMElements.video != undefined) {
+      Window.Vinya.DOMElements.hide('video');
+    }
+    Window.Vinya.DOMElements.hide('spinner');
+    return false;
+  }
+  return true;
 }
 
 /**
@@ -60,7 +81,7 @@ Window.Vinya.changeVideo = function changeVideo(videoName, languageChanged) {
  * @param {String} param is the param that will added or updated with the val;
  * @param {*} val is the value to put in the url.
  */
-Window.Vinya.updateURL = function updateURL(param, val) {
+Window.Vinya.functions.updateURL = function updateURL(param, val) {
   if (Window.Vinya.url.searchParams.has(param)) {
     Window.Vinya.url.searchParams.set(param, val);
   } else {
@@ -74,14 +95,14 @@ Window.Vinya.updateURL = function updateURL(param, val) {
   if (history.pushState) {
     window.history.pushState({path:Window.Vinya.url.href},'',Window.Vinya.url.href);
   }
-  Window.Vinya.updateStorage();
+  Window.Vinya.functions.updateStorage();
 }
 
 /**
  * Determines which if any of the videos are in the URL and displays
  * content appropriately.
  */
-Window.Vinya.parseURL = function parseURL() {
+Window.Vinya.functions.parseURL = function parseURL() {
   var params = Window.Vinya.url.searchParams;
   var lang = params.get(Window.Vinya.URLParams.lang), time = params.get(Window.Vinya.URLParams.time),
     sub = params.get(Window.Vinya.URLParams.sub);
@@ -89,7 +110,9 @@ Window.Vinya.parseURL = function parseURL() {
   if (params.has(Window.Vinya.URLParams.lang)) {
     Window.Vinya.DOMElements.languages.value = lang;
   }
-  Window.Vinya.createVimeoPlayer(Window.Vinya.videoTitle, lang);
+  if (Window.Vinya.functions.videoPlayerPreCheck(Window.Vinya.videoTitle)) {
+    Window.Vinya.functions.createVimeoPlayer(Window.Vinya.videoList[Window.Vinya.videoTitle][lang]);
+  }
   // check to see if the time is in the url, if so the video will be set to that time
   if (params.has(Window.Vinya.URLParams.time)) {
     Window.Vinya.player.setCurrentTime(time);
@@ -102,7 +125,7 @@ Window.Vinya.parseURL = function parseURL() {
 /**
  * Updates the url parameters in storage by removing all unnecesary url params. 
  */
-Window.Vinya.updateStorage = function updateStorage() {
+Window.Vinya.functions.updateStorage = function updateStorage() {
   // a list of parameters to store in local storage
   var tempURL = new URL(Window.Vinya.url.href.substring(0, Window.Vinya.url.href.indexOf('?')));
   if (Window.Vinya.url.searchParams.has(Window.Vinya.URLParams.sub)) {
@@ -112,22 +135,5 @@ Window.Vinya.updateStorage = function updateStorage() {
     tempURL.searchParams.append(Window.Vinya.URLParams.lang, Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.lang));
   }
   // store the parameters and current url base
-  localStorage.setItem('videoParams', tempURL.search);
-}
-
-/**
- * Determines if it is possible to load the desired video and displays
- * the appropriate response if it is not possible.
- * @returns whether or not the desired video is in the current video list.
- */
-Window.Vinya.videoPlayerPreCheck = function videoPlayerPreCheck(videoName) {
-  if (Window.Vinya[videoName][Window.Vinya.DOMElements.languages.value] === undefined) {
-    Window.Vinya.DOMElements.videoError.innerText = Window.Vinya.errorMsg;
-    if (Window.Vinya.DOMElements.video != undefined) {
-      Window.Vinya.DOMElements.hide('video');
-    }
-    Window.Vinya.DOMElements.hide('spinner');
-    return false;
-  }
-  return true;
+  localStorage.setItem(Window.Vinya.localKey, tempURL.search);
 }
