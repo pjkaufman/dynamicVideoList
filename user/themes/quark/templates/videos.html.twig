@@ -73,21 +73,25 @@
 
 {% block inlineScript %}
 <script>
-  Window.Vinya = {defLang: '{{~grav.language.getActive~}}'};
-  Object.assign(Window.Vinya, {'errorMsg': '{{ error }}' });
+  Window.Vinya = {
+    defLang: '{{~grav.language.getActive~}}',
+    errorMsg: '{{ error }}',
+    videoList: {},
+    functions: {},
+    URLParams: {
+      lang: "lang", 
+      title: "video", 
+      time: "time",
+      sub: "sub"
+    }
+  };
   {% for video in videos %}
-    Object.assign(Window.Vinya, {'{{ video.name }}': {} });
-    Object.assign(Window.Vinya['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });
+    Object.assign(Window.Vinya.videoList, {'{{ video.name }}': {} });
+    Object.assign(Window.Vinya.videoList['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });
     {% for id in video.ids %}
-      Object.assign(Window.Vinya['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
+      Object.assign(Window.Vinya.videoList['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
     {% endfor %}
   {% endfor %}
-  Window.Vinya.URLParams = {
-    lang: "lang", 
-    title: "video", 
-    time: "time",
-    sub: "sub"
-  };
   // this function runs itself
   (function(){
     var lastParams = localStorage.getItem('params');

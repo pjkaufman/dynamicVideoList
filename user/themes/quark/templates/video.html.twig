@@ -14,20 +14,22 @@
 <script>
   Window.Vinya = {
     defLang: '{{~grav.language.getActive~}}',
-    videoTitle: '{{ page.header.videoTitle }}'
+    videoTitle: '{{ page.header.videoTitle }}',
+    errorMsg: '{{ error }}',
+    videoList: {},
+    functions: {},
+    URLParams: {
+      lang: "lang",  
+      time: "time",
+      sub: "sub"
+    }
   };
-  Object.assign(Window.Vinya, {'errorMsg': '{{ error }}'});
   {% for video in videos %}
-    Object.assign(Window.Vinya, {'{{ video.name }}': {} })
+    Object.assign(Window.Vinya.videoList, {'{{ video.name }}': {} })
     {% for id in video.ids %}
-      Object.assign(Window.Vinya['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
+      Object.assign(Window.Vinya.videoList['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
     {% endfor %}
   {% endfor %}
-  Window.Vinya.URLParams = {
-    lang: "lang", 
-    time: "time",
-    sub: "sub"
-  };
   // this function runs itself
   (function(){
     var lastParams = localStorage.getItem('videoParams');

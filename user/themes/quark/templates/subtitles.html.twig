@@ -17,12 +17,14 @@
 <script>
   Window.Vinya = {
     defLang: '{{~grav.language.getActive~}}',
-    videoID: '{{ page.header.videoID }}'
-    };
-  Object.assign(Window.Vinya, {'errorMsg': '{{ error }}'});
-  Window.Vinya.URLParams = { 
-    time: "time",
-    sub: "sub"
+    videoID: '{{ page.header.videoID }}',
+    errorMsg: '{{ error }}',
+    videoList: {},
+    functions: {},
+    URLParams: { 
+      time: "time",
+      sub: "sub"
+    }
   };
   // this function runs itself
   (function(){
