@@ -60,6 +60,23 @@ Window.Vinya.functions.changeVideo = function changeVideo(videoName, languageCha
 }
 
 /**
+ * Determines if it is possible to load the desired video and displays
+ * the appropriate response if it is not possible.
+ * @returns whether or not the desired video is in the current video list.
+ */
+Window.Vinya.functions.videoPlayerPreCheck = function videoPlayerPreCheck(videoName) {
+  if (Window.Vinya.videoList[videoName][Window.Vinya.DOMElements.languages.value] === undefined) {
+    Window.Vinya.DOMElements.videoError.innerText = Window.Vinya.errorMsg;
+    if (Window.Vinya.DOMElements.video != undefined) {
+      Window.Vinya.DOMElements.hide('video');
+    }
+    Window.Vinya.DOMElements.hide('spinner');
+    return false;
+  }
+  return true;
+}
+
+/**
  * Takes a param name and a value and stores that value as the value of the url param.
  * @param {String} param is the param that will added or updated with the val;
  * @param {*} val is the value to put in the url.
@@ -118,22 +135,5 @@ Window.Vinya.functions.updateStorage = function updateStorage() {
     tempURL.searchParams.append(Window.Vinya.URLParams.lang, Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.lang));
   }
   // store the parameters and current url base
-  localStorage.setItem('videoParams', tempURL.search);
-}
-
-/**
- * Determines if it is possible to load the desired video and displays
- * the appropriate response if it is not possible.
- * @returns whether or not the desired video is in the current video list.
- */
-Window.Vinya.functions.videoPlayerPreCheck = function videoPlayerPreCheck(videoName) {
-  if (Window.Vinya.videoList[videoName][Window.Vinya.DOMElements.languages.value] === undefined) {
-    Window.Vinya.DOMElements.videoError.innerText = Window.Vinya.errorMsg;
-    if (Window.Vinya.DOMElements.video != undefined) {
-      Window.Vinya.DOMElements.hide('video');
-    }
-    Window.Vinya.DOMElements.hide('spinner');
-    return false;
-  }
-  return true;
+  localStorage.setItem(Window.Vinya.localKey, tempURL.search);
 }

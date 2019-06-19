@@ -16,6 +16,7 @@
     defLang: '{{~grav.language.getActive~}}',
     videoTitle: '{{ page.header.videoTitle }}',
     errorMsg: '{{ error }}',
+    localKey: '{{ page.header.pageIdentifier }}',
     videoList: {},
     functions: {},
     URLParams: {
@@ -32,7 +33,7 @@
   {% endfor %}
   // this function runs itself
   (function(){
-    var lastParams = localStorage.getItem('videoParams');
+    var lastParams = localStorage.getItem(Window.Vinya.localKey);
     // add the appropriate params to the website if they exist
     if (lastParams != undefined && window.location.search === '' && !window.location.href.includes(lastParams)) {
      window.location.search = lastParams;

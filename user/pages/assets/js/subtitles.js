@@ -68,5 +68,5 @@ Window.Vinya.functions.updateStorage = function updateStorage() {
     tempURL.searchParams.append(Window.Vinya.URLParams.sub,Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.sub));
   }
   // store the parameters and current url base
-  localStorage.setItem('subParams', tempURL.search);
+  localStorage.setItem(Window.Vinya.localKey, tempURL.search);
 }

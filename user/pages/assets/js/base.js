@@ -31,6 +31,15 @@ Window.Vinya.functions.URLContainsParam = function URLContainsParam() {
 }
 
 /**
+ * updates the time in the url.
+ */
+Window.Vinya.functions.updateURLTime = function updateURLTime() {
+  Window.Vinya.player.getCurrentTime().then(function(seconds) {
+    Window.Vinya.functions.updateURL(Window.Vinya.URLParams.time, seconds);
+  });
+}
+
+/**
  * Creates an iframe using the video name and language to select the appropriate link for the Window.Vinya.DOMElements.video.
  * @param {String} videoID is the id of the desired video.
  */
@@ -57,15 +66,6 @@ Window.Vinya.functions.createVimeoPlayer = function createVimeoPlayer(videoID) {
 }
 
 /**
- * updates the time in the url.
- */
-Window.Vinya.functions.updateURLTime = function updateURLTime() {
-  Window.Vinya.player.getCurrentTime().then(function(seconds) {
-    Window.Vinya.functions.updateURL(Window.Vinya.URLParams.time, seconds);
-  });
-}
-
-  /**
  * Gets the subtitles and captions for the video and then adds them to the
  * select for subtitles. It also selects the subtitle value listed in url 
  * parameter if it exists. 
