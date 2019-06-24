@@ -10,14 +10,14 @@ Window.Vinya.functions.addEventListeners = function addEventListeners() {
       Window.Vinya.player.enableTextTrack(Window.Vinya.DOMElements.subtitles.value);
     }
   });
-}
+};
 
 /**
  * Displays the video selected by the user.
  */
 Window.Vinya.functions.displaySelectedVideo = function displaySelectedVideo() {
   Window.Vinya.functions.createVimeoPlayer(Window.Vinya.videoID);
-}
+};
 
 /**
  * Takes a param name and a value and stores that value as the value of the url param.
@@ -39,7 +39,7 @@ Window.Vinya.functions.updateURL = function updateURL(param, val) {
     window.history.pushState({path:Window.Vinya.url.href},'',Window.Vinya.url.href);
   }
   Window.Vinya.functions.updateStorage();
-}
+};
 
 /**
  * Determines which if any of the videos are in the URL and displays
@@ -56,7 +56,7 @@ Window.Vinya.functions.parseURL = function parseURL() {
   if (params.has(Window.Vinya.URLParams.sub)) {
     Window.Vinya.player.enableTextTrack(sub);
   }
-}
+};
 
 /**
  * Updates the url parameters in storage by removing all unnecesary url params. 
@@ -69,4 +69,4 @@ Window.Vinya.functions.updateStorage = function updateStorage() {
   }
   // store the parameters and current url base
   localStorage.setItem(Window.Vinya.localKey, tempURL.search);
-}
+};

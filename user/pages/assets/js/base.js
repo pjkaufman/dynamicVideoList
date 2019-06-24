@@ -1,4 +1,4 @@
-"use strict;"
+"use strict";
 /**
  * This file has all of the functions that stay the same between the three 
  * different versions of the video player.  
@@ -15,20 +15,20 @@ Window.Vinya.functions.fixURLForLanguage = function fixURLForLanguage(lang) {
   url = url.substring(0, url.lastIndexOf('/'));
   url += '/' + lang + endpoint;
   return url;
-}
+};
 
 /**
  * Checks to see if the URL contains any parameters.
  * @returns whether or not the url has any url parameters in it.
  */
 Window.Vinya.functions.URLContainsParam = function URLContainsParam() {
-  for (key in Window.Vinya.URLParams) {
+  for (var key in Window.Vinya.URLParams) {
     if (Window.Vinya.url.searchParams.has(Window.Vinya.URLParams[key])) {
       return true;
     }
   }
   return false;
-}
+};
 
 /**
  * updates the time in the url.
@@ -37,7 +37,7 @@ Window.Vinya.functions.updateURLTime = function updateURLTime() {
   Window.Vinya.player.getCurrentTime().then(function(seconds) {
     Window.Vinya.functions.updateURL(Window.Vinya.URLParams.time, seconds);
   });
-}
+};
 
 /**
  * Creates an iframe using the video name and language to select the appropriate link for the Window.Vinya.DOMElements.video.
@@ -63,7 +63,7 @@ Window.Vinya.functions.createVimeoPlayer = function createVimeoPlayer(videoID) {
     Window.Vinya.DOMElements.video.setAttribute('class' , 'resp-iframe');
     Window.Vinya.functions.getTextTracks();         
   });
-}
+};
 
 /**
  * Gets the subtitles and captions for the video and then adds them to the
@@ -103,4 +103,4 @@ Window.Vinya.functions.getTextTracks = function getTextTracks() {
     Window.Vinya.DOMElements.hide('spinner');
     Window.Vinya.DOMElements.display('video');
   });
-}
+};
