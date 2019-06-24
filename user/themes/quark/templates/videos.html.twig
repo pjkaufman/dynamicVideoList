@@ -110,10 +110,10 @@
   })();
 </script>
 {% endblock %}
-{% do assets.addJs('https://player.vimeo.com/api/player.js', {priority: 7, loading: 'defer', position: 'after'}) %}
-{% do assets.addJs('page://assets/js/base.js', {priority: 6, loading: 'defer', position: 'after'}) %}
+{% do assets.addJs('https://player.vimeo.com/api/player.js', {priority: 107, loading: 'defer', position: 'before'}) %}
+{% do assets.addJs('page://assets/js/base.js', {priority: 106, loading: 'defer', position: 'before'}) %}
 {% block javascriptFunctions %}
-  {% do assets.addJs('page://assets/js/videos.js', {priority: 5, loading: 'defer', position: 'after'}) %}
+  {% do assets.addJs('page://assets/js/videos.js', {priority: 105, loading: 'defer', position: 'before'}) %}
 {% endblock %}
-{% do assets.addJs('page://assets/js/main.js', {priority: 4, loading: 'defer', position: 'after'}) %}
+{% do assets.addJs('page://assets/js/main.js', {priority: 104, loading: 'defer', position: 'before'}) %}
 {% endblock %}
