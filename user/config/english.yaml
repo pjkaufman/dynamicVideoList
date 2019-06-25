@@ -1,0 +1,50 @@
+videos: 
+  - name: Ep. 1
+    title:
+      en: God Makes the World
+      es: Dios Hace al Mundo
+    ids: 
+      - id: 210999824
+        language: en
+  - name: Ep. 2
+    title:
+      en: When Sin Entered The World
+      es: Cuando el Pecado Entró al Mundo
+    ids:
+      - id: 233860107
+        language: en
+  - name: Ep. 3
+    title:
+      en: Noah and the Fload
+      es: Noé y el Diluvio
+    ids:
+      - id: 234338529
+        language: en
+
+languages: 
+  en:
+    - name: English
+      code: en
+  es:
+    - name: Inglés
+      code: en
+    
+select:
+  en:
+    languages: "Select a language:"
+    videos: "Select a video:"
+    subtitles: "Select a subtitle:"
+    empty: "Off"
+    next: "Next"
+    back: "Back"
+  es:
+    languages: "Escoge una idioma:"
+    videos: "Escoge un video:"
+    subtitles: "Escoge un subtitulo:"
+    empty: "Apagar"
+    next: "Adelante"
+    back: "Atras"
+
+error: 
+  en: "The video you are trying to select does not exist in this language."
+  es: "El video que intenta seleccionar no existe en este idioma."
