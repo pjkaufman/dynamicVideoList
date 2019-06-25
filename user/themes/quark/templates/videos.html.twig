@@ -8,7 +8,7 @@
 {% endif %}
 
 {% block content %} 
-{% do assets.addCss('page://assets/css/videos.css') %}
+{% do assets.addCss('theme://css/videos.css') %}
 <div id="swapLanguage">
   <p>
     <a href="" id="en" >English</a>
@@ -111,9 +111,9 @@
 </script>
 {% endblock %}
 {% do assets.addJs('https://player.vimeo.com/api/player.js', {priority: 107, loading: 'defer', position: 'before'}) %}
-{% do assets.addJs('page://assets/js/base.js', {priority: 106, loading: 'defer', position: 'before'}) %}
+{% do assets.addJs('theme://js/base.js', {priority: 106, loading: 'defer', position: 'before'}) %}
 {% block javascriptFunctions %}
-  {% do assets.addJs('page://assets/js/videos.js', {priority: 105, loading: 'defer', position: 'before'}) %}
+  {% do assets.addJs('theme://js/videos.js', {priority: 105, loading: 'defer', position: 'before'}) %}
 {% endblock %}
-{% do assets.addJs('page://assets/js/main.js', {priority: 104, loading: 'defer', position: 'before'}) %}
+{% do assets.addJs('theme://js/main.js', {priority: 104, loading: 'defer', position: 'before'}) %}
 {% endblock %}
