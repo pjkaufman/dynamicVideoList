@@ -1,10 +1,32 @@
 {% extends 'partials/base.html.twig' %}
 
-{% set select = attribute(config.video.select, grav.language.getActive) %}
-{% set error = attribute(config.video.error, grav.language.getActive) %}
-{% set languages = attribute(config.video.languages, grav.language.getActive) %}
+{# Determine what the config file is #}
+{% if page.header.configFile is defined %}
+  {% set configFile = attribute(config, page.header.configFile) %}
+{% else %}
+  {% set configFile = config.video %}
+{% endif %}
+{# Determine where to get the text options from #}
+{% if page.header.textListConfig is defined and page.header.textListConfig == false %}
+  {% set select = page.header.select %}
+  {% set error = page.header.error %}
+{% else %}
+  {% set select = attribute(configFile.select, grav.language.getActive) %}
+  {% set error = attribute(configFile.error, grav.language.getActive) %}
+{% endif %}
+{# Determine where to get the language list from #}
+{% if page.header.languageListConfig is defined and page.header.languageListConfig == false %}
+  {% set languages = page.header.languages %}
+{% else %}
+  {% set languages = attribute(configFile.languages, grav.language.getActive) %}
+{% endif %}
+{# Determine where to get the video list from #}
 {% if page.header.videoList is defined %}
-  {% set videos = attribute(config.video, page.header.videoList) %}
+  {% if page.header.videoListConfig is defined and page.header.videoListConfig == false %}
+    {% set videos = attribute(page.header, page.header.videoList) %}
+  {% else %}
+    {% set videos = attribute(configFile, page.header.videoList) %}
+  {% endif %}
 {% endif %}
 
 {% block content %} 

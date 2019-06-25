@@ -14,6 +14,7 @@ Allows a user to dynamically choose what video they want to watch based on the e
   - [URL Parameters](#URL-Parameters-1)
   - [Subtitle List](#Subtitle-List)
   - [Visible Options](#Visible-Options)
+  - [YAML Front Matter Options](#YAML-Front-Matter-Options)
 - [Types](#Types)
 - [Uses](#Uses)
 
@@ -163,6 +164,21 @@ This video player allows the user to select a subtilte from a list of subtitles 
 This option requires that in the YAML front matter of the page there is an option called `videoID`. videoID should be a valid Vimeo ID for the video to load.
 
 In order to use this template, make sure the Markdown files is called `subtitles.*.*md` or `subtitles.md`.
+
+### YAML Front Matter Options
+
+| Name | Value and What It Does | Default | Required |
+| ---- | ---------------------- | ------- | -------- |
+| `configFile`  | The name of the config file to use | video | Optional |
+| `languageListConfig` | Either true or false. It determines whether the language list to use is defined in a config file or the Front Matter of the page. | true | Optional |
+| `pageIdentifier` | Should be sting of characters unique to the page. It allows for the storing of user based information. </br> _Note: if two different pages have the same pageIdentifier value the data stored about the user will be the same for both and can override the data of the other page_ | NA | Required |
+| `textListConfig` |Either true or false. It is used to determine whether the text options to display to the user are defined in a config file or the Front Matter of the page. The text list includes the error message displayed to the user and the text that is above the select boxes. | true | Optional |
+| `videoID` | Should be a valid Vimeo ID and is only needed for the subtitles template. </br> _Note: an invalid ID value will cause the video to not load_ | NA | Optional* |
+| `videoList` | The name of the video list to use. It can either be defined in the Front Matter of the page or a config file. It is the key for the video list. It is needed for both the videos and video template. | NA | Optional* |
+| `videoListConfig` | Either true or false. It is used to determine whether the video list to use is found in a config file or the Front Matter of the page. | true | Optional |
+| `videoTitle` | The name of a video in the specified video list to use and is only needed for the video template. | NA | Optional* |
+_* Optional unless using the specified template_
+_Note: if any list is being read from the YAML Front Matter it does not need the language based option. For example languages has en and es for language options in the config files, but they are not needed when it is in the Front Matter._
 
 ## Uses
 
