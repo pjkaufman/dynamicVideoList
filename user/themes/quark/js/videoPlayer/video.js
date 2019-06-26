@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Adds event listeners for each of the select options.
  */

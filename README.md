@@ -15,6 +15,7 @@ Allows a user to dynamically choose what video they want to watch based on the e
   - [Subtitle List](#Subtitle-List)
   - [Visible Options](#Visible-Options)
   - [YAML Front Matter Options](#YAML-Front-Matter-Options)
+  - [Javascript](#Javascript)
 - [Types](#Types)
 - [Uses](#Uses)
 
@@ -178,7 +179,18 @@ In order to use this template, make sure the Markdown files is called `subtitles
 | `videoListConfig` | Either true or false. It is used to determine whether the video list to use is found in a config file or the Front Matter of the page. | true | Optional |
 | `videoTitle` | The name of a video in the specified video list to use and is only needed for the video template. | NA | Optional* |
 _* Optional unless using the specified template_
+
 _Note: if any list is being read from the YAML Front Matter it does not need the language based option. For example languages has en and es for language options in the config files, but they are not needed when it is in the Front Matter._
+
+### JavaScript
+
+Each of the templates uses a minified javascript file that follows the concatenation pattern before being minified:
+- base.js
+- [template_name].js
+- main.js
+
+The minified files follow the naming patern [template_name].min.js.
+
 
 ## Uses
 
