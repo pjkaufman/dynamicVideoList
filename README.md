@@ -15,7 +15,9 @@ Allows a user to dynamically choose what video they want to watch based on the e
   - [Subtitle List](#Subtitle-List)
   - [Visible Options](#Visible-Options)
   - [YAML Front Matter Options](#YAML-Front-Matter-Options)
-  - [Javascript](#JavaScript)
+  - [Resources](#Resources)
+    - [JavaScript](#JavaScript)
+    - [CSS](#CSS)
 - [Types](#Types)
 - [Uses](#Uses)
 
@@ -55,7 +57,7 @@ The video list is where both the Dynamic Video Player and Video Language Player 
 
 You can do any of three things to modify the video list:
 
-1. Modify the yaml config file `user\config\video.yaml` to modify or add a video list. This is the default way that the Dynanic Video Player and Video Player get their video list.
+1. Modify the yaml config file `user\config\video.yaml` to modify or add a video list. This is the default way that the Dynamic Video Player and Video Player get their video list.
 
 2. Create a new config file and add the video list there. <br> _Note: this option requires that the language list and text based options be defined in the config file as well._
 
@@ -83,7 +85,7 @@ The list that contains the languages that the videos are available in and the la
 
 You can do any of three things to modify the language list:
 
-1. Modify the yaml config file `user\config\video.yaml` to modify the language lsit. This is the default way that the Dynanic Video Player and Video Player get their language list.
+1. Modify the yaml config file `user\config\video.yaml` to modify the language lsit. This is the default way that the Dynamic Video Player and Video Player get their language list.
 
 2. Create a new config file and add the language list there. <br> _Note: this option requires that the video list and text based options be defined in the config file as well._
 
@@ -193,7 +195,18 @@ _* Optional unless using the specified template_
 
 _Note: if any list is being read from the YAML Front Matter it does not need the language based option except the titles option of the videos list. For example languages has en and es for language options in the config files, but they are not needed when it is in the Front Matter._
 
+### Resources
+
+The JavaScript files are located in `user/themes/quark/js/videoPlayer/` and the CSS files are located in `user/themes/quark/css/videoPlayer/`.
+
+If any modification is made to these files, run the following in the base directory of the repository in command window that you are not currently using because it will continue running until you manually stop it:
+```
+npm run-script build
+```
+This command will concatenate and then minify all css files, concatenate and minify all specified JavaScript file recipes, and watch for any changes in these files in which case it will reminifiy and concatenate the appropriate files.
+
 ## Uses
 
 - [Grav](https://getgrav.org/)
 - [Vimeo API](https://github.com/vimeo/player.js#vimeo-player-api---)
+- [Gulp via Node for concatenating and minifying resources](https://gulpjs.com/)
