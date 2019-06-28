@@ -1,0 +1,13 @@
+email: PeterJamesKaufman@gmail.com
+fullname: Administrator
+title: 'Site Administrator'
+access:
+  admin:
+    super: 'true'
+    login: 'true'
+    users: 'true'
+state: enabled
+hashed_password: $2y$10$X7IzWzCyCVch3mWLWvyVoe7IAEge9vv7ta5GDp38EFDQf0KXNAjJG
+language: en
+twofa_enabled: false
+twofa_secret: 6KRJYWH74RY5VINESYRIN2LZEPNQYZ5A

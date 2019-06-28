@@ -1,7 +1,7 @@
-title: Grav
+title: VideoPlayer
 author:
-  name: Joe Bloggs
+  name: Peter Kaufman
   email: 'joe@example.com'
 metadata:
-    description: 'Grav is an easy to use, yet powerful, open source flat-file CMS'
+    description: 'The site allows users to dynamically load videos using a variety of options'
 
