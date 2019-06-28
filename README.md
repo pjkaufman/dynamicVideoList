@@ -189,6 +189,7 @@ In order to use this template, make sure the Markdown files is called `subtitles
 | <p id="videoList">`videoList`</p> | The name of the video list to use. It can either be defined in the Front Matter of the page or a config file. It is the key for the video list. It is needed for both the videos and video template. | NA | Optional* |
 | <p id="videoListConfig">`videoListConfig`</p> | Either true or false. It is used to determine whether the video list to use is found in a config file or the Front Matter of the page. | true | Optional |
 | <p id="videoTitle">`videoTitle`</p> | The name of a video in the specified video list to use and is only needed for the video template. | NA | Optional* |
+
 _* Optional unless using the specified template_
 
 _Note: if any list is being read from the YAML Front Matter it does not need the language based option except the titles option of the videos list. For example languages has en and es for language options in the config files, but they are not needed when it is in the Front Matter._
