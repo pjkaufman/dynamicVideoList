@@ -15,19 +15,16 @@ Allows a user to dynamically choose what video they want to watch based on the e
   - [Subtitle List](#Subtitle-List)
   - [Visible Options](#Visible-Options)
   - [YAML Front Matter Options](#YAML-Front-Matter-Options)
-  - [Javascript](#Javascript)
+  - [Javascript](#JavaScript)
 - [Types](#Types)
 - [Uses](#Uses)
 
 ## Installation
 
-Run the following command:
-
+Run the following command in the web content folder of your server:
 ```
 git clone https://github.com/pjkaufman/dynamicVideoList.git
 ```
-
-Then copy the files from the git repository and paste them in the web content folder of your server.
 
 ### Configuration
 
@@ -55,9 +52,16 @@ These parameters are defined and used in Javascript
 ### Video List
 
 The video list is where both the Dynamic Video Player and Video Language Player get their video IDs from.
-You need to modify the yaml config file `user\config\video.yaml` to modify or add a video list.
 
-It will look something like: 
+You can do any of three things to modify the video list:
+
+1. Modify the yaml config file `user\config\video.yaml` to modify or add a video list. This is the default way that the Dynanic Video Player and Video Player get their video list.
+
+2. Create a new config file and add the video list there. <br> _Note: this option requires that the language list and text based options be defined in the config file as well._
+
+3. Create the video list in the YAML front matter of the page. <br> _Note: this option does not require the use of more than the default language for the page in the title option._
+
+The video list looks something like: 
 ``` YAML
 [name_of_video_list]: 
   - name: [name_to_display_here]
@@ -75,7 +79,15 @@ _Note: you can add as many elements to ids as you like as long as the language i
 
 ### Language List
 
-You need to modify the yaml in `user\config\video.yaml` to modify the language list.
+The list that contains the languages that the videos are available in and the language code for the language.
+
+You can do any of three things to modify the language list:
+
+1. Modify the yaml config file `user\config\video.yaml` to modify the language lsit. This is the default way that the Dynanic Video Player and Video Player get their language list.
+
+2. Create a new config file and add the language list there. <br> _Note: this option requires that the video list and text based options be defined in the config file as well._
+
+3. Create the language list in the YAML front matter of the page. <br> _Note: this option does not require the use of the two character language code which store the list of languages and their display name for the language._
 
 It will look something like: 
 ``` YAML
@@ -88,8 +100,7 @@ languages:
     - name: French
       code: fr
 ```
-This list should have a language code for each language you plan to support (the YAML code above would only support English).
-
+This list should have a language code for each language you plan to support (the YAML code above would only support English) unless using the YAML front matter of the page.
 
 ### URL Parameters
 
@@ -113,9 +124,9 @@ This list must be modified in Vimeo.
 
 When editing any of the custom template files (videos.html.twig, video.html.twig, subtitles.html.twig, or any template that extends videos.html.twig), there are 6 blocks to note.
 
-1. The **videoSelect** block which allows the user to select from a video list defined in `user\config\video.yaml`.
+1. The **videoSelect** block which allows the user to select from a video list defined in either `user\config\video.yaml`, a user defined config file, or the YAML front matter of the page.
 
-2. The **languageSelect** block which allows the user to select a language from the language list defined in `user\config\video.yaml`.
+2. The **languageSelect** block which allows the user to select a language from the language list defined ineither `user\config\video.yaml`, a user defined config file, or the YAML front matter of the page.
 
 3. The **subtitleSelect** block which allows the user to select a subtitle from the subtitle list defined in Vimeo.
 
@@ -140,21 +151,21 @@ In order to modify any of these blocks, add the following to your template:
 
 ## Types
 
-There are three different types of video player templates setup in this repository. Each player requires that in the YAML front matter of the page there is an option called `pageIdentifier` which is used to enhance the user experience. 
+There are three different types of video player templates setup in this repository. Each player requires that in the YAML front matter of the page there is an option called [`pageIdentifier`](#pageIdentifier). 
 
 1. Dynamic Video Player
 
-This video player allows the user to select a video from the video list defined in and a language from the languages list which are both defined in `user\config\video.yaml` as well as a subtilte from a list of subtitles which is loaded with the video.
+This video player allows the user to select a video from the video list, a language from the languages list, and a subtilte from a list of subtitles which is loaded with the video.
 
-This option requires that in the YAML front matter of the page there is an option called `videoList`. videoList corresponds to the name of one of the video lists defined in `user\config\video.yaml`.
+This option requires that in the YAML front matter of the page there is an option called [`videoList`](#videoList).
 
 In order to use this template, make sure the Markdown files is called `videos.*.*md` or `videos.md`.
 
 2. Video Language Player
 
-This video player allows the user to select a language from the languages list which is defined in `user\config\video.yaml` as well as a subtilte from a list of subtitles which is loaded with the video.
+This video player allows the user to select a language from the languages list and a subtilte from a list of subtitles which is loaded with the video.
 
-This option requires that in the YAML front matter of the page there are options called `videoTitle` and `videoList`. videoTitle corresponds to the name of one of the video names listed in the video list specified by the `videoList` option which corresponds with a video list in `user\config\video.yaml`.
+This option requires that in the YAML front matter of the page there are options called [`videoTitle`](#videoTitle) and [`videoList`](#videoList). 
 
 In order to use this template, make sure the Markdown files is called `video.*.*md` or `video.md`.
 
@@ -162,7 +173,7 @@ In order to use this template, make sure the Markdown files is called `video.*.*
 
 This video player allows the user to select a subtilte from a list of subtitles which is loaded with the video.
 
-This option requires that in the YAML front matter of the page there is an option called `videoID`. videoID should be a valid Vimeo ID for the video to load.
+This option requires that in the YAML front matter of the page there is an option called [`videoID`](#videoID). 
 
 In order to use this template, make sure the Markdown files is called `subtitles.*.*md` or `subtitles.md`.
 
@@ -170,27 +181,17 @@ In order to use this template, make sure the Markdown files is called `subtitles
 
 | Name | Value and What It Does | Default | Required |
 | ---- | ---------------------- | ------- | -------- |
-| `configFile`  | The name of the config file to use | video | Optional |
-| `languageListConfig` | Either true or false. It determines whether the language list to use is defined in a config file or the Front Matter of the page. | true | Optional |
-| `pageIdentifier` | Should be sting of characters unique to the page. It allows for the storing of user based information. </br> _Note: if two different pages have the same pageIdentifier value the data stored about the user will be the same for both and can override the data of the other page_ | NA | Required |
-| `textListConfig` |Either true or false. It is used to determine whether the text options to display to the user are defined in a config file or the Front Matter of the page. The text list includes the error message displayed to the user and the text that is above the select boxes. | true | Optional |
-| `videoID` | Should be a valid Vimeo ID and is only needed for the subtitles template. </br> _Note: an invalid ID value will cause the video to not load_ | NA | Optional* |
-| `videoList` | The name of the video list to use. It can either be defined in the Front Matter of the page or a config file. It is the key for the video list. It is needed for both the videos and video template. | NA | Optional* |
-| `videoListConfig` | Either true or false. It is used to determine whether the video list to use is found in a config file or the Front Matter of the page. | true | Optional |
-| `videoTitle` | The name of a video in the specified video list to use and is only needed for the video template. | NA | Optional* |
+| <p id="configFile">`configFile`</p> | The name of the config file to use | video | Optional |
+| <p id="languageListConfig">`languageListConfig`</p> | Either true or false. It determines whether the language list to use is defined in a config file or the Front Matter of the page. | true | Optional |
+| <p id="pageIdentifier">`pageIdentifier`</p> | Should be sting of characters unique to the page. It allows for the storing of user based information. </br> _Note: if two different pages have the same pageIdentifier value the data stored about the user will be the same for both and can override the data of the other page_ | NA | Required |
+| <p id="textListConfig">`textListConfig`</p> |Either true or false. It is used to determine whether the text options to display to the user are defined in a config file or the Front Matter of the page. The text list includes the error message displayed to the user and the text that is above the select boxes. | true | Optional |
+| <p id="videoID">`videoID`</p> | Should be a valid Vimeo ID and is only needed for the subtitles template. </br> _Note: an invalid ID value will cause the video to not load_ | NA | Optional* |
+| <p id="videoList">`videoList`</p> | The name of the video list to use. It can either be defined in the Front Matter of the page or a config file. It is the key for the video list. It is needed for both the videos and video template. | NA | Optional* |
+| <p id="videoListConfig">`videoListConfig`</p> | Either true or false. It is used to determine whether the video list to use is found in a config file or the Front Matter of the page. | true | Optional |
+| <p id="videoTitle">`videoTitle`</p> | The name of a video in the specified video list to use and is only needed for the video template. | NA | Optional* |
 _* Optional unless using the specified template_
 
-_Note: if any list is being read from the YAML Front Matter it does not need the language based option. For example languages has en and es for language options in the config files, but they are not needed when it is in the Front Matter._
-
-### JavaScript
-
-Each of the templates uses a minified javascript file that follows the concatenation pattern before being minified:
-- base.js
-- [template_name].js
-- main.js
-
-The minified files follow the naming patern [template_name].min.js.
-
+_Note: if any list is being read from the YAML Front Matter it does not need the language based option except the titles option of the videos list. For example languages has en and es for language options in the config files, but they are not needed when it is in the Front Matter._
 
 ## Uses
 
