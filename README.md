@@ -16,8 +16,6 @@ Allows a user to dynamically choose what video they want to watch based on the e
   - [Visible Options](#Visible-Options)
   - [YAML Front Matter Options](#YAML-Front-Matter-Options)
   - [Resources](#Resources)
-    - [JavaScript](#JavaScript)
-    - [CSS](#CSS)
 - [Types](#Types)
 - [Uses](#Uses)
 
@@ -204,6 +202,7 @@ If any modification is made to these files, run the following in the base direct
 npm run-script build
 ```
 This command will concatenate and then minify all css files, concatenate and minify all specified JavaScript file recipes, and watch for any changes in these files in which case it will reminifiy and concatenate the appropriate files.
+_Note: it will be necessary that you run `npm install` in the base directory before running this command for the first time._
 
 ## Uses
 
