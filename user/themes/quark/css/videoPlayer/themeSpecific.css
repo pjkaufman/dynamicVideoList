@@ -1,0 +1,3 @@
+.header-fixed #header { /* fixes issue where selects go over navbar */
+  z-index: 9999;
+}

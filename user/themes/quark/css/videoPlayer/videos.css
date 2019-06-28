@@ -19,10 +19,6 @@ body, #swapLanguage, #swapLanguage > p > a, #videoBtnOptions > a {
   position: relative;
 }
 
-.header-fixed #header { /* fixes issue where selects go over navbar */
-  z-index: 9999;
-}
-
 .hidden {
   display: none;
 }
