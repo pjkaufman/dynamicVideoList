@@ -1,0 +1,8 @@
+state: enabled
+email: PeterJamesKaufman@gmail.com
+fullname: 'Peter James Kaufman'
+level: Newbie
+access:
+  site:
+    login: 'true'
+hashed_password: $2y$10$NSfTmISCT3yvPknbCpeaI.SyCloC8HVGsPW1RLC2KiuTt0xwupV0G

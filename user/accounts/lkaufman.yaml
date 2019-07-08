@@ -1,0 +1,8 @@
+state: enabled
+email: lkaufman@comporium.net
+fullname: 'Loralie E Kaufman'
+level: Newbie
+access:
+  site:
+    login: 'true'
+hashed_password: $2y$10$8Cq0Shfq/bHxcQlnrATUduvcGVobWgMsGbuAmYffGTGhvaYa6eiKO
