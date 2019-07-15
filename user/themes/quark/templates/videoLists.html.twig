@@ -1,0 +1,68 @@
+{% extends 'videos.html.twig' %}
+
+{% block videoList %}
+{% endblock %}
+
+{% block content %}
+{# Setup the videoLists #}
+{% set videoLists =  attribute(configFile, page.header.listContainer) %}
+{# Determine where to get the initial video list from #}
+{% set videos = attribute(videoLists, page.header.defaultList) %}
+{{ parent() }}
+{% endblock %}
+{% block videoSelect %}
+  <div id="videoListOptions">
+    <p>Select a Video List: </p>
+    <div class="select">
+      <select id="videoLists">
+        {% for list in page.header.videoList %}
+          <option value="{{ list }}">{{ list }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  {{ parent() }}
+  {% block inlineScript %}
+<script>
+  Window.Vinya = {
+    defLang: '{{~grav.language.getActive~}}',
+    errorMsg: '{{ error }}',
+    localKey: '{{ page.header.pageIdentifier }}',
+    videoList: {},
+    functions: {},
+    URLParams: {
+      lang: "lang", 
+      title: "video", 
+      time: "time",
+      sub: "sub"
+    }
+  };
+  {% for list in page.header.videoList %}
+    Object.assign(Window.Vinya.videoList, {'{{ list }}': {}});
+    {% for video in attribute(videoLists, list) %}
+      Object.assign(Window.Vinya.videoList['{{ list }}'], {'{{ video.name }}': {} });
+      Object.assign(Window.Vinya.videoList['{{ list }}']['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });
+      {% for id in video.ids %}
+        Object.assign(Window.Vinya.videoList['{{ list }}']['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
+      {% endfor %}
+    {% endfor %}
+  {% endfor %}
+  // this function runs itself
+  (function(){
+    var lastParams = localStorage.getItem(Window.Vinya.localKey);
+    // add the appropriate params to the website if they exist
+    if (lastParams != undefined && window.location.search === '' && !window.location.href.includes(lastParams)) {
+     window.location.search = lastParams;
+    }
+    var tempURL = new URL(window.location.href);
+    if (!tempURL.searchParams.has(Window.Vinya.URLParams.lang)) {
+      tempURL.searchParams.append(Window.Vinya.URLParams.lang, Window.Vinya.defLang);
+      // update the browser history
+      if (history.pushState) {
+        window.history.pushState({path:window.location.href},'',tempURL.href);
+      }
+    }
+  })();
+</script>
+{% endblock %}
+{% endblock %}
