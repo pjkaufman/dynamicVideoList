@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function(){
     videoError: document.getElementById('videoError'),
     subtitles: document.getElementById('subtitles'),
     spinner: document.getElementById('loading'),
+    videoLists: document.getElementById('videoLists'),
     video: undefined,
     hide: function (property) {
       if (this[property].classList.length.length === 0) {

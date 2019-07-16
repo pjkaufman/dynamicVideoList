@@ -21,6 +21,7 @@
   {% set languages = attribute(configFile.languages, grav.language.getActive) %}
 {% endif %}
 {# Determine where to get the video list from #}
+{% block videoList %}
 {% if page.header.videoList is defined %}
   {% if page.header.videoListConfig is defined and page.header.videoListConfig == false %}
     {% set videos = attribute(page.header, page.header.videoList) %}
@@ -28,6 +29,7 @@
     {% set videos = attribute(configFile, page.header.videoList) %}
   {% endif %}
 {% endif %}
+{% endblock %}
 
 {% block content %} 
 {% do assets.addCss('theme://css/videos.min.css') %}

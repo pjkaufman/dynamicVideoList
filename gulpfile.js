@@ -13,6 +13,9 @@ gulp.task('js', function(){
       .pipe(gulp.dest('user/themes/quark/js/')) && gulp.src(['user/themes/quark/js/videoPlayer/base.js', 'user/themes/quark/js/videoPlayer/subtitles.js', 'user/themes/quark/js/videoPlayer/main.js'])
       .pipe(concat('subtitlesPlayer.min.js'))
       .pipe(uglify())
+      .pipe(gulp.dest('user/themes/quark/js/')) && gulp.src(['user/themes/quark/js/videoPlayer/base.js', 'user/themes/quark/js/videoPlayer/videoLists.js', 'user/themes/quark/js/videoPlayer/main.js'])
+      .pipe(concat('videoListsPlayer.min.js'))
+      .pipe(uglify())
       .pipe(gulp.dest('user/themes/quark/js/'));
 });
 

@@ -1,0 +1,119 @@
+lists: 
+  english:
+    - name: Ep. 1
+      title:
+        en: God Makes the World
+        es: Dios Hace al Mundo
+      ids: 
+        - id: 210999824
+          language: en
+    - name: Ep. 2
+      title:
+        en: When Sin Entered The World
+        es: Cuando el Pecado Entró al Mundo
+      ids:
+        - id: 233860107
+          language: en
+    - name: Ep. 3
+      title:
+        en: Noah and the Fload
+        es: Noé y el Diluvio
+      ids:
+        - id: 234338529
+          language: en
+  spanish: 
+    - name: Ep. 1
+      title:
+        en: God Makes the World
+        es: Dios Hace al Mundo
+      ids: 
+        - id: 177244126
+          language: es
+    - name: Ep. 2
+      title:
+        en: When Sin Entered The World
+        es: Cuando el Pecado Entró al Mundo
+      ids:
+        - id: 177293932
+          language: es
+    - name: Ep. 3
+      title:
+        en: Noah and the Fload
+        es: Noé y el Diluvio
+      ids:
+        - id: 177417325
+          language: es
+    - name: Ep. 4
+      title:
+        en: The Sons of Abraham
+        es: Los Hijos de Abraham
+      ids:
+        - id: 27726252
+          language: es
+    - name: Ep. 5
+      title:
+        en: Joseph the Loved Son, Slave, and Governor
+        es: José Hijo amado, esclavo y gobernador
+      ids:
+        - id: 74403242
+          language: es
+    - name: Ep. 6
+      title:
+        en: God Frees His People
+        es: Dios libera a su pueblo
+      ids:
+        - id: 73814356
+          language: es
+    - name: Ep. 7
+      title:
+        en: God and His People in the Desert
+        es: Dios y su pueblo en el desierto
+      ids:
+        - id: 194721481
+          language: es
+    - name: Ep. 8
+      title:
+        en: Faith Behind the Wall
+        es: Fe detrás de la muralla
+      ids:
+        - id: 133693604
+          language: es
+    - name: Ep. 9
+      title:
+        en: Give Me a Signal
+        es: Dame una señal
+      ids:
+        - id: 210653772
+          language: es
+
+languages: 
+  en:
+    - name: English
+      code: en
+    - name: Spanish
+      code: es
+  es:
+    - name: Inglés
+      code: en
+    - name: Espanol
+      code: es
+    
+select:
+  en:
+    languages: "Select a language:"
+    videos: "Select a video:"
+    subtitles: "Select a subtitle:"
+    empty: "Off"
+    next: "Next"
+    back: "Back"
+  es:
+    languages: "Escoge una idioma:"
+    videos: "Escoge un video:"
+    subtitles: "Escoge un subtitulo:"
+    empty: "Apagar"
+    next: "Adelante"
+    back: "Atras"
+
+error: 
+  en: "The video you are trying to select does not exist in this language."
+  es: "El video que intenta seleccionar no existe en este idioma."

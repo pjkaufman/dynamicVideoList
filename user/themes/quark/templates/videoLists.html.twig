@@ -22,7 +22,8 @@
     </div>
   </div>
   {{ parent() }}
-  {% block inlineScript %}
+{% endblock %}
+{% block inlineScript %}
 <script>
   Window.Vinya = {
     defLang: '{{~grav.language.getActive~}}',
@@ -34,8 +35,10 @@
       lang: "lang", 
       title: "video", 
       time: "time",
-      sub: "sub"
-    }
+      sub: "sub",
+      list: "list"
+    },
+    defaultList: '{{ page.header.defaultList }}'
   };
   {% for list in page.header.videoList %}
     Object.assign(Window.Vinya.videoList, {'{{ list }}': {}});
@@ -65,4 +68,7 @@
   })();
 </script>
 {% endblock %}
+
+{% block javascriptFunctions %}
+  {% do assets.addJs('theme://js/videoListsPlayer.min.js', {priority: 106, loading: 'defer', position: 'before'}) %}
 {% endblock %}
