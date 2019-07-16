@@ -232,6 +232,10 @@ Window.Vinya.functions.updateStorage = function updateStorage() {
   if (Window.Vinya.url.searchParams.has(Window.Vinya.URLParams.title)) {
     tempURL.searchParams.append(Window.Vinya.URLParams.title, Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.title));
   }
+
+  if (Window.Vinya.url.searchParams.has(Window.Vinya.URLParams.list)) {
+    tempURL.searchParams.append(Window.Vinya.URLParams.list, Window.Vinya.url.searchParams.get(Window.Vinya.URLParams.list));
+  }
   // store the parameters and current url base
   localStorage.setItem(Window.Vinya.localKey, tempURL.search);
 };
