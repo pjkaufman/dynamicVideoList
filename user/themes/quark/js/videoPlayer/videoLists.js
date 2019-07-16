@@ -45,7 +45,7 @@ Window.Vinya.functions.addEventListeners = function addEventListeners() {
     Window.Vinya.functions.changeVideo(epsiodeFormat + back, false);
   });
 
-  Window.Vinya.DOMElements.videoLists.addEventListener("change", function(){
+  Window.Vinya.DOMElements.videoLists.addEventListener("change", function() {
     Window.Vinya.defaultList = this.value;
     // update the current video list values
     Window.Vinya.functions.refreshVideoList(this.value);
@@ -96,7 +96,6 @@ Window.Vinya.functions.displaySelectedVideo = function displaySelectedVideo() {
   // display the selected video
   if (Window.Vinya.player === undefined ) {
     if (Window.Vinya.functions.videoPlayerPreCheck(title)) {
-      console.log(Window.Vinya.videoList[Window.Vinya.defaultList]);
       Window.Vinya.functions.createVimeoPlayer(Window.Vinya.videoList[Window.Vinya.defaultList][title][lang]);
       Window.Vinya.functions.updateURL(Window.Vinya.URLParams.title, title);
       Window.Vinya.functions.updateURL(Window.Vinya.URLParams.lang, lang);
@@ -142,8 +141,6 @@ Window.Vinya.functions.changeVideo = function changeVideo(videoName, languageCha
  * @returns whether or not the desired video is in the current video list.
  */
 Window.Vinya.functions.videoPlayerPreCheck = function videoPlayerPreCheck(videoName) {
-  console.log(Window.Vinya.videoList[Window.Vinya.defaultList]);
-  console.log()
   if (Window.Vinya.videoList[Window.Vinya.defaultList][videoName][Window.Vinya.DOMElements.languages.value] === undefined) {
     Window.Vinya.DOMElements.videoError.innerText = Window.Vinya.errorMsg;
     if (Window.Vinya.DOMElements.video != undefined) {
@@ -205,7 +202,7 @@ Window.Vinya.functions.parseURL = function parseURL() {
   }
   Window.Vinya.functions.fixBtnDisplay(title);
   if (list != undefined) {
-    Window.Vinya.DOMElements.videoLists = list;
+    Window.Vinya.DOMElements.videoLists.value = list;
     Window.Vinya.defaultList = list;
   }
   if (Window.Vinya.functions.videoPlayerPreCheck(title)) {
@@ -247,7 +244,6 @@ Window.Vinya.functions.refreshVideoList = function refreshVideoList(videoList) {
   var newVideoList = '';
   Window.Vinya.DOMElements.videoList.innerHTML = '';
   Object.keys(Window.Vinya.videoList[videoList]).forEach(function(key) {
-    console.log(key);
     newVideoList += '<option value="' + key + '">' + key + '</option>';
   });
   Window.Vinya.DOMElements.videoList.innerHTML = newVideoList;
