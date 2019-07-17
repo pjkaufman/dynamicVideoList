@@ -79,6 +79,9 @@ $RECYCLE.BIN/
 # Grav Specific
 .sass-cache
 composer.lock
+user/accounts/*
+!user/accounts/.gitkeep
+!user
 cache/*/*
 cache/*
 !cache/*/.gitkeep

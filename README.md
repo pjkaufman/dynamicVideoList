@@ -46,6 +46,7 @@ These parameters are defined and used in JavaScript:
 - video - the name of the video to play
 - time - the time in the video to start the video at
 - sub - the language to have the subtitles set to
+- list - the video list that is currently in use
 
 ## Modifying
 
@@ -102,6 +103,19 @@ languages:
 ```
 This list should have a language code for each language you plan to support (the YAML code above would only support English) unless using the YAML front matter of the page.
 
+If using the videoLists template, the language list will follow this pattern:
+``` YAML
+languages: 
+  [name_of_video_list]:
+    en:
+      - name: English
+        code: en
+      - name: Spanish
+        code: es
+      - name: French
+        code: fr
+```
+
 ### URL Parameters
 
 The URL Parameters are defined in `user\themes\quark\templates\` in a script tag in any of the custom templates (videos.html.twig, video.html.twig, and subtitles.html.twig).
@@ -112,7 +126,8 @@ The list should look something like this:
   lang: "[lang_param_name_to_display]", 
   title: "[video_param_name_to_display]", 
   time: "[video_time_param_name_to_display]",
-  sub: "[subtitle_param_name_to_display]"
+  sub: "[subtitle_param_name_to_display]",
+  list: "[video_list_param_name_to_display]"
 }
 ```
 
@@ -154,13 +169,15 @@ In order to modify any of these blocks, add the following to your template:
 | Name | Value and What It Does | Default | Required |
 | ---- | ---------------------- | ------- | -------- |
 | `configFile` | The name of the config file to use | video | Optional |
+| `defaultList` | The name of the default video list to use. It is needed for the videoLists template | NA | Optional* |
 | `languageListConfig` | Either true or false. It determines whether the language list will be founnd in a config file. | true | Optional |
+| `listContainer` | The name of the video list that contains the other video lists. It is needed for the videoLists template. _Note: it will have no affect if the videoLists template is not being used._ | NA | Optional* |
 | `pageIdentifier` | Should be a string of characters unique to the page. It allows for the storing of user based information. </br> _Note: if two different pages have the same pageIdentifier value the data stored about the user will be the same for both and can override the data of the other page._ | NA | Required |
 | `textListConfig` |Either true or false. It determines whether the text options to display to the user will be found in a config file.  The text list includes the error message displayed to the user and the text that is above the select boxes. | true | Optional |
 | `videoID` | Should be a valid Vimeo id and is only needed for the subtitles template. </br> _Note: an invalid id value will cause the video to not load._ | NA | Optional* |
-| `videoList` | The name of the video list to use. It is needed for both the videos and video template. | NA | Optional* |
+| `videoList` | The name of the video list(s) to use. It is needed for the videos, video, and videoLists template. _Note: the videoLists template is the only one that use multiple video lists_ | NA | Optional* |
 | `videoListConfig` | Either true or false. It determines whether the video list to use is found in a config file. | true | Optional |
-| `videoTitle` | The name of a video in the specified video list to use. It is only needed for the video template. | NA | Optional* |
+| `videoTitle` | The name of a video in the specified video list to use. It is needed for the video template. | NA | Optional* |
 
 _* Optional unless using the specified template(s)._
 
@@ -180,7 +197,7 @@ _Note: it will be necessary that you run `npm install` in the base directory bef
 
 ## Types
 
-There are three different types of video player templates setup in this repository. 
+There are four different types of video player templates setup in this repository. 
 
 1. Dynamic Video Player
 
@@ -199,6 +216,12 @@ In order to use this template, make sure the Markdown files is called `video.*.m
 This video player allows the user to select a subtilte from a list of subtitles which is loaded with the video.
 
 In order to use this template, make sure the Markdown files is called `subtitles.*.md` or `subtitles.md`.
+
+4. Video Lists Player
+
+This player is like the Dynamic Video Player except it also allows for multiple video lists that the user can select and the ability to have different language lists for each video list.
+
+In order to use this template, make sure the Markdown files is called `videoLists.*.md` or `videoLists.md`.
 
 ## Uses
 

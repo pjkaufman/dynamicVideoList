@@ -118,4 +118,3 @@ GRAV:
         ERROR2: Bad number of elements
         ERROR3: The jquery_element should be set into jqCron settings
         ERROR4: Unrecognized expression
-        
