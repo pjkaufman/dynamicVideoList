@@ -86,17 +86,21 @@ lists:
         - id: 210653772
           language: es
 
-languages: 
-  en:
-    - name: English
-      code: en
-    - name: Spanish
-      code: es
-  es:
-    - name: Inglés
-      code: en
-    - name: Espanol
-      code: es
+languages:
+  spanish: 
+    en:
+      - name: Spanish
+        code: es
+    es:
+      - name: Español
+        code: es
+  english:
+    en:
+      - name: English
+        code: en
+    es:
+      - name: Inglés
+        code: en      
     
 select:
   en:

@@ -2,12 +2,27 @@
 
 {% block videoList %}
 {% endblock %}
+{% block languageList %}
+{% endblock %}
 
 {% block content %}
 {# Setup the videoLists #}
-{% set videoLists =  attribute(configFile, page.header.listContainer) %}
+{% if page.header.videoList is defined %}
+  {% if page.header.videoListConfig is defined and page.header.videoListConfig == false %}
+    {% set videoLists =  attribute(page.header, page.header.listContainer) %}
+  {% else %}
+    {% set videoLists = attribute(configFile, page.header.listContainer) %}
+  {% endif %}
+{% endif %}
 {# Determine where to get the initial video list from #}
+{% if page.header.languageListConfig is defined and page.header.languageListConfig == false %}
+  {% set languages = page.header.languages %}
+{% else %}
+  {% set languages = configFile.languages %}
+{% endif %}
 {% set videos = attribute(videoLists, page.header.defaultList) %}
+{% set languageLists = languages %}
+{% set languages = attribute(attribute(languageLists, page.header.defaultList), grav.language.getActive) %}
 {{ parent() }}
 {% endblock %}
 {% block videoSelect %}
@@ -30,6 +45,7 @@
     errorMsg: '{{ error }}',
     localKey: '{{ page.header.pageIdentifier }}',
     videoList: {},
+    languageLists: {},
     functions: {},
     URLParams: {
       lang: "lang", 
@@ -42,6 +58,10 @@
   };
   {% for list in page.header.videoList %}
     Object.assign(Window.Vinya.videoList, {'{{ list }}': {}});
+    Object.assign(Window.Vinya.languageLists, {'{{ list }}': {}});
+    {% for language in attribute(attribute(languageLists, list), grav.language.getActive) %}
+      Object.assign(Window.Vinya.languageLists['{{ list }}'], { '{{ language.code }}' : '{{language.name}}'});
+    {% endfor %}
     {% for video in attribute(videoLists, list) %}
       Object.assign(Window.Vinya.videoList['{{ list }}'], {'{{ video.name }}': {} });
       Object.assign(Window.Vinya.videoList['{{ list }}']['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });

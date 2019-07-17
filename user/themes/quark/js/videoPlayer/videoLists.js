@@ -49,7 +49,8 @@ Window.Vinya.functions.addEventListeners = function addEventListeners() {
     Window.Vinya.defaultList = this.value;
     // update the current video list values
     Window.Vinya.functions.refreshVideoList(this.value);
-    Window.Vinya.functions.updateURL(Window.Vinya.URLParams.list, this.value);
+    // update the current language list
+    Window.Vinya.functions.refreshLanguageList(this.value);
     // change the video
     Window.Vinya.functions.displaySelectedVideo();
   });
@@ -201,9 +202,11 @@ Window.Vinya.functions.parseURL = function parseURL() {
     title = Window.Vinya.DOMElements.videoList.value;
   }
   Window.Vinya.functions.fixBtnDisplay(title);
+  // check to see if the list needs to be updated and what the language list should be
   if (list != undefined) {
     Window.Vinya.DOMElements.videoLists.value = list;
     Window.Vinya.defaultList = list;
+    Window.Vinya.functions.refreshLanguageList(list);
   }
   if (Window.Vinya.functions.videoPlayerPreCheck(title)) {
     Window.Vinya.functions.createVimeoPlayer(Window.Vinya.videoList[Window.Vinya.defaultList][title][lang]);
@@ -251,4 +254,18 @@ Window.Vinya.functions.refreshVideoList = function refreshVideoList(videoList) {
     newVideoList += '<option value="' + key + '">' + key + '</option>';
   });
   Window.Vinya.DOMElements.videoList.innerHTML = newVideoList;
+  Window.Vinya.functions.updateURL(Window.Vinya.URLParams.list, videoList);
+}
+
+/**
+ * Refreshs the language list after the user selects a new video list.
+ * @param videoList The name of the video list selected by the user.
+ */
+Window.Vinya.functions.refreshLanguageList = function refreshLanguageList(videoList) {
+  var newLanguageList = '';
+  Window.Vinya.DOMElements.languages.innerHTML = '';
+  Object.keys(Window.Vinya.languageLists[videoList]).forEach(function(key) {
+    newLanguageList += '<option value="' + key + '">' + Window.Vinya.languageLists[videoList][key] + '</option>';
+  });
+  Window.Vinya.DOMElements.languages.innerHTML = newLanguageList;
 }
