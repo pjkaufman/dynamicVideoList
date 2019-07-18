@@ -1,5 +1,11 @@
 {% extends 'partials/base.html.twig' %}
 
+{# Determine where to get the initial video list from #}
+{% if page.header.languageListConfig is defined and page.header.languageListConfig == false %}
+  {% set languages = page.header.languages %}
+{% else %}
+  {% set languages = configFile.languages %}
+{% endif %}
 {# Determine what the config file is #}
 {% if page.header.configFile is defined %}
   {% set configFile = attribute(config, page.header.configFile) %}
@@ -15,23 +21,37 @@
   {% set error = attribute(configFile.error, grav.language.getActive) %}
 {% endif %}
 {# Determine where to get the language list from #}
-{% block languageList %}
 {% if page.header.languageListConfig is defined and page.header.languageListConfig == false %}
   {% set languages = page.header.languages %}
 {% else %}
-  {% set languages = attribute(configFile.languages, grav.language.getActive) %}
-{% endif %}
-{% endblock %}
-{# Determine where to get the video list from #}
-{% block videoList %}
-{% if page.header.videoList is defined %}
-  {% if page.header.videoListConfig is defined and page.header.videoListConfig == false %}
-    {% set videos = attribute(page.header, page.header.videoList) %}
+  {% if page.header.listContainer is defined %}
+    {% set languages = configFile.languages %}
   {% else %}
-    {% set videos = attribute(configFile, page.header.videoList) %}
+    {% set languages = attribute(configFile.languages, grav.language.getActive) %}
   {% endif %}
 {% endif %}
-{% endblock %}
+{# Determine where to get the video list from #}
+{% if page.header.videoList is defined %}
+  {% if page.header.videoListConfig is defined and page.header.videoListConfig == false %}
+    {% if page.header.listContainer is defined %}
+      {% set videoLists =  attribute(page.header, page.header.listContainer) %}
+    {% else %}
+      {% set videos = attribute(page.header, page.header.videoList) %}
+    {% endif %} 
+  {% else %}
+    {% if page.header.listContainer is defined %}
+      {% set videoLists = attribute(configFile, page.header.listContainer) %}
+    {% else %}
+      {% set videos = attribute(configFile, page.header.videoList) %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+{# Set the values of certain variables if the containerList is present #}
+{% if page.header.listContainer is defined %}
+  {% set videos = attribute(videoLists, page.header.defaultList) %}
+  {% set languageLists = languages %}
+  {% set languages = attribute(attribute(languageLists, page.header.defaultList), grav.language.getActive) %}
+{% endif %}
 
 {% block content %} 
 {% do assets.addCss('theme://css/videos.min.css') %}

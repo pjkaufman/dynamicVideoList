@@ -4,7 +4,11 @@
 Window.Vinya.functions.addEventListeners = function addEventListeners() {
   Window.Vinya.DOMElements.languages.addEventListener("change", function() {
     Window.Vinya.functions.fixBtnDisplay(Window.Vinya.DOMElements.videoList.value);
-    Window.Vinya.functions.changeVideo(Window.Vinya.DOMElements.videoList.value, true);
+    if (Window.Vinya.player != undefined) {
+      Window.Vinya.functions.changeVideo(Window.Vinya.DOMElements.videoList.value, true);
+    } else {
+      Window.Vinya.functions.createVimeoPlayer();
+    } 
   });
 
   Window.Vinya.DOMElements.videoList.addEventListener("change", function () {
