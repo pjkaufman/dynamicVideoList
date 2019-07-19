@@ -2,6 +2,7 @@
 title: Los planes del video
 
 configFile: english
-videoList: videos
+videoList: lessons
+lessons: true
 pageIdentifier: config
 ---

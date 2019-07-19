@@ -2,6 +2,7 @@
 title: Video Plans
 
 configFile: videoPlans
-videoList: videos
+videoList: lessons
+lessons: true
 pageIdentifier: videoPlans
 ---

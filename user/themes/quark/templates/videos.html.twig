@@ -52,6 +52,11 @@
   {% set languageLists = languages %}
   {% set languages = attribute(attribute(languageLists, page.header.defaultList), grav.language.getActive) %}
 {% endif %}
+{% if page.header.lessons is defined and page.header.lessons == true %} 
+  {% set lessons = true %}
+{% else %}
+  {% set lessons = false %}
+{% endif %}
 
 {% block content %} 
 {% do assets.addCss('theme://css/videos.min.css') %}
@@ -115,13 +120,16 @@
 <div id="videosFrames" class="resp-container">
   <div id="loading"></div>
 </div>
-
+{% if lessons == true %}
+  <a href="">Spanish</a>
+{% endif %}
 {% block inlineScript %}
 <script>
   Window.Vinya = {
     defLang: '{{~grav.language.getActive~}}',
     errorMsg: '{{ error }}',
     localKey: '{{ page.header.pageIdentifier }}',
+    lessons: {{ lessons }},
     videoList: {},
     functions: {},
     URLParams: {
@@ -134,6 +142,11 @@
   {% for video in videos %}
     Object.assign(Window.Vinya.videoList, {'{{ video.name }}': {} });
     Object.assign(Window.Vinya.videoList['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });
+    {% if lessons == true %}
+      {% for lesson in video.lesson %}
+        Object.assign(Window.Vinya.videoList['{{ video.name }}'], { 'lesson': { 'link': '{{ theme_url }}/{{ lesson.name }}', 'name': '{{ attribute(lesson, grav.language.getActive) }}' }});
+      {% endfor %}
+    {% endif %}
     {% for id in video.ids %}
       Object.assign(Window.Vinya.videoList['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
     {% endfor %}
