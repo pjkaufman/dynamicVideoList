@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function(){
     subtitles: document.getElementById('subtitles'),
     spinner: document.getElementById('loading'),
     videoLists: document.getElementById('videoLists'),
+    lessons: document.getElementById('lessonPlans'),
     video: undefined,
     hide: function (property) {
       if (this[property].classList.length.length === 0) {

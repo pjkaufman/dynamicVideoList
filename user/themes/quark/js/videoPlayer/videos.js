@@ -117,6 +117,9 @@ Window.Vinya.functions.changeVideo = function changeVideo(videoName, languageCha
         });
       });
     });
+    if (Window.Vinya.lessonsActive) {
+      Window.Vinya.functions.updateLessons(videoName);
+    }
     if (!languageChanged) {
       Window.Vinya.functions.updateURL(Window.Vinya.URLParams.title, videoName);
     }

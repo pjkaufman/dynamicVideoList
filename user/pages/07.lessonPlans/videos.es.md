@@ -1,8 +1,9 @@
 ---
 title: Los planes del video
 
-configFile: english
-videoList: lessons
+configFile: lessons
+videoList: videos
 lessons: true
-pageIdentifier: config
+allLessons: true
+pageIdentifier: videoPlans
 ---

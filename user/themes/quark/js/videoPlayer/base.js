@@ -63,6 +63,9 @@ Window.Vinya.functions.createVimeoPlayer = function createVimeoPlayer(videoID) {
     Window.Vinya.DOMElements.video.setAttribute('class' , 'resp-iframe');
     Window.Vinya.functions.getTextTracks();         
   });
+  if (Window.Vinya.lessonsActive) {
+    Window.Vinya.functions.updateLessons(Window.Vinya.DOMElements.videoList.value);
+  }
 };
 
 /**
@@ -104,3 +107,35 @@ Window.Vinya.functions.getTextTracks = function getTextTracks() {
     Window.Vinya.DOMElements.display('video');
   });
 };
+
+/**
+ * Removes the current lessons and adds lessons for the current video.
+ * @param videoName The name of the video to get the lesson plans for.
+ */
+Window.Vinya.functions.updateLessons = function updateLessons(videoName) {
+  // determine where the videos are stored
+  var videos;
+  if (Window.Vinya.DOMElements.videoLists != undefined) {
+    videos = Window.Vinya.videoList[Window.Vinya.DOMElements.videoLists.value];
+  } else {
+    videos = Window.Vinya.videoList;
+  }
+  // update the current lesson list
+  var lessons = '', lesson, key;
+  if (Window.Vinya.allLessons) {
+    for (key in videos){
+      lessons += key + ': ';
+      for (var i = 0, length = videos[key]['lesson'].length; i < length; i++) {
+        lesson = videos[key]['lesson'][i];
+        lessons += '<a href="' + lesson.link + '" target="_blank">' + lesson.name + ' </a>';
+      }
+      lessons += '<br>';
+    }
+  } else {
+    for (var i = 0, length = videos[videoName]['lesson'].length; i < length; i++) {
+      lesson = videos[videoName]['lesson'][i];
+      lessons += '<a href="' + lesson.link + '" target="_blank">' + lesson.name + '</a> ';
+    }
+  }
+  Window.Vinya.DOMElements.lessons.innerHTML = lessons;
+}

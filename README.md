@@ -171,9 +171,10 @@ In order to modify any of these blocks, add the following to your template:
 | `configFile` | The name of the config file to use | video | Optional |
 | `defaultList` | The name of the default video list to use. It is needed for the videoLists template | NA | Optional* |
 | `languageListConfig` | Either true or false. It determines whether the language list will be founnd in a config file. | true | Optional |
+| `lessons` | Either true or false. It determines whether or not to display the lesson plans. | false | Optional |
 | `listContainer` | The name of the video list that contains the other video lists. It is needed for the videoLists template. _Note: it will cause issues if present on any other template._ | NA | Optional* |
 | `pageIdentifier` | Should be a string of characters unique to the page. It allows for the storing of user based information. </br> _Note: if two different pages have the same pageIdentifier value the data stored about the user will be the same for both and can override the data of the other page._ | NA | Required |
-| `textListConfig` |Either true or false. It determines whether the text options to display to the user will be found in a config file.  The text list includes the error message displayed to the user and the text that is above the select boxes. | true | Optional |
+| `textListConfig` | Either true or false. It determines whether the text options to display to the user will be found in a config file.  The text list includes the error message displayed to the user and the text that is above the select boxes. | true | Optional |
 | `videoID` | Should be a valid Vimeo id and is only needed for the subtitles template. </br> _Note: an invalid id value will cause the video to not load._ | NA | Optional* |
 | `videoList` | The name of the video list(s) to use. It is needed for the videos, video, and videoLists template. _Note: the videoLists template is the only one that use multiple video lists_ | NA | Optional* |
 | `videoListConfig` | Either true or false. It determines whether the video list to use is found in a config file. | true | Optional |

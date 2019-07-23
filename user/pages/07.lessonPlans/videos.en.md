@@ -1,8 +1,8 @@
 ---
 title: Video Plans
 
-configFile: videoPlans
-videoList: lessons
-lessons: true
+configFile: lessons
+videoList: videos
+# lessons: false
 pageIdentifier: videoPlans
 ---
