@@ -168,9 +168,11 @@ In order to modify any of these blocks, add the following to your template:
 
 | Name | Value and What It Does | Default | Required |
 | ---- | ---------------------- | ------- | -------- |
+| `allLessons` | Either true or false. It determines whether all lessons in the video playlist will be displayed to the user. | false | Optional |
 | `configFile` | The name of the config file to use | video | Optional |
 | `defaultList` | The name of the default video list to use. It is needed for the videoLists template | NA | Optional* |
 | `languageListConfig` | Either true or false. It determines whether the language list will be founnd in a config file. | true | Optional |
+| `lessonList`| The list needed for the lesson iff lessons are active on the subtitles template. | NA | Optional |
 | `lessons` | Either true or false. It determines whether or not to display the lesson plans. | false | Optional |
 | `listContainer` | The name of the video list that contains the other video lists. It is needed for the videoLists template. _Note: it will cause issues if present on any other template._ | NA | Optional* |
 | `pageIdentifier` | Should be a string of characters unique to the page. It allows for the storing of user based information. </br> _Note: if two different pages have the same pageIdentifier value the data stored about the user will be the same for both and can override the data of the other page._ | NA | Required |

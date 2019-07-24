@@ -29,6 +29,16 @@
       sub: "sub",
       list: "list"
     },
+    {% if page.header.lessons is defined and page.header.lessons == true %}  
+    lessonsActive: true,
+    {% else %}
+    lessonsActive: false,
+    {% endif %}
+    {% if page.header.allLessons is defined and page.header.allLessons == true %}  
+    allLessons: true,
+    {% else %}
+    allLessons: false,
+    {% endif %}
     defaultList: '{{ page.header.defaultList }}'
   };
   {% for list in page.header.videoList %}
@@ -37,6 +47,12 @@
     {% for language in attribute(attribute(languageLists, list), grav.language.getActive) %}
       Object.assign(Window.Vinya.languageLists['{{ list }}'], { '{{ language.code }}' : '{{language.name}}'});
     {% endfor %}
+    {% if page.header.lessons is defined and page.header.lessons == true %} 
+      Object.assign(Window.Vinya.videoList['{{ list }}']['{{ video.name }}'], { 'lesson': new Array()});
+      {% for lesson in video.lesson %}
+        Window.Vinya.videoList['{{ list }}']['{{ video.name }}']['lesson'].push({ 'link': '{{ theme_url }}/lessons/{{ lesson.name }}', 'name': '{{ attribute(lesson, grav.language.getActive) }}' });
+      {% endfor %}
+    {% endif %}
     {% for video in attribute(videoLists, list) %}
       Object.assign(Window.Vinya.videoList['{{ list }}'], {'{{ video.name }}': {} });
       Object.assign(Window.Vinya.videoList['{{ list }}']['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });

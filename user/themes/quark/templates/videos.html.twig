@@ -52,21 +52,8 @@
   {% set languageLists = languages %}
   {% set languages = attribute(attribute(languageLists, page.header.defaultList), grav.language.getActive) %}
 {% endif %}
-{# Determine the value of the lessons variable #}
-{% if page.header.lessons is defined and page.header.lessons == true %} 
-  {% set lessonsActive = true %}
-{% else %}
-  {% set lessonsActive = false %}
-{% endif %}
-
-{# {% if page.header.allLessons is defined and page.header.allLessons == true %} 
-  {% set allLessons = true %}
-{% else %}
-  {% set allLessons = false %}
-{% endif %} #}
 
 {% block content %} 
-<h1>The value of lessonsActive: {{lessonsActive is defined }}</h1>
 {% do assets.addCss('theme://css/videos.min.css') %}
 <div id="swapLanguage">
   <p>
@@ -128,9 +115,11 @@
 <div id="videosFrames" class="resp-container">
   <div id="loading"></div>
 </div>
-{% if lessonsActive == true %}
+{% block lessons %}
+{% if page.header.lessons is defined and page.header.lessons == true %} 
   <center><h4>Lesson Plan(s):</h4><div id="lessonPlans"></div></center>
 {% endif %}
+{% endblock %}
 {% block inlineScript %}
 <script>
   Window.Vinya = {
@@ -145,13 +134,21 @@
       time: "time",
       sub: "sub"
     },
-    lessonsActive: {{ lessonsActive is same as(true)}}
-    {# allLessons: {{ allLessons }} #}
+    {% if page.header.lessons is defined and page.header.lessons == true %}  
+    lessonsActive: true,
+    {% else %}
+    lessonsActive: false,
+    {% endif %}
+    {% if page.header.allLessons is defined and page.header.allLessons == true %}  
+    allLessons: true
+    {% else %}
+    allLessons: false
+    {% endif %}
   };
   {% for video in videos %}
     Object.assign(Window.Vinya.videoList, {'{{ video.name }}': {} });
     Object.assign(Window.Vinya.videoList['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });
-    {% if lessonsActive == true %}
+    {% if page.header.lessons is defined and page.header.lessons == true %} 
       Object.assign(Window.Vinya.videoList['{{ video.name }}'], { 'lesson': new Array()});
       {% for lesson in video.lesson %}
         Window.Vinya.videoList['{{ video.name }}']['lesson'].push({ 'link': '{{ theme_url }}/lessons/{{ lesson.name }}', 'name': '{{ attribute(lesson, grav.language.getActive) }}' });

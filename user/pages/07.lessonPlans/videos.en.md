@@ -3,6 +3,6 @@ title: Video Plans
 
 configFile: lessons
 videoList: videos
-# lessons: false
+lessons: true
 pageIdentifier: videoPlans
 ---
