@@ -17,8 +17,9 @@
 {% if page.header.lessons is defined and page.header.lessons == true %} 
   <center><h4>Lesson Plan(s):</h4><div id="lessonPlans">
   {% for lesson in page.header.lessonList %}
-  <p><a href="{{ theme_url }}/lessons/{{ lesson.name }}" target="_blank"> + lesson.displayName + '</a> '</p>
+  <a href="{{ theme_url }}/lessons/{{ lesson.name }}" target="_blank">{{ lesson.displayName }}</a>
   </div></center>
+  {% endfor %}
 {% endif %}
 {% endblock %}
 
