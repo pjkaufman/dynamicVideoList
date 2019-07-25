@@ -67,14 +67,22 @@ The video list looks something like:
 [name_of_video_list]: 
   - name: [name_to_display_here]
     title:
-        en: [English_video_name]
-        es: [Spanish_video_name]
+      en: [English_video_name]
+      es: [Spanish_video_name]
+    lesson:
+      - en: [English_lesson_name]
+        es: [Spanish_lesson_name]
+        name: [file_name_for_the_lesson_including_extension]
     ids: 
       - id: [id_for_video]
         language: [code_of_language_to_list_the_video_as]
 ```
 
-The title option is only needed for the Dynamic Video Player.
+The title option is only needed for the Dynamic Video Player. 
+
+The lesson option is only needed if the `lessons` option is true. 
+
+_Note: that if the subtitle template is being used the `lessonList` option will have to be defined in the YAML Front Matter with `displayName` and `name`(the file name with extention)._
 
 _Note: you can add as many elements to ids as you like as long as the language is in the language list (see below) and the id  is a valid Vimeo id._
 
@@ -168,12 +176,15 @@ In order to modify any of these blocks, add the following to your template:
 
 | Name | Value and What It Does | Default | Required |
 | ---- | ---------------------- | ------- | -------- |
+| `allLessons` | Either true or false. It determines whether all lessons in the video playlist will be displayed to the user. | false | Optional |
 | `configFile` | The name of the config file to use | video | Optional |
 | `defaultList` | The name of the default video list to use. It is needed for the videoLists template | NA | Optional* |
 | `languageListConfig` | Either true or false. It determines whether the language list will be founnd in a config file. | true | Optional |
+| `lessonList`| The list needed for the lesson iff lessons are active on the subtitles template. | NA | Optional |
+| `lessons` | Either true or false. It determines whether or not to display the lesson plans. | false | Optional |
 | `listContainer` | The name of the video list that contains the other video lists. It is needed for the videoLists template. _Note: it will cause issues if present on any other template._ | NA | Optional* |
 | `pageIdentifier` | Should be a string of characters unique to the page. It allows for the storing of user based information. </br> _Note: if two different pages have the same pageIdentifier value the data stored about the user will be the same for both and can override the data of the other page._ | NA | Required |
-| `textListConfig` |Either true or false. It determines whether the text options to display to the user will be found in a config file.  The text list includes the error message displayed to the user and the text that is above the select boxes. | true | Optional |
+| `textListConfig` | Either true or false. It determines whether the text options to display to the user will be found in a config file.  The text list includes the error message displayed to the user and the text that is above the select boxes. | true | Optional |
 | `videoID` | Should be a valid Vimeo id and is only needed for the subtitles template. </br> _Note: an invalid id value will cause the video to not load._ | NA | Optional* |
 | `videoList` | The name of the video list(s) to use. It is needed for the videos, video, and videoLists template. _Note: the videoLists template is the only one that use multiple video lists_ | NA | Optional* |
 | `videoListConfig` | Either true or false. It determines whether the video list to use is found in a config file. | true | Optional |

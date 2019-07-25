@@ -13,6 +13,16 @@
   {% do assets.addJs('theme://js/subtitlesPlayer.min.js', {priority: 106, loading: 'defer', position: 'before'}) %}
 {% endblock %}
 
+{% block lessons %}
+{% if page.header.lessons is defined and page.header.lessons == true %} 
+  <center><h4>Lesson Plan(s):</h4><div id="lessonPlans">
+  {% for lesson in page.header.lessonList %}
+  <a href="{{ theme_url }}/lessons/{{ lesson.name }}" target="_blank">{{ lesson.displayName }}</a>
+  </div></center>
+  {% endfor %}
+{% endif %}
+{% endblock %}
+
 {% block inlineScript %}
 <script>
   Window.Vinya = {

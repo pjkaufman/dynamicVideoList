@@ -115,7 +115,11 @@
 <div id="videosFrames" class="resp-container">
   <div id="loading"></div>
 </div>
-
+{% block lessons %}
+{% if page.header.lessons is defined and page.header.lessons == true %} 
+  <center><h4>Lesson Plan(s):</h4><div id="lessonPlans"></div></center>
+{% endif %}
+{% endblock %}
 {% block inlineScript %}
 <script>
   Window.Vinya = {
@@ -129,11 +133,27 @@
       title: "video", 
       time: "time",
       sub: "sub"
-    }
+    },
+    {% if page.header.lessons is defined and page.header.lessons == true %}  
+    lessonsActive: true,
+    {% else %}
+    lessonsActive: false,
+    {% endif %}
+    {% if page.header.allLessons is defined and page.header.allLessons == true %}  
+    allLessons: true
+    {% else %}
+    allLessons: false
+    {% endif %}
   };
   {% for video in videos %}
     Object.assign(Window.Vinya.videoList, {'{{ video.name }}': {} });
     Object.assign(Window.Vinya.videoList['{{ video.name }}'], { title: '{{ attribute(video.title, grav.language.getActive) }}' });
+    {% if page.header.lessons is defined and page.header.lessons == true %} 
+      Object.assign(Window.Vinya.videoList['{{ video.name }}'], { 'lesson': new Array()});
+      {% for lesson in video.lesson %}
+        Window.Vinya.videoList['{{ video.name }}']['lesson'].push({ 'link': '{{ theme_url }}/lessons/{{ lesson.name }}', 'name': '{{ attribute(lesson, grav.language.getActive) }}' });
+      {% endfor %}
+    {% endif %}
     {% for id in video.ids %}
       Object.assign(Window.Vinya.videoList['{{ video.name }}'], { {{ id.language }}: {{ id.id }}});
     {% endfor %}

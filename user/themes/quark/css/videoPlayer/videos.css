@@ -7,7 +7,7 @@ body {
   background-color: gray;
 }
 /* Sets the same color to all of the necesssary elements */
-body, #swapLanguage, #swapLanguage > p > a, #videoBtnOptions > a {
+body, #swapLanguage, #swapLanguage > p > a, #videoBtnOptions > a, #lessonPlans > a {
   color: var(--textColor);
 }
 
@@ -32,7 +32,7 @@ body, #swapLanguage, #swapLanguage > p > a, #videoBtnOptions > a {
   float: left;
 }
 
-#swapLanguage > p > a, #back, #next {
+#swapLanguage > p > a, #back, #next, #lessonPlans > a {
   text-decoration: underline;
   cursor: pointer;
 }
