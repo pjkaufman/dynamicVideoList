@@ -67,14 +67,22 @@ The video list looks something like:
 [name_of_video_list]: 
   - name: [name_to_display_here]
     title:
-        en: [English_video_name]
-        es: [Spanish_video_name]
+      en: [English_video_name]
+      es: [Spanish_video_name]
+    lesson:
+      - en: [English_lesson_name]
+        es: [Spanish_lesson_name]
+        name: [file_name_for_the_lesson_including_extension]
     ids: 
       - id: [id_for_video]
         language: [code_of_language_to_list_the_video_as]
 ```
 
-The title option is only needed for the Dynamic Video Player.
+The title option is only needed for the Dynamic Video Player. 
+
+The lesson option is only needed if the `lessons` option is true. 
+
+_Note: that if the subtitle template is being used the `lessonList` option will have to be defined in the YAML Front Matter with `displayName` and `name`(the file name with extention)._
 
 _Note: you can add as many elements to ids as you like as long as the language is in the language list (see below) and the id  is a valid Vimeo id._
 
